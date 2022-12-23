@@ -1,5 +1,4 @@
 import { ServicosSefaz } from '../interface/nfe';
-import { getContentType } from './functions';
 import * as Utils from '../utils/utils';
 const servicos = require('../../../servicos.json')
 const autorizadores = require('../../../autorizadores.json')
@@ -183,7 +182,6 @@ export abstract class SefazNFCe {
             soap.urlChave = infoQRCode.urlChave;
         }
 
-		soap.contentType = getContentType(uf);
         soap.method = servicos[servico].method;
         soap.action = servicos[servico].action;
 

@@ -62,3 +62,14 @@ export async function sleep(fn: any, ms: number, ...args: any) {
     await timeout(ms);
     return fn(...args);
 }
+
+export function findKey(object: any, key: string): any {
+    for (const [k, v] of Object.entries(object)) {
+        if (k === key) return v;
+        if (v instanceof Object) {
+            const d = findKey(v, key);
+            if (d) return d;
+        }
+    }
+    return null;
+}

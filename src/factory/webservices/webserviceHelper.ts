@@ -1,7 +1,8 @@
-import fetch, {Response} from 'node-fetch'
+import fetch, { RequestInit } from 'node-fetch'
 import * as https from 'https';
 import { XmlHelper } from '../xmlHelper'
 import { RetornoProcessamento } from '../interface/nfe'
+import { findKey } from '../utils/utils';
 
 export interface WebProxy {
     host: string
@@ -28,10 +29,12 @@ export abstract class WebServiceHelper {
 
     public static buildSoapEnvelope(xml: string, soapMethod: string) {
         let soapEnvelopeObj = {
-            '$': { 'xmlns:soap': 'http://www.w3.org/2003/05/soap-envelope',
+            '$': { 
                     'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-                    'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema' },
-                'soap:Body': {
+                    'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
+                    'xmlns:soap12': 'http://www.w3.org/2003/05/soap-envelope',
+                 },
+                'soap12:Body': {
                     'nfeDadosMsg': {
                         '$': {
                             'xmlns': soapMethod
@@ -41,30 +44,30 @@ export abstract class WebServiceHelper {
                 }
             };
 
-        let soapEnvXml = XmlHelper.serializeXml(soapEnvelopeObj, 'soap:Envelope');
+        let soapEnvXml = XmlHelper.serializeXml(soapEnvelopeObj, 'soap12:Envelope');
         return soapEnvXml.replace('[XML]', xml);
     }
 
     public static async makeSoapRequest(xml: string, cert: any, soap: any,  proxy?: WebProxy) {
         let result = <RetornoProcessamento>{ xml_enviado: xml };
         try {
-            const options = {
+            const headers: HeadersInit = {
+                "Content-Type": `application/soap+xml; charset=utf-8`,
+                "SAOPAction": soap.action,
+            };
+            const agent = new https.Agent({
+                rejectUnauthorized: false,
+                cert: cert.pem,
+                key: cert.key,
+            });
+            const opts: RequestInit = {
                 method: 'POST',
-                headers: {
-                    "Content-Type": soap.contentType,
-                    "SOAPAction": soap.action
-                },
-                agent: new https.Agent({
-                    rejectUnauthorized: false,
-                    // pfx: cert.pfx,
-                    cert: cert.pem,
-                    key: cert.key,
-                    passphrase: cert.password,
-                }),
+                headers,
+                agent,
                 body: this.buildSoapEnvelope(xml, soap.method),
-            }
+            };
 
-            const res = await fetch(soap.url, options);
+            const res = await fetch(soap.url, opts);
             result.status = res.status;
             result.xml_recebido = await res.text();
 
@@ -72,9 +75,7 @@ export abstract class WebServiceHelper {
                 result.success = true;
                 let retorno = XmlHelper.deserializeXml(result.xml_recebido, {explicitArray: false});
                 if (retorno) {
-                    result.data = Object(retorno)['soap:Envelope'] != undefined 
-                        ? Object(retorno)['soap:Envelope']['soap:Body']['nfeResultMsg'] 
-                        : Object(retorno)['env:Envelope']['env:Body']['nfeResultMsg'];
+                    result.data = findKey(retorno, 'nfeResultMsg');
                 }
             }
             return result;

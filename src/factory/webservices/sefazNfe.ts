@@ -1,5 +1,4 @@
 import { ServicosSefaz } from '../interface/nfe';
-import { getContentType } from './functions';
 import * as Utils from '../utils/utils';
 const servicos = require('../../../servicos.json')
 const autorizadores = require('../../../autorizadoresNFe.json')
@@ -98,7 +97,6 @@ export abstract class SefazNFe {
         else
             soap.url = Utils.validaUrlWsdl(autorizador.servicos[servico].url_homologacao);
 
-		soap.contentType = getContentType(uf);
         soap.method = servicos[servico].method;
         soap.action = servicos[servico].action;
 
