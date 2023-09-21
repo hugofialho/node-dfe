@@ -372,6 +372,7 @@ export class EnviaProcessor {
             serie: documento.serie,
             nNF: documento.numeroNota,
             dhEmi: documento.dhEmissao,
+            dhSaiEnt: documento.dhSaiEnt,
             tpNF: Utils.getEnumByValue(schema.TNFeInfNFeIdeTpNF, documento.tipoDocumentoFiscal),
             idDest: Utils.getEnumByValue(schema.TNFeInfNFeIdeIdDest, documento.identificadorDestinoOperacao),
             cMunFG: documento.codIbgeFatoGerador,
@@ -384,7 +385,6 @@ export class EnviaProcessor {
             indPres: Utils.getEnumByValue(schema.TNFeInfNFeIdeIndPres, documento.indPresenca),
             procEmi: Utils.getEnumByValue(schema.TProcEmi, documento.processoEmissao),
             verProc: documento.versaoAplicativoEmissao,
-            dhSaiEnt: documento.dhSaiEnt,
             dhCont: documento.dhContingencia,
             xJust: documento.justificativaContingencia,
             //nFref: schema.TNFeInfNFeIdeNFref[],
@@ -527,11 +527,11 @@ export class EnviaProcessor {
         let detImposto = <schema.TNFeInfNFeDetImposto>{
             vTotTrib: imposto.valorAproximadoTributos,
             ICMS: imposto.icms ? [this.getImpostoIcms(imposto.icms)] : [],
+            IPI: imposto.ipi ? [this.getImpostoIPI(imposto.ipi, modelo)] : [],
             PIS: imposto.pis ? [this.getImpostoPIS(imposto.pis, modelo)] : [],
             COFINS: imposto.cofins ? [this.getImpostoCOFINS(imposto.cofins, modelo)] : [],
             PISST: imposto.pisst ? [this.getImpostoPISST(imposto.pisst)] : [],
             COFINSST: imposto.cofinsst ? [this.getImpostoCOFINSST(imposto.cofinsst)] : [],
-            IPI: imposto.ipi ? [this.getImpostoIPI(imposto.ipi, modelo)] : [],
             II: imposto.ii ? [this.getImpostoII(imposto.ii, cfop)] : [],
             ICMSUFDest: imposto.icmsUfDest ? [this.getIcmsUfDest(imposto.icmsUfDest)] : [],
             ISSQN: '',
@@ -942,25 +942,22 @@ export class EnviaProcessor {
         if ((ipi.vBC + ipi.pIPI > 0) && (ipi.qUnid + ipi.vUnid > 0)) throw 'As TAG <vBC> e <pIPI> não podem ser informadas em conjunto com as TAG <qUnid> e <vUnid>';
 
 
-        result = {
-            IPI: <schema.TIpi>{
-                CNPJProd: ipi.CNPJProd,
-                cSelo: ipi.cSelo,
-                qSelo: ipi.qSelo,
-                cEnq: ipi.cEnq || '999',
-            }
-
+        result = <schema.TIpi>{
+            CNPJProd: ipi.CNPJProd,
+            cSelo: ipi.cSelo,
+            qSelo: ipi.qSelo,
+            cEnq: ipi.cEnq || '999',
         }
 
         if (ipi.qUnid + ipi.vUnid > 0) {
-            result.IPI.IPITrib = <schema.TIpiIPITrib>{
+            result.IPITrib = <schema.TIpiIPITrib>{
                 CST: ipi.CST,
                 qUnid: ipi.qUnid,
                 vUnid: ipi.vUnid,
                 vIPI: ipi.vIPI,
             }
         } else {
-            result.IPI.IPITrib = <schema.TIpiIPITrib>{
+            result.IPITrib = <schema.TIpiIPITrib>{
                 CST: ipi.CST,
                 vBC: ipi.vBC,
                 pIPI: ipi.pIPI,
