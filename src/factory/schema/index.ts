@@ -127,6 +127,7 @@ export interface TNFeInfNFe {
     transp: TNFeInfNFeTransp;
     cobr?: TNFeInfNFeCobr;
     pag?: TNFeInfNFePag;
+    infIntermed: TNFeInfNFeInfIntermed;
     infAdic: TNFeInfNFeInfAdic;
     exporta: TNFeInfNFeExporta;
     compra: TNFeInfNFeCompra;
@@ -2149,16 +2150,13 @@ export enum TNFeInfNFeTranspModFrete {
 
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
 export interface TNFeInfNFeTranspTransporta {
-    //CNPJ
-    //CPF
-    item: string;
-    itemElementName: ItemChoiceType6;
+    CNPJ: string;
+    CPF: string;
     xNome: string;
-    ie: string;
+    IE: string;
     xEnder: string;
     xMun: string;
-    uf: TUf;
-    ufSpecified: boolean;
+    UF: TUf;
 }
 
 //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.portalfiscal.inf.br/nfe", IncludeInSchema=false)]
@@ -2195,19 +2193,12 @@ export enum ItemsChoiceType5 {
 
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
 export interface TNFeInfNFeTranspVol {
-
     qVol: string;
-
     esp: string;
-
     marca: string;
-
     nVol: string;
-
     pesoL: string;
-
     pesoB: string;
-
     lacres: TNFeInfNFeTranspVolLacres[];
 }
 
@@ -2308,6 +2299,11 @@ export enum TNFeInfNFePagDetPagCardTBand {
     Item08 = "08",
     Item09 = "09",
     Item99 = "99",
+}
+
+export interface TNFeInfNFeInfIntermed {
+    CNPJ: string;
+    idCadIntTran: string;
 }
 
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]

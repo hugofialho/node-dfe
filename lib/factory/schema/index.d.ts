@@ -101,6 +101,7 @@ export interface TNFeInfNFe {
     transp: TNFeInfNFeTransp;
     cobr?: TNFeInfNFeCobr;
     pag?: TNFeInfNFePag;
+    infIntermed: TNFeInfNFeInfIntermed;
     infAdic: TNFeInfNFeInfAdic;
     exporta: TNFeInfNFeExporta;
     compra: TNFeInfNFeCompra;
@@ -1688,14 +1689,13 @@ export declare enum TNFeInfNFeTranspModFrete {
     Item9 = "9"
 }
 export interface TNFeInfNFeTranspTransporta {
-    item: string;
-    itemElementName: ItemChoiceType6;
+    CNPJ: string;
+    CPF: string;
     xNome: string;
-    ie: string;
+    IE: string;
     xEnder: string;
     xMun: string;
-    uf: TUf;
-    ufSpecified: boolean;
+    UF: TUf;
 }
 export declare enum ItemChoiceType6 {
     CNPJ = 0,
@@ -1804,6 +1804,10 @@ export declare enum TNFeInfNFePagDetPagCardTBand {
     Item08 = "08",
     Item09 = "09",
     Item99 = "99"
+}
+export interface TNFeInfNFeInfIntermed {
+    CNPJ: string;
+    idCadIntTran: string;
 }
 export interface TNFeInfNFeInfAdic {
     infAdFisco: string;

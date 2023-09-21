@@ -43,13 +43,15 @@ export declare class EnviaProcessor {
     private getImpostoDevolucao;
     private getIcmsUfDest;
     private getTotal;
-    private getIcmsTot;
     private getTransp;
+    private getTransportadora;
+    private getVolumes;
     private getCobr;
     private getDetalheCobranca;
     private getPag;
     private getDetalhamentoPagamentos;
     private getDetalhamentoCartao;
+    private getIntermediador;
     private getInfoAdic;
     private getResponsavelTecnico;
     private gerarHashCSRT;

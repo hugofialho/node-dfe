@@ -1,6 +1,6 @@
 import {
     RetornoProcessamentoNF, Empresa, Endereco, NFCeDocumento, NFeDocumento, DocumentoFiscal, Destinatario, Transporte, Pagamento, Produto, Total,
-    InfoAdicional, DetalhesProduto, Imposto, Icms, Cofins, Pis, IcmsTot, IssqnTot, DetalhePagamento, DetalhePgtoCartao, RetornoContingenciaOffline, ResponsavelTecnico, ServicosSefaz, II, PisST, Ipi, CofinsST, IcmsUfDest, impostoDevol, Configuracoes, Cobranca, Duplicata, NFeBase, NFref
+    InfoAdicional, DetalhesProduto, Imposto, Icms, Cofins, Pis, IcmsTot, IssqnTot, DetalhePagamento, DetalhePgtoCartao, RetornoContingenciaOffline, ResponsavelTecnico, ServicosSefaz, II, PisST, Ipi, CofinsST, IcmsUfDest, impostoDevol, Configuracoes, Cobranca, Duplicata, NFeBase, NFref, Transportadora, Volume, Intermediador
 } from '../interface/nfe';
 
 import { WebServiceHelper } from "../webservices/webserviceHelper";
@@ -328,7 +328,8 @@ export class EnviaProcessor {
         nfe.total = this.getTotal(documento.total);
         nfe.transp = this.getTransp(documento.transporte);
         nfe.cobr = this.getCobr(documento.cobranca);
-        nfe.pag = this.getPag(documento.pagamento);        
+        nfe.pag = this.getPag(documento.pagamento);
+        nfe.infIntermed = this.getIntermediador(documento.intermediador);
         nfe.infAdic = this.getInfoAdic(documento.infoAdicional);
         //nfe.exporta = ;
         //nfe.compra = ;
@@ -1283,26 +1284,41 @@ export class EnviaProcessor {
         }
     }
 
-    private getIcmsTot(icmsTot: IcmsTot) {
-        return icmsTot;
-
-    }
-
     private getTransp(transp: Transporte) {
         return <schema.TNFeInfNFeTransp>{
-            modFrete: transp.modalidateFrete
-            /**
-             * transporta: TNFeInfNFeTranspTransporta;
-                retTransp: TNFeInfNFeTranspRetTransp;
-                //balsa
-                //reboque
-                //vagao
-                //veicTransp
-                items: object[];
-                itemsElementName: ItemsChoiceType5[];
-                vol: TNFeInfNFeTranspVol[];
-            */
+            modFrete: transp.modalidateFrete,
+            transporta: this.getTransportadora(transp.transportadora),
+            vol: this.getVolumes(transp.volumes)
         }
+    }
+
+    private getTransportadora(transportadora: Transportadora) {
+        if (!transportadora) return null;
+
+        const tagCNPJ = transportadora.documento.length === 14;
+
+        return <schema.TNFeInfNFeTranspTransporta> {
+            CNPJ: tagCNPJ ? transportadora.documento : null,
+            CPF: !tagCNPJ ? transportadora.documento : null,
+            xNome: transportadora.nome,
+            IE: transportadora.inscricaoEstadual,
+            xEnder: transportadora.enderecoCompleto,
+            xMun: transportadora.municipio,
+            UF: transportadora.uf
+        }
+    }
+
+    private getVolumes(volumes: Volume[]) {
+        return volumes && volumes.length > 0 
+            ? volumes.map(volume => <schema.TNFeInfNFeTranspVol> {
+                qVol: volume.quantidade,
+                esp: volume.especie,
+                marca: volume.marca,
+                nVol: volume.numeracao,
+                pesoL: volume.pesoLiquido,
+                pesoB: volume.pesoBruto,
+            }) 
+            : null;
     }
 
     private getCobr(cobranca: Cobranca) {
@@ -1377,6 +1393,13 @@ export class EnviaProcessor {
             CNPJ: dadosCartao.cnpj,
             tBand: Utils.getEnumByValue(schema.TNFeInfNFePagDetPagCardTBand, dadosCartao.bandeira),
             cAut: dadosCartao.codAutorizacao
+        }
+    }
+
+    private getIntermediador(intermediador: Intermediador) {
+        return <schema.TNFeInfNFeInfIntermed>{
+            CNPJ: intermediador.CNPJ,
+            idCadIntTran: intermediador.identificador,
         }
     }
 

@@ -34,6 +34,7 @@ export interface NFeBase {
     produtos: Produto[];
     total: Total;
     transporte: Transporte;
+    intermediador: Intermediador;
     infoAdicional: InfoAdicional;
 }
 export interface NFeDocumento extends NFeBase {
@@ -70,6 +71,10 @@ export interface DocumentoFiscal {
 }
 export interface NFref {
     refNFe: string;
+}
+export interface Intermediador {
+    CNPJ: string;
+    identificador: string;
 }
 export interface Produto {
     prod: DetalhesProduto;
@@ -297,6 +302,24 @@ export interface RetTrib {
 }
 export interface Transporte {
     modalidateFrete: string;
+    transportadora: Transportadora;
+    volumes: Volume[];
+}
+export interface Transportadora {
+    documento: string;
+    nome: string;
+    inscricaoEstadual: string;
+    enderecoCompleto: string;
+    municipio: string;
+    uf: string;
+}
+export interface Volume {
+    quantidade: string;
+    especie: string;
+    marca: string;
+    numeracao: string;
+    pesoLiquido: string;
+    pesoBruto: string;
 }
 export interface Cobranca {
     fatura: Fatura;

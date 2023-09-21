@@ -14,8 +14,8 @@ let cert = {
 let empresa = {
   razaoSocial: "TESTE",
   nomeFantasia: "TEST",
-  cnpj: "",
-  inscricaoEstadual: "",
+  cnpj: "12345678901234",
+  inscricaoEstadual: "1234567890",
   inscricaoMunicipal: "",
   codRegimeTributario: "3",
   endereco: {
@@ -97,6 +97,29 @@ let dest = {
 
 let transp = {
   modalidateFrete: "9",
+  // transportadora: {
+  //   documento: "12345678901234",
+  //   nome: "TRANSPORTADORA TESTE",
+  //   inscricaoEstadual: "123456789",
+  //   enderecoCompleto: "AV TESTE, 182",
+  //   municipio: "CIDADE DE DEUS",
+  //   uf: "SP",
+  // },
+  // volumes: [
+  //   {
+  //     quantidade: "1",
+  //     especie: "TESTE",
+  //     marca: "TESTE",
+  //     numeracao: "TESTE",
+  //     pesoLiquido: "1.000",
+  //     pesoBruto: "1.000",
+  //   },
+  // ],
+};
+
+let intermediador = {
+  CNPJ: "12345678901234",
+  identificador: "8714928718923",
 };
 
 let infoAdic = {
@@ -203,7 +226,8 @@ let nfce = {
   produtos: produtos,
   total: { icmsTot: icmsTot },
   transporte: transp,
-  pagamento: pagamento,
+  intermediador,
+  pagamento,
   infoAdicional: infoAdic,
 };
 
