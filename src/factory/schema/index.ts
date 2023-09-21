@@ -158,7 +158,7 @@ export interface TNFeInfNFeIde {
     verProc: string;
     dhCont: string;
     xJust: string;
-    nFref: TNFeInfNFeIdeNFref[];
+    NFref: TNFeInfNFeIdeNFref[];
     indIntermed?: TNFeInfNFeIdeIndIntermed;
 }
 

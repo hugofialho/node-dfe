@@ -74,6 +74,11 @@ export interface DocumentoFiscal {
     justificativaContingencia: string;
     isContingenciaOffline: boolean;
     indIntermed?: string;
+    NFref: NFref[];
+}
+
+export interface NFref {
+    refNFe: string;
 }
 
 export interface Produto {
@@ -184,6 +189,7 @@ export interface Icms {
     vBCEfet: string;
     vICMSEfet: string;
 }
+
 export interface IcmsUfDest {
     vBCUFDest: number;
     vBCFCPUFDest: number;

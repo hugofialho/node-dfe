@@ -66,6 +66,10 @@ export interface DocumentoFiscal {
     justificativaContingencia: string;
     isContingenciaOffline: boolean;
     indIntermed?: string;
+    NFref: NFref[];
+}
+export interface NFref {
+    refNFe: string;
 }
 export interface Produto {
     prod: DetalhesProduto;

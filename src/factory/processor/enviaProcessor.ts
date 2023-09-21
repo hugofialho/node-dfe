@@ -1,6 +1,6 @@
 import {
     RetornoProcessamentoNF, Empresa, Endereco, NFCeDocumento, NFeDocumento, DocumentoFiscal, Destinatario, Transporte, Pagamento, Produto, Total,
-    InfoAdicional, DetalhesProduto, Imposto, Icms, Cofins, Pis, IcmsTot, IssqnTot, DetalhePagamento, DetalhePgtoCartao, RetornoContingenciaOffline, ResponsavelTecnico, ServicosSefaz, II, PisST, Ipi, CofinsST, IcmsUfDest, impostoDevol, Configuracoes, Cobranca, Duplicata, NFeBase
+    InfoAdicional, DetalhesProduto, Imposto, Icms, Cofins, Pis, IcmsTot, IssqnTot, DetalhePagamento, DetalhePgtoCartao, RetornoContingenciaOffline, ResponsavelTecnico, ServicosSefaz, II, PisST, Ipi, CofinsST, IcmsUfDest, impostoDevol, Configuracoes, Cobranca, Duplicata, NFeBase, NFref
 } from '../interface/nfe';
 
 import { WebServiceHelper } from "../webservices/webserviceHelper";
@@ -387,7 +387,7 @@ export class EnviaProcessor {
             verProc: documento.versaoAplicativoEmissao,
             dhCont: documento.dhContingencia,
             xJust: documento.justificativaContingencia,
-            //nFref: schema.TNFeInfNFeIdeNFref[],
+            NFref: this.getNFref(documento.NFref),
         };
 
         if (documento.indIntermed) {
@@ -395,6 +395,14 @@ export class EnviaProcessor {
         }
 
         return ide;
+    }
+
+    private getNFref(NFref: NFref[]) {
+        return NFref && NFref.length > 0 
+            ? NFref.map(ref => <schema.TNFeInfNFeIdeNFref> {
+                refNFe: ref.refNFe
+            }) 
+            : null;
     }
 
     private getEmit(empresa: Empresa) {
