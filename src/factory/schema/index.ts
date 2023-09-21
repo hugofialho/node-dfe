@@ -1474,8 +1474,8 @@ export interface TIpi {
     cSelo: string;
     qSelo: string;
     cEnq: string;
-    //IPINT
-    IPITrib: TIpiIPITrib
+    IPINT: TIpiIPINT;
+    IPITrib: TIpiIPITrib;
     item: object;
 }
 

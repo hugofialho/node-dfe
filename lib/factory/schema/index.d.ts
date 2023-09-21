@@ -1136,6 +1136,7 @@ export interface TIpi {
     cSelo: string;
     qSelo: string;
     cEnq: string;
+    IPINT: TIpiIPINT;
     IPITrib: TIpiIPITrib;
     item: object;
 }

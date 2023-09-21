@@ -949,23 +949,45 @@ export class EnviaProcessor {
             cEnq: ipi.cEnq || '999',
         }
 
-        if (ipi.qUnid + ipi.vUnid > 0) {
-            result.IPITrib = <schema.TIpiIPITrib>{
-                CST: ipi.CST,
-                qUnid: ipi.qUnid,
-                vUnid: ipi.vUnid,
-                vIPI: ipi.vIPI,
-            }
-        } else {
-            result.IPITrib = <schema.TIpiIPITrib>{
-                CST: ipi.CST,
-                vBC: ipi.vBC,
-                pIPI: ipi.pIPI,
-                vIPI: ipi.vIPI,
-            }
+        switch (ipi.CST) {
+            case "00":
+            case "49":
+            case "50":
+            case "99":
+                if (ipi.qUnid + ipi.vUnid > 0) {
+                    result.IPITrib = <schema.TIpiIPITrib>{
+                        CST: ipi.CST,
+                        qUnid: ipi.qUnid,
+                        vUnid: ipi.vUnid,
+                        vIPI: ipi.vIPI,
+                    }
+                } else {
+                    result.IPITrib = <schema.TIpiIPITrib>{
+                        CST: ipi.CST,
+                        vBC: ipi.vBC,
+                        pIPI: ipi.pIPI,
+                        vIPI: ipi.vIPI,
+                    }
+                }
+                break;
+
+            case "01":
+            case "02":
+            case "03":
+            case "04":
+            case "05":
+            case "51":
+            case "52":
+            case "53":
+            case "54":
+            case "55":
+                result.IPINT = <schema.TIpiIPINT>{ CST: ipi.CST }
+                break;
+
+            default:
+                throw `PIS CST ${ipi.CST} não suportado.`
         }
 
-        // result.IPI.IPINT = { CST: ipi.CST }
         return result;
     }
 
