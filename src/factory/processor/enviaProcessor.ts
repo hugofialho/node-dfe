@@ -15,10 +15,6 @@ import * as path from 'path';
 
 const sha1 = require('sha1');
 
-let soapAutorizacao: any = null;
-let soapRetAutorizacao: any = null;
-
-
 function log(msg: string, processo?: string) {
     console.log(`[node-dfe][${processo || 'log'}]->${msg}`);
 }
@@ -43,6 +39,8 @@ function jsonOneLevel(obj: any): string {
  */
 export class EnviaProcessor {
 
+    private soapAutorizacao: any = null;
+
     constructor(
         private configuracoes: Configuracoes
     ) {
@@ -57,7 +55,7 @@ export class EnviaProcessor {
                 this.configuracoes.arquivos.pastaRetorno = this.configuracoes.arquivos.pastaRetorno + path.sep;
             if (this.configuracoes.arquivos.pastaXML && (!'/\\'.includes(this.configuracoes.arquivos.pastaXML.substr(-1))))
                 this.configuracoes.arquivos.pastaXML = this.configuracoes.arquivos.pastaXML + path.sep;
-        }
+        }        
     }
 
     /**
@@ -100,12 +98,8 @@ export class EnviaProcessor {
 
     private configuraUrlsSefaz() {
         const { geral: { modelo, ambiente }, empresa } = this.configuracoes;
-        if (!soapAutorizacao || !soapRetAutorizacao) {
-            let Sefaz = modelo == '65' ? SefazNFCe : SefazNFe;
-
-            soapAutorizacao = Sefaz.getSoapInfo(empresa.endereco.uf, ambiente, ServicosSefaz.autorizacao);
-            soapRetAutorizacao = Sefaz.getSoapInfo(empresa.endereco.uf, ambiente, ServicosSefaz.retAutorizacao);
-        }
+        let Sefaz = modelo == '65' ? SefazNFCe : SefazNFe;
+        this.soapAutorizacao = Sefaz.getSoapInfo(empresa.endereco.uf, ambiente, ServicosSefaz.autorizacao);
     }
 
     private appendQRCodeXML(documento: NFCeDocumento, xmlAssinado: string) {
@@ -120,14 +114,14 @@ export class EnviaProcessor {
             let valorTotal = documento.total.icmsTot.vNF;
             let digestValue = Object(xmlAssinadoObj).NFe.Signature.SignedInfo.Reference.DigestValue;
 
-            qrCode = this.gerarQRCodeNFCeOffline(soapAutorizacao.urlQRCode, chave, '2', documento.docFiscal.ambiente, diaEmissao, valorTotal, digestValue, this.configuracoes.empresa.idCSC, this.configuracoes.empresa.CSC);
+            qrCode = this.gerarQRCodeNFCeOffline(this.soapAutorizacao.urlQRCode, chave, '2', documento.docFiscal.ambiente, diaEmissao, valorTotal, digestValue, this.configuracoes.empresa.idCSC, this.configuracoes.empresa.CSC);
         } else {
-            qrCode = this.gerarQRCodeNFCeOnline(soapAutorizacao.urlQRCode, chave, '2', documento.docFiscal.ambiente, this.configuracoes.empresa.idCSC, this.configuracoes.empresa.CSC);
+            qrCode = this.gerarQRCodeNFCeOnline(this.soapAutorizacao.urlQRCode, chave, '2', documento.docFiscal.ambiente, this.configuracoes.empresa.idCSC, this.configuracoes.empresa.CSC);
         }
 
         let qrCodeObj = <schema.TNFeInfNFeSupl>{
             qrCode: '<' + qrCode + '>',
-            urlChave: soapAutorizacao.urlChave
+            urlChave: this.soapAutorizacao.urlChave
         };
 
         let qrCodeXml = XmlHelper.serializeXml(qrCodeObj, 'infNFeSupl').replace('>]]>', ']]>').replace('<![CDATA[<', '<![CDATA[');
@@ -201,7 +195,7 @@ export class EnviaProcessor {
         const { webProxy, certificado } = this.configuracoes
 
         return await WebServiceHelper.makeSoapRequest(
-            xml, certificado, soapAutorizacao, webProxy
+            xml, certificado, this.soapAutorizacao, webProxy
         );
     }
 
