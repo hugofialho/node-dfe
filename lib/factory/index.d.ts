@@ -3,5 +3,5 @@ export { RetornoProcessor } from './processor/retornoProcessor';
 export { StatusServicoProcessor } from './processor/statusServicoProcessor';
 export { EventoProcessor } from './processor/eventoProcessor';
 export { InutilizaProcessor } from './processor/inutilizaProcessor';
-export { DanfeProcessor } from './processor/danfe/danfeProcessor';
+export { DanfeProcessor } from './processor/danfeProcessor';
 export * from './interface';

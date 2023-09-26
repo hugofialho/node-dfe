@@ -48,6 +48,7 @@ export interface DocumentoFiscal {
     serie: string;
     modelo: string;
     numeroNota: string;
+    codigoNumerico: string;
     naturezaOperacao: string;
     ambiente: string;
     dhEmissao: string;

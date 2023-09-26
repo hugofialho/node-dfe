@@ -1,13 +1,14 @@
-import { TNfeProc } from "../../schema";
+import { TNfeProc } from "../schema";
 /**
  * Classe para processamento do DANFE em PDF
  */
 export declare class DanfeProcessor {
     constructor();
-    xmlStringToPdf(xml: string): Promise<string>;
+    xmlStringToPdf(xml: string, emitenteImageUrl: string): Promise<string>;
     renderHtml(data: any): string;
-    getTemplateData(nfeProc: TNfeProc): {
-        operacao: import("../../schema").TNFeInfNFeIdeTpNF;
+    getTemplateData(nfeProc: TNfeProc, emitenteImageUrl: string): {
+        emitenteImageUrl: string;
+        operacao: import("../schema").TNFeInfNFeIdeTpNF;
         natureza: string;
         numero: string;
         serie: string;
@@ -26,7 +27,7 @@ export declare class DanfeProcessor {
             complemento: string;
             bairro: string;
             municipio: string;
-            uf: import("../../schema").TUfEmi;
+            uf: import("../schema").TUfEmi;
             cep: string;
             telefone: string;
         };
@@ -39,12 +40,13 @@ export declare class DanfeProcessor {
             complemento: string;
             bairro: string;
             municipio: string;
-            uf: import("../../schema").TUf;
+            uf: import("../schema").TUf;
             cep: string;
             telefone: string;
         };
         data_emissao: string;
         data_saida: string;
+        hora_saida: string;
         base_calculo_icms: string;
         imposto_icms: string;
         base_calculo_icms_st: string;
@@ -62,7 +64,7 @@ export declare class DanfeProcessor {
             inscricao_nacional: string;
             endereco: string;
             municipio: string;
-            uf: import("../../schema").TUf;
+            uf: import("../schema").TUf;
             ie: string;
         } | null;
         volume: {
@@ -73,7 +75,10 @@ export declare class DanfeProcessor {
             pesoBruto: string;
             pesoLiquido: string;
         } | null;
-        modalidade_frete: import("../../schema").TNFeInfNFeTranspModFrete;
+        informacoes_fisco: string;
+        informacoes_complementares: string;
+        modalidade_frete: import("../schema").TNFeInfNFeTranspModFrete;
+        modalidade_frete_texto: string;
         itens: {
             codigo: string;
             descricao: string;
@@ -84,12 +89,19 @@ export declare class DanfeProcessor {
             quantidade: string;
             valor: string;
             total: string;
-            base_calculo: any;
-            icms: any;
-            porcentagem_icms: any;
-            ipi: any;
-            porcentagem_ipi: any;
+            base_calculo: string;
+            icms: string;
+            porcentagem_icms: string;
+            ipi: string;
+            porcentagem_ipi: string;
+            informacoes_produto: string;
         }[];
+        exibe_ipi: boolean;
+        duplicatas: {
+            numero: string;
+            vencimento: string;
+            valor: string;
+        }[] | null;
     };
     getEmitente(nfeProc: TNfeProc): {
         inscricao_nacional: string;
@@ -102,7 +114,7 @@ export declare class DanfeProcessor {
         complemento: string;
         bairro: string;
         municipio: string;
-        uf: import("../../schema").TUfEmi;
+        uf: import("../schema").TUfEmi;
         cep: string;
         telefone: string;
     };
@@ -115,7 +127,7 @@ export declare class DanfeProcessor {
         complemento: string;
         bairro: string;
         municipio: string;
-        uf: import("../../schema").TUf;
+        uf: import("../schema").TUf;
         cep: string;
         telefone: string;
     };
@@ -124,7 +136,7 @@ export declare class DanfeProcessor {
         inscricao_nacional: string;
         endereco: string;
         municipio: string;
-        uf: import("../../schema").TUf;
+        uf: import("../schema").TUf;
         ie: string;
     } | null;
     getVolume(nfeProc: TNfeProc): {
@@ -145,11 +157,18 @@ export declare class DanfeProcessor {
         quantidade: string;
         valor: string;
         total: string;
-        base_calculo: any;
-        icms: any;
-        porcentagem_icms: any;
-        ipi: any;
-        porcentagem_ipi: any;
+        base_calculo: string;
+        icms: string;
+        porcentagem_icms: string;
+        ipi: string;
+        porcentagem_ipi: string;
+        informacoes_produto: string;
     }[];
+    getExibeIPI(nfeProc: TNfeProc): boolean;
+    getDuplicatas(nfeProc: TNfeProc): {
+        numero: string;
+        vencimento: string;
+        valor: string;
+    }[] | null;
     getValueByTag(theObject: any, tag: string): any;
 }
