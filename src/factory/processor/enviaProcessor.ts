@@ -255,7 +255,9 @@ export class EnviaProcessor {
         chave += (docFiscal.numeroNota.toString().padStart(9, '0'));
         chave += (docFiscal.tipoEmissao);
 
-        let cnf = (Utils.randomInt(10000000, 99999999)).toString();
+        let cnf = docFiscal.codigoNumerico 
+            ? docFiscal.codigoNumerico 
+            : (Utils.randomInt(10000000, 99999999)).toString();
         chave += cnf;
 
         let digitoVerificador = this.obterDigitoVerificador(chave);
