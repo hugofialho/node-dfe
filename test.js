@@ -344,10 +344,19 @@ function testHashRespTec() {
   );
 }
 
+async function testeDANFE() {
+  const xml = fs.readFileSync("31230506540713000124550010000257061560604128.xml", "utf8");
+  const danfeProcessor = new lib.DanfeProcessor();
+  const html = await danfeProcessor.xmlStringToPdf(xml);
+  fs.writeFileSync('danfe.html', html);
+}
+
+testeDANFE();
+
 //testeAssinaturaXML();
 // testeConsultaStatusServico(empresa, "2", "65");
 //testeDesereliaze();
-testeEmissaoNFCe();
+// testeEmissaoNFCe();
 //testeEmissaoNFCeContingenciaOffline(empresa);
 //testeQRcodeNFCe();
 //testHashRespTec();

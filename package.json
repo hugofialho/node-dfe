@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/lealhugui/node-dfe#readme",
   "dependencies": {
+    "handlebars": "^4.7.8",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "node-fetch": "^2.6.7",
