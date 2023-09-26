@@ -4,6 +4,7 @@ import { RetornoProcessamentoNF, Configuracoes, NFeBase } from '../interface/nfe
  */
 export declare class EnviaProcessor {
     private configuracoes;
+    private soapAutorizacao;
     constructor(configuracoes: Configuracoes);
     /**
      * Metodo para realizar o processamento de documento(s) do tipo 55 ou 65
