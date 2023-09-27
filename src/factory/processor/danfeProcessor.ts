@@ -16,32 +16,18 @@ import * as path from "path";
 const TEMPLATE_DANFE = path.join(__dirname, "..", "templates/danfe.hbs");
 
 /**
- * Classe para processamento do DANFE em PDF
+ * Classe para processamento do DANFE em HTML
  */
 export class DanfeProcessor {
   constructor() {}
 
-  async xmlStringToPdf(xml: string, emitenteImageUrl: string) {
+  async xmlStringToHtml(xml: string, emitenteImageUrl: string) {
     const xmlAsJson: any = XmlHelper.deserializeXml(xml);
     const nfeProc: TNfeProc = xmlAsJson.nfeProc;
-    const templateData = this.getTemplateData(nfeProc, emitenteImageUrl);
-    const html = this.renderHtml(templateData);
-    return html;
-  }
-
-  renderHtml(data: any) {
-    handlebars.registerHelper(
-      "ifCond",
-      function (v1: any, v2: any, options: any) {
-        if (v1.length > v2) {
-          return options.fn();
-        }
-        return options.inverse();
-      }
-    );
-
     const template = fs.readFileSync(TEMPLATE_DANFE, "utf8");
-    return handlebars.compile(template)(data);
+    const templateData = this.getTemplateData(nfeProc, emitenteImageUrl);
+    const html = handlebars.compile(template)(templateData);
+    return html;
   }
 
   getTemplateData(nfeProc: TNfeProc, emitenteImageUrl: string) {

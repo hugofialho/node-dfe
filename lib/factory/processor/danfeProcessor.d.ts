@@ -1,11 +1,10 @@
 import { TNfeProc } from "../schema";
 /**
- * Classe para processamento do DANFE em PDF
+ * Classe para processamento do DANFE em HTML
  */
 export declare class DanfeProcessor {
     constructor();
-    xmlStringToPdf(xml: string, emitenteImageUrl: string): Promise<string>;
-    renderHtml(data: any): string;
+    xmlStringToHtml(xml: string, emitenteImageUrl: string): Promise<string>;
     getTemplateData(nfeProc: TNfeProc, emitenteImageUrl: string): {
         emitenteImageUrl: string;
         operacao: import("../schema").TNFeInfNFeIdeTpNF;

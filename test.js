@@ -350,7 +350,7 @@ async function testeDANFE() {
     "utf8"
   );
   const danfeProcessor = new lib.DanfeProcessor();
-  const html = await danfeProcessor.xmlStringToPdf(
+  const html = await danfeProcessor.xmlStringToHtml(
     xml,
     `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`
   );
