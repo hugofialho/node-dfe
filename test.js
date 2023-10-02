@@ -345,16 +345,27 @@ function testHashRespTec() {
 }
 
 async function testeDANFE() {
+  const danfeProcessor = new lib.DanfeProcessor();
+
   const xml = fs.readFileSync(
     "31230506540713000124550010000257061560604128.xml",
     "utf8"
   );
-  const danfeProcessor = new lib.DanfeProcessor();
   const html = await danfeProcessor.xmlStringToHtml(
     xml,
     `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`
   );
-  fs.writeFileSync("danfe.html", html);
+  fs.writeFileSync("31230506540713000124550010000257061560604128.html", html);
+
+  const xml2 = fs.readFileSync(
+    "35230902500781000109550010000008931965267338.xml",
+    "utf8"
+  );
+  const html2 = await danfeProcessor.xmlStringToHtml(
+    xml,
+    `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`
+  );
+  fs.writeFileSync("35230902500781000109550010000008931965267338.html", html);
 }
 
 testeDANFE();

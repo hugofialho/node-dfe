@@ -1,4 +1,5 @@
 export function mascaraCPF(cpf: string) {
+  if (!cpf) return "";
   return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
 
@@ -9,6 +10,7 @@ export function mascaraCPF(cpf: string) {
  * @return     {string}
  */
 export function mascaraCNPJ(cnpj: string) {
+  if (!cnpj) return "";
   return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
 }
 
@@ -19,15 +21,13 @@ export function mascaraCNPJ(cnpj: string) {
  * @return     {string}
  */
 export function formataInscricaoNacional(numero: string) {
-  if (numero) {
-    if (numero.length === 11) {
-      return mascaraCPF(numero);
-    }
-    if (numero.length === 14) {
-      return mascaraCNPJ(numero);
-    }
+  if (!numero) return "";
+  if (numero.length === 11) {
+    return mascaraCPF(numero);
   }
-  return numero;
+  if (numero.length === 14) {
+    return mascaraCNPJ(numero);
+  }
 }
 
 export function formataTelefone(telefone: string) {
@@ -40,7 +40,6 @@ export function formataTelefone(telefone: string) {
 
 export function formataCEP(cep: string) {
   if (!cep) return "";
-
   return cep.replace(/(\d{5})(\d{3})/, "$1-$2");
 }
 
@@ -48,18 +47,20 @@ export function formataCEP(cep: string) {
  * Formata data de acordo com <dt> esoecificado.
  * <dt> é no formato UTC, YYYY-MM-DDThh:mm:ssTZD (https://www.w3.org/TR/NOTE-datetime)
  *
- * @param      {string}  dt 2022-11-03T16:20:52-03:00
+ * @param      {string}  data 2022-11-03T16:20:52-03:00
  * @return     {string}
  */
-export function formataData(dt: string) {
-  var [ano, mes, dia] = dt.substring(0, 10).split("-");
+export function formataData(data: string) {
+  if (!data) return "";
+  var [ano, mes, dia] = data.substring(0, 10).split("-");
   return (
     dia.padStart(2, "0") + "/" + mes.toString().padStart(2, "0") + "/" + ano
   );
 }
 
-export function formataHora(dt: string) {
-  return dt.substring(11, 19);
+export function formataHora(data: string) {
+  if (!data) return "";
+  return data.substring(11, 19);
 }
 
 /**
@@ -70,11 +71,10 @@ export function formataHora(dt: string) {
  * @return     {string}
  */
 export function formataMoeda(numero: string, decimais: number) {
-  return numero
-    ? parseFloat(numero).toLocaleString("pt-br", {
-        minimumFractionDigits: decimais,
-      })
-    : "";
+  if (!numero) return "";
+  return parseFloat(numero).toLocaleString("pt-br", {
+    minimumFractionDigits: decimais,
+  });
 }
 
 /**

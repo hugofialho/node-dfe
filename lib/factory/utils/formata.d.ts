@@ -12,18 +12,18 @@ export declare function mascaraCNPJ(cnpj: string): string;
  * @param      {string}  numero
  * @return     {string}
  */
-export declare function formataInscricaoNacional(numero: string): string;
+export declare function formataInscricaoNacional(numero: string): string | undefined;
 export declare function formataTelefone(telefone: string): string;
 export declare function formataCEP(cep: string): string;
 /**
  * Formata data de acordo com <dt> esoecificado.
  * <dt> é no formato UTC, YYYY-MM-DDThh:mm:ssTZD (https://www.w3.org/TR/NOTE-datetime)
  *
- * @param      {string}  dt 2022-11-03T16:20:52-03:00
+ * @param      {string}  data 2022-11-03T16:20:52-03:00
  * @return     {string}
  */
-export declare function formataData(dt: string): string;
-export declare function formataHora(dt: string): string;
+export declare function formataData(data: string): string;
+export declare function formataHora(data: string): string;
 /**
  * Retorna o valor formatado em moeda de acordo com  <numero>  e <decimais> especificados.
  *

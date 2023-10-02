@@ -16,7 +16,7 @@ export declare class DanfeProcessor {
         protocolo: string;
         data_protocolo: string;
         emitente: {
-            inscricao_nacional: string;
+            inscricao_nacional: string | undefined;
             ie: string;
             ie_st: string;
             nome: string;
@@ -31,7 +31,7 @@ export declare class DanfeProcessor {
             telefone: string;
         };
         destinatario: {
-            inscricao_nacional: string;
+            inscricao_nacional: string | undefined;
             ie: string;
             nome: string;
             endereco: string;
@@ -103,7 +103,7 @@ export declare class DanfeProcessor {
         }[] | null;
     };
     getEmitente(nfeProc: TNfeProc): {
-        inscricao_nacional: string;
+        inscricao_nacional: string | undefined;
         ie: string;
         ie_st: string;
         nome: string;
@@ -118,7 +118,7 @@ export declare class DanfeProcessor {
         telefone: string;
     };
     getDestinatario(nfeProc: TNfeProc): {
-        inscricao_nacional: string;
+        inscricao_nacional: string | undefined;
         ie: string;
         nome: string;
         endereco: string;
