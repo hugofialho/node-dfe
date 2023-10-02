@@ -151,7 +151,9 @@ export class DanfeProcessor {
   }
 
   getItens(nfeProc: TNfeProc) {
-    return nfeProc.NFe.infNFe.det.map((i) => ({
+    const det = nfeProc.NFe.infNFe.det;
+    const dets = det instanceof Array ? det : [det];
+    return dets.map((i) => ({
       codigo: i.prod.cProd,
       descricao: i.prod.xProd,
       ncm: i.prod.NCM,
@@ -179,7 +181,9 @@ export class DanfeProcessor {
   }
 
   getExibeIPI(nfeProc: TNfeProc) {
-    return nfeProc.NFe.infNFe.det
+    const det = nfeProc.NFe.infNFe.det;
+    const dets = det instanceof Array ? det : [det];
+    return dets
       .map((i) => !!this.getValueByTag(i.imposto.IPI, "vIPI"))
       .reduce((oculta, vIPI) => oculta || vIPI, false);
   }

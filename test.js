@@ -361,11 +361,8 @@ async function testeDANFE() {
     "35230902500781000109550010000008931965267338.xml",
     "utf8"
   );
-  const html2 = await danfeProcessor.xmlStringToHtml(
-    xml,
-    `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`
-  );
-  fs.writeFileSync("35230902500781000109550010000008931965267338.html", html);
+  const html2 = await danfeProcessor.xmlStringToHtml(xml2);
+  fs.writeFileSync("35230902500781000109550010000008931965267338.html", html2);
 }
 
 testeDANFE();
