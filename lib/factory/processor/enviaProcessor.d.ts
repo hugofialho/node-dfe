@@ -1,4 +1,4 @@
-import { RetornoProcessamentoNF, Configuracoes, NFeBase } from '../interface/nfe';
+import { RetornoProcessamentoNF, Configuracoes, NFeBase } from "../interface/nfe";
 /**
  * Classe para processamento de NFe/NFCe
  */
