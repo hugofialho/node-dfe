@@ -50,24 +50,6 @@ import * as path from "path";
 
 const sha1 = require("sha1");
 
-function log(msg: string, processo?: string) {
-  console.log(`[node-dfe][${processo || "log"}]->${msg}`);
-}
-
-function jsonOneLevel(obj: any): string {
-  const result: any = {};
-
-  for (const k of Object.keys(obj)) {
-    let logStr = obj[k].toString() || "null";
-    if (logStr.length > 500) {
-      logStr = logStr.substring(0, 499);
-    }
-    result[k] = logStr;
-  }
-
-  return JSON.stringify(result);
-}
-
 /**
  * Classe para processamento de NFe/NFCe
  */
@@ -243,20 +225,20 @@ export class EnviaProcessor {
 
       let retornoEnvio = await this.enviarNF(xmlLote);
 
-      try {
-        log(
-          jsonOneLevel({
-            success: !!retornoEnvio ? retornoEnvio.success : false,
-            retornoEnvio: !!retornoEnvio,
-            data: !retornoEnvio ? false : !!retornoEnvio.data,
-          }),
-          "retornoEnvio.exists"
-        );
+      // try {
+      //   log(
+      //     jsonOneLevel({
+      //       success: !!retornoEnvio ? retornoEnvio.success : false,
+      //       retornoEnvio: !!retornoEnvio,
+      //       data: !retornoEnvio ? false : !!retornoEnvio.data,
+      //     }),
+      //     "retornoEnvio.exists"
+      //   );
 
-        log(jsonOneLevel(retornoEnvio), "retornoEnvio.full");
-      } catch (e: any) {
-        log(`ja deu erro pra logar.......${e.toString()}`, "retornoEnvio");
-      }
+      //   log(jsonOneLevel(retornoEnvio), "retornoEnvio.full");
+      // } catch (e: any) {
+      //   log(`ja deu erro pra logar.......${e.toString()}`, "retornoEnvio");
+      // }
 
       if (retornoEnvio && retornoEnvio.data) {
         const data = Object(retornoEnvio.data);
