@@ -46,7 +46,9 @@ import * as Utils from "../utils/utils";
 import { Signature } from "../signature";
 import { SefazNFCe } from "../webservices/sefazNfce";
 import { SefazNFe } from "../webservices/sefazNfe";
+import * as fs from "fs";
 import * as path from "path";
+import * as libxmljs from "libxmljs";
 
 const sha1 = require("sha1");
 
@@ -55,6 +57,7 @@ const sha1 = require("sha1");
  */
 export class EnviaProcessor {
   private soapAutorizacao: any = null;
+  private schemaXsdLote: any = null;
 
   constructor(private configuracoes: Configuracoes) {
     if (!this.configuracoes.geral.versao)
@@ -119,6 +122,20 @@ export class EnviaProcessor {
       }
 
       let xmlLote = this.gerarXmlLote(xmlAssinado, assincrono);
+
+      // valida xml lote <<<<<
+      if (this.schemaXsdLote === null) {
+        const pathXsd = path.join(__dirname, "..", "xsd/enviNFe_v4.00.xsd");
+        const nfeProcXsd = fs.readFileSync(pathXsd, "utf8");
+        process.chdir(path.dirname(pathXsd));
+        this.schemaXsdLote = libxmljs.parseXml(nfeProcXsd);
+      }
+
+      const xmlToValidate = libxmljs.parseXml(xmlLote);
+      const valid = xmlToValidate.validate(this.schemaXsdLote);
+      if (!valid) {
+        throw new Error(xmlToValidate.validationErrors.join('\r\n'));
+      }
 
       if (
         documento.docFiscal.modelo == "65" &&

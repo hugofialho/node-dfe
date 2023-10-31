@@ -3,6 +3,7 @@ const lib = require("./lib");
 const signUtils = require("./lib/factory/signature");
 const XmlHelper = require("./lib/factory/xmlHelper");
 const path = require("path");
+const libxmljs = require("libxmljs");
 
 let cert = {
   pfx: fs.readFileSync("certificado/certificado.pfx"),
@@ -365,12 +366,35 @@ async function testeDANFE() {
   fs.writeFileSync("35230902500781000109550010000008931965267338.html", html2);
 }
 
-testeDANFE();
+async function testeValidate() {
+  const nfeProcXml = fs.readFileSync(
+    "31230506540713000124550010000257061560604128.xml",
+    "utf8"
+  );
+
+  const pathXsd = __dirname + "/src/factory/xsd/procNFe_v4.00.xsd";
+  const nfeProcXsd = fs.readFileSync(pathXsd, "utf8");
+
+  process.chdir(path.dirname(pathXsd)); // This seems undesirable...
+
+  const schema = libxmljs.parseXml(nfeProcXsd);
+  const doc = libxmljs.parseXml(nfeProcXml);
+  const valid = doc.validate(schema);
+  if (valid) {
+    console.log("XML is valid!!");
+  } else {
+    console.error("XML did not validate against XSD schema!", {
+      errors: doc.validationErrors,
+    });
+  }
+}
+
+// testeValidate();
 
 //testeAssinaturaXML();
 // testeConsultaStatusServico(empresa, "2", "65");
 //testeDesereliaze();
-// testeEmissaoNFCe();
+testeEmissaoNFCe();
 //testeEmissaoNFCeContingenciaOffline(empresa);
 //testeQRcodeNFCe();
 //testHashRespTec();
