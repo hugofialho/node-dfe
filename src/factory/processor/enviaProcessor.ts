@@ -123,7 +123,6 @@ export class EnviaProcessor {
 
       let xmlLote = this.gerarXmlLote(xmlAssinado, assincrono);
 
-      // valida xml lote <<<<<
       if (this.schemaXsdLote === null) {
         const pathXsd = path.join(__dirname, "..", "xsd/enviNFe_v4.00.xsd");
         const nfeProcXsd = fs.readFileSync(pathXsd, "utf8");
@@ -134,7 +133,12 @@ export class EnviaProcessor {
       const xmlToValidate = libxmljs.parseXml(xmlLote);
       const valid = xmlToValidate.validate(this.schemaXsdLote);
       if (!valid) {
-        throw new Error(xmlToValidate.validationErrors.join('\r\n'));
+        throw new Error(
+          "Erro de validação do XML:\r\n" +
+            xmlToValidate.validationErrors
+              .map((e) => e.message.replace("Error: ", ""))
+              .join("\r\n")
+        );
       }
 
       if (

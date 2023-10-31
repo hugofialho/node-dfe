@@ -159,7 +159,7 @@ for (let i = 1; i <= 1; i++) {
     imposto: {
       valorAproximadoTributos: 0,
       icms: {
-        CST: "00",
+        CST: "70",
         orig: "0",
         modBC: "3",
         vBC: "629.90",
@@ -167,9 +167,9 @@ for (let i = 1; i <= 1; i++) {
         pICMS: "18.00",
         aliquota: "0.00",
         valor: "0.00",
-        vBCST: "0.00",
-        valorST: "0.00",
-        aliquotaST: "0.00",
+        // vBCST: "0.00",
+        // valorST: "0.00",
+        // aliquotaST: "0.00",
         percentualReducaoBaseCalc: "0.00",
       },
     },
@@ -256,8 +256,8 @@ async function testeEmissaoNFCe() {
   const fin = new Date();
   console.log(`${(fin.getTime() - ini.getTime()) / 1000}s`);
 
-  result = require("util").inspect(result, false, null);
-  console.log("Resultado Emissão NFC-e: \n\n" + result);
+  // result = require("util").inspect(result, false, null);
+  console.log("Resultado Emissão NFC-e: \n\n" + result.error.message);
 }
 
 async function testeEmissaoNFCeAsync(empresa) {
@@ -392,7 +392,7 @@ async function testeValidate() {
 // testeValidate();
 
 //testeAssinaturaXML();
-// testeConsultaStatusServico(empresa, "2", "65");
+//testeConsultaStatusServico(empresa, "2", "65");
 //testeDesereliaze();
 testeEmissaoNFCe();
 //testeEmissaoNFCeContingenciaOffline(empresa);
