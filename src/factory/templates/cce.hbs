@@ -8,22 +8,27 @@
 </head>
 <style>
 
-
   body {
     padding: 0;
     margin: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
+    width: 100vw;
+    height: 100vh;
   }
 
   span {
     font-size: 14px;
   }
+
+  .cce-container {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    max-width: 960px;
+  }
   
   .container {
-    max-width: 980px;
+    width: 100%;
     height: 100%;
     padding: 24px;
     display: flex;
@@ -58,7 +63,7 @@
   }
 
   .emitter-info-container {
-    flex: 1;
+    width: 100%;
     padding: 8px 16px;
     border: 2px solid black;
     border-bottom: none;
@@ -97,6 +102,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 24px;
   }
 
   .cce-keys-container-top-area {
@@ -224,6 +230,7 @@
 
 </style>
 <body>
+  <div class="cce-container">
     <div class="container">
       <div class="main-container">
         <div class="cce-info-area">
@@ -302,12 +309,13 @@ ou de saida.</span>
       </div>
       <span class="cce-legal-information-text">Este documento é uma representação gráfica da CCe e foi impresso apenas para sua informação e não possue validade fiscal. A CCe deve ser recebida e mantida em arquivo eletrônico XML e pode ser consultada através dos Portais das SEFAZ.</span>
     </div>
+  </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/JsBarcode.all.min.js">
 
 </script>
 <script>
-  JsBarcode("#barcode", "{{ chaveAcesso }}", { displayValue: false, height: 36, width: 1.6 })
+  JsBarcode("#barcode", "{{ chaveAcesso }}", { displayValue: false, height: 36, width: 1.2 })
 </script>
 
 </html>

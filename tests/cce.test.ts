@@ -1,74 +1,76 @@
 import { readFileSync, writeFileSync } from "fs";
-import { CCeProcessor } from "../src/factory/processor/cceProcessor";
 import { CCeXml } from "../src/factory/interface/cce";
-import { TNFe, TNfeProc, TUf } from "../src/factory/schema";
-import { template } from "handlebars";
+import { CCeProcessor } from "../src/factory/processor/cceProcessor";
+import { TNfeProc } from "../src/factory/schema";
 describe("Test coverage for the 'Carta de Correção' module", () => {
-  const cceXml = readFileSync("./assets/cce-example.xml", "utf8");
-  const nfeXml = readFileSync("./assets/nfe-example.xml", "utf-8");
+  const cceXml = readFileSync("tests/assets/cce-example.xml", "utf8");
+  const nfeXml = readFileSync("tests/assets/nfe-example.xml", "utf-8");
   const cceProcessor = new CCeProcessor();
 
-  it("should correctly format the template data", () => {
-    const mockCCeXmlObject: CCeXml = {
-      procEventoNFe: {
-        evento: {
-          infEvento: {
-            chNFe: "",
-            CNPJ: "00000000000000",
-            cOrgao: "1",
-            detEvento: {
-              descEvento: "Carta de Correcao",
-              xCorrecao:
-                "No Item 3 Onde esta Serie 000214624-02 leia-se Serie 000214618-56",
-              xCondUso: "",
-            },
-            dhEvento: "2023-11-02T10:46:22-03:00",
-            nSeqEvento: "1",
-            tpAmb: "1",
-            tpEvento: "110110",
-            verEvento: "1.00",
+  const mockCCeXmlObject: CCeXml = {
+    procEventoNFe: {
+      evento: {
+        infEvento: {
+          chNFe: "",
+          CNPJ: "00.000.000/0000-00",
+          cOrgao: "1",
+          detEvento: {
+            descEvento: "Carta de Correcao",
+            xCorrecao:
+              "No Item 3 Onde esta Serie 000214624-02 leia-se Serie 000214618-56",
+            xCondUso: "",
           },
-        },
-        retEvento: {
-          infEvento: {
-            CNPJDest: "00000000000000",
-            chNFe: "35170202500781000109550010000002881000000005",
-            cOrgao: "35",
-            cStat: "135",
-            dhRegEvento: "2023-11-02T10:46:22-03:00",
-            nProt: "135170128223566",
-            nSeqEvento: "1",
-            tpAmb: "1",
-            tpEvento: "110110",
-            verAplic: "SP_EVENTOS_PL_100",
-            xEvento: "Carta de Correção registrada",
-            xMotivo: "Evento registrado e vinculado a NF-e",
-          },
+          dhEvento: "2023-11-02T10:46:22-03:00",
+          nSeqEvento: "1",
+          tpAmb: "1",
+          tpEvento: "110110",
+          verEvento: "1.00",
         },
       },
-    };
+      retEvento: {
+        infEvento: {
+          CNPJDest: "00.000.000/0000-00",
+          chNFe: "35170202500781000109550010000002881000000005",
+          cOrgao: "35",
+          cStat: "135",
+          dhRegEvento: "2023-11-02T10:46:22-03:00",
+          nProt: "135170128223566",
+          nSeqEvento: "1",
+          tpAmb: "1",
+          tpEvento: "110110",
+          verAplic: "SP_EVENTOS_PL_100",
+          xEvento: "Carta de Correção registrada",
+          xMotivo: "Evento registrado e vinculado a NF-e",
+        },
+      },
+    },
+  };
 
-    const mockNfeXmlObject = {
-      NFe: {
-        infNFe: {
-          dest: {
-            xNome: "Mock Company",
-            enderDest: {},
+  const mockNfeXmlObject = {
+    NFe: {
+      infNFe: {
+        dest: {
+          xNome: "Mock Company",
+          enderDest: {},
+        },
+        emit: {
+          enderEmit: {
+            CEP: "12345-678",
+            nro: "10",
+            xBairro: "Mock neighborhood",
+            xLgr: "Mock address",
+            xMun: "Mock city",
+            UF: "SP",
           },
-          emit: {
-            enderEmit: {
-              nro: "10",
-              xBairro: "Mock neighborhood",
-              xLgr: "Mock address",
-              xMun: "Mock city",
-              UF: "SP",
-            },
-            IE: "123456789",
-            xFant: "Mock Company",
-          },
+          IE: "123456789",
+          xFant: "Mock Company",
         },
       },
-    } as TNfeProc;
+    },
+  } as TNfeProc;
+
+  it("should correctly format the template data", () => {
+
 
     const templateData = cceProcessor["getTemplateData"]({
       cceXmlObject: mockCCeXmlObject,
@@ -86,6 +88,7 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
     });
     expect(templateData.emitente).toEqual({
       bairro: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.xBairro,
+      cep: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.CEP,
       cnpj: mockCCeXmlObject.procEventoNFe.retEvento.infEvento.CNPJDest,
       endereco: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.xLgr,
       fantasia: mockNfeXmlObject.NFe.infNFe.emit.xFant,
@@ -104,6 +107,5 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
       nfeXml,
     });
     writeFileSync("cce.html", html);
-    console.log(html);
   });
 });

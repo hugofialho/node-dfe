@@ -5,11 +5,12 @@ import { TNfeProc } from "../schema";
 import { XmlHelper } from "../xmlHelper";
 import { DanfeProcessor } from "./danfeProcessor";
 import path = require("path");
+import { mascaraCNPJ } from "../utils/formata";
 
 const TEMPLATE_CCE = path.join(__dirname, "..", "templates/cce.hbs");
 
 export class CCeProcessor {
-  async xmlStringToHtml({
+  public async xmlStringToHtml({
     cceXml,
     nfeXml,
   }: {
@@ -46,12 +47,12 @@ export class CCeProcessor {
       correcao: cceXmlObject.procEventoNFe.evento.infEvento.detEvento.xCorrecao,
       destinatario: {
         nome: destinatario.nome,
-        cnpj: cceXmlObject.procEventoNFe.retEvento.infEvento.CNPJDest,
+        cnpj: mascaraCNPJ(cceXmlObject.procEventoNFe.retEvento.infEvento.CNPJDest),
       },
       emitente: {
         bairro: emitente.bairro,
         cep: emitente.cep,
-        cnpj: cceXmlObject.procEventoNFe.evento.infEvento.CNPJ,
+        cnpj: mascaraCNPJ(cceXmlObject.procEventoNFe.evento.infEvento.CNPJ),
         endereco: emitente.endereco,
         fantasia: emitente.fantasia,
         ie: emitente.ie,
