@@ -1,5 +1,3 @@
-import { TUf } from "../../schema";
-
 export type CCeXml = {
   procEventoNFe: {
     evento: {

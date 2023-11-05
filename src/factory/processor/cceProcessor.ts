@@ -66,8 +66,7 @@ export class CCeProcessor {
         numero: emitente.numero,
         uf: emitente.uf,
       },
-      numeroSequencia:
-        baseCCeData.retEvento.infEvento.nSeqEvento,
+      numeroSequencia: baseCCeData.retEvento.infEvento.nSeqEvento,
       versaoEvento: baseCCeData.evento.infEvento.verEvento,
     };
   }
