@@ -9,6 +9,9 @@ import path = require("path");
 
 const TEMPLATE_CCE = path.join(__dirname, "..", "templates/cce.hbs");
 
+/**
+ * Classe para processamento da CCe em HTML
+ */
 export class CCeProcessor {
   public async xmlStringToHtml({
     cceXml,
