@@ -2,10 +2,10 @@ import { readFileSync } from "fs";
 import { compile } from "handlebars";
 import { CCeTemplateData, CCeXml } from "../interface/cce";
 import { TNfeProc } from "../schema";
+import { mascaraCNPJ } from "../utils/formata";
 import { XmlHelper } from "../xmlHelper";
 import { DanfeProcessor } from "./danfeProcessor";
 import path = require("path");
-import { mascaraCNPJ } from "../utils/formata";
 
 const TEMPLATE_CCE = path.join(__dirname, "..", "templates/cce.hbs");
 
