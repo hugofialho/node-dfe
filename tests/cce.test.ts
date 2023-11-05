@@ -7,20 +7,21 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
   const nfeXml = readFileSync("tests/assets/nfe-example.xml", "utf-8");
   const cceProcessor = new CCeProcessor();
 
+  // data retrieved from the cce-example.xml fil;
   const mockCCeXmlObject: CCeXml = {
     procEventoNFe: {
       evento: {
         infEvento: {
-          chNFe: "",
-          CNPJ: "00.000.000/0000-00",
-          cOrgao: "1",
+          chNFe: "35170202500781000109550010000002881000000005",
+          CNPJ: "02.500.781/0001-09",
+          cOrgao: "35",
           detEvento: {
             descEvento: "Carta de Correcao",
             xCorrecao:
               "No Item 3 Onde esta Serie 000214624-02 leia-se Serie 000214618-56",
-            xCondUso: "",
+            xCondUso: "A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com: I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao; II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario; III - a data de emissao ou de saida.",
           },
-          dhEvento: "2023-11-02T10:46:22-03:00",
+          dhEvento: "2017-02-28T10:46:22-03:00",
           nSeqEvento: "1",
           tpAmb: "1",
           tpEvento: "110110",
@@ -29,11 +30,11 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
       },
       retEvento: {
         infEvento: {
-          CNPJDest: "00.000.000/0000-00",
+          CNPJDest: "53.485.215/0001-06",
           chNFe: "35170202500781000109550010000002881000000005",
           cOrgao: "35",
           cStat: "135",
-          dhRegEvento: "2023-11-02T10:46:22-03:00",
+          dhRegEvento: "2017-02-28T10:46:25-03:00",
           nProt: "135170128223566",
           nSeqEvento: "1",
           tpAmb: "1",
@@ -50,25 +51,26 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
     NFe: {
       infNFe: {
         dest: {
-          xNome: "Mock Company",
+          xNome: "DISTRIB. RIBEIRO E ROSA EIRELI - ME",
           enderDest: {},
         },
         emit: {
           enderEmit: {
-            CEP: "12345-678",
-            nro: "10",
-            xBairro: "Mock neighborhood",
-            xLgr: "Mock address",
-            xMun: "Mock city",
-            UF: "SP",
+            CEP: "38414-314",
+            nro: "580",
+            xBairro: "LUIZOTE",
+            xLgr: "RUA PAULO LUIS ROTELLE",
+            xMun: "UBERLANDIA",
+            UF: "MG",
           },
-          IE: "123456789",
-          xFant: "Mock Company",
+          IE: "7023103750022",
+          xFant: "DISTRIBUIDORA VITORIA",
         },
       },
     },
   } as TNfeProc;
 
+  // data retrieved from the nfe-example.xml;
   it("should correctly format the template data", () => {
 
 
@@ -89,7 +91,7 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
     expect(templateData.emitente).toEqual({
       bairro: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.xBairro,
       cep: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.CEP,
-      cnpj: mockCCeXmlObject.procEventoNFe.retEvento.infEvento.CNPJDest,
+      cnpj: mockCCeXmlObject.procEventoNFe.evento.infEvento.CNPJ,
       endereco: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.xLgr,
       fantasia: mockNfeXmlObject.NFe.infNFe.emit.xFant,
       ie: mockNfeXmlObject.NFe.infNFe.emit.IE,
@@ -106,6 +108,12 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
       cceXml,
       nfeXml,
     });
-    writeFileSync("cce.html", html);
+
+    expect(html).toMatch(/35170202500781000109550010000002881000000005/);
+    expect(html).toMatch(/02.500.781\/0001-09/);
+    expect(html).toMatch(/o Item 3 Onde esta Serie 000214624-02  leia-se  Serie  000214618-56/)
+    expect(html).toMatch(new RegExp("53.485.215/0001-06"));
+    expect(html).toMatch(/DISTRIBUIDORA VITORIA/);
+    expect(html).toMatch(/7023103750022/);
   });
 });
