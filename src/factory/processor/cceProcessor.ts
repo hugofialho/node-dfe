@@ -43,28 +43,28 @@ export class CCeProcessor {
     nfeXmlObject: TNfeProc;
   }): CCeTemplateData {
     const danfeProcessor = new DanfeProcessor();
-
     const baseCCeData = cceXmlObject.procEventoNFe;
 
-    const emitente = danfeProcessor.getEmitente(nfeXmlObject);
-    const destinatario = danfeProcessor.getDestinatario(nfeXmlObject);
+    const emitter = danfeProcessor.getEmitente(nfeXmlObject);
+    const receiver = danfeProcessor.getDestinatario(nfeXmlObject);
+
     return {
       chaveAcesso: baseCCeData.retEvento.infEvento.chNFe,
       correcao: baseCCeData.evento.infEvento.detEvento.xCorrecao,
       destinatario: {
-        nome: destinatario.nome,
+        nome: receiver.nome,
         cnpj: mascaraCNPJ(baseCCeData.retEvento.infEvento.CNPJDest),
       },
       emitente: {
-        bairro: emitente.bairro,
-        cep: emitente.cep,
+        bairro: emitter.bairro,
+        cep: emitter.cep,
         cnpj: mascaraCNPJ(baseCCeData.evento.infEvento.CNPJ),
-        endereco: emitente.endereco,
-        fantasia: emitente.fantasia,
-        ie: emitente.ie,
-        municipio: emitente.municipio,
-        numero: emitente.numero,
-        uf: emitente.uf,
+        endereco: emitter.endereco,
+        fantasia: emitter.fantasia,
+        ie: emitter.ie,
+        municipio: emitter.municipio,
+        numero: emitter.numero,
+        uf: emitter.uf,
       },
       numeroSequencia: baseCCeData.retEvento.infEvento.nSeqEvento,
       versaoEvento: baseCCeData.evento.infEvento.verEvento,
