@@ -1,3 +1,5 @@
+import { TUf } from "../../schema";
+
 export type CCeXml = {
   procEventoNFe: {
     evento: {
@@ -17,32 +19,43 @@ export type CCeXml = {
         verEvento: string;
       };
     };
-    retEvento?: {
+    retEvento: {
       infEvento: {
-        tpAmb: string;
-        verAplic: string;
+        CNPJDest: string;
+        chNFe: string;
         cOrgao: string;
         cStat: string;
-        xMotivo: string;
-        chNFe: string;
-        tpEvento: string;
-        xEvento: string;
-        nSeqEvento: string;
-        CNPJDest: string;
         dhRegEvento: string;
         nProt: string;
+        nSeqEvento: string;
+        tpAmb: string;
+        tpEvento: string;
+        verAplic: string;
+        xEvento: string;
+        xMotivo: string;
       };
     };
   };
 };
 
 export type CCeTemplateData = {
-  cnpj: string;
-  correction: string;
-  sequenceNumber: string;
-  ie: string;
-  receiver: {
+  chaveAcesso: string;
+  correcao: string;
+  destinatario: {
     cnpj: string;
-    name: string;
+    nome: string;
   };
+  emitente: {
+    bairro: string;
+    cep: string;
+    cnpj: string;
+    endereco: string;
+    fantasia: string;
+    ie: string;
+    municipio: string;
+    numero: string;
+    uf: string;
+  };
+  numeroSequencia: string;
+  versaoEvento: string;
 };

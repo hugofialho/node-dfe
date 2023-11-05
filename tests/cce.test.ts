@@ -1,12 +1,15 @@
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { CCeProcessor } from "../src/factory/processor/cceProcessor";
 import { CCeXml } from "../src/factory/interface/cce";
+import { TNFe, TNfeProc, TUf } from "../src/factory/schema";
+import { template } from "handlebars";
 describe("Test coverage for the 'Carta de Correção' module", () => {
-  const xml = readFileSync("./assets/cce1.xml", "utf8");
+  const cceXml = readFileSync("./assets/cce-example.xml", "utf8");
+  const nfeXml = readFileSync("./assets/nfe-example.xml", "utf-8");
   const cceProcessor = new CCeProcessor();
 
   it("should correctly format the template data", () => {
-    const mockXmlObject: CCeXml = {
+    const mockCCeXmlObject: CCeXml = {
       procEventoNFe: {
         evento: {
           infEvento: {
@@ -26,20 +29,81 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
             verEvento: "1.00",
           },
         },
+        retEvento: {
+          infEvento: {
+            CNPJDest: "00000000000000",
+            chNFe: "35170202500781000109550010000002881000000005",
+            cOrgao: "35",
+            cStat: "135",
+            dhRegEvento: "2023-11-02T10:46:22-03:00",
+            nProt: "135170128223566",
+            nSeqEvento: "1",
+            tpAmb: "1",
+            tpEvento: "110110",
+            verAplic: "SP_EVENTOS_PL_100",
+            xEvento: "Carta de Correção registrada",
+            xMotivo: "Evento registrado e vinculado a NF-e",
+          },
+        },
       },
     };
-    const mockInfo = mockXmlObject.procEventoNFe.evento.infEvento;
 
-    const templateData = cceProcessor["getTemplateData"](mockXmlObject);
-    expect(templateData.cnpj).toBe(mockInfo.CNPJ);
-    expect(templateData.correction).toBe(mockInfo.detEvento.xCorrecao);
-    expect(templateData.ie).toBe("1234");
-    expect(templateData.receiver.cnpj).toBe("1234");
-    expect(templateData.receiver.name).toBe("Name");
-    expect(templateData.sequenceNumber).toBe("1");
+    const mockNfeXmlObject = {
+      NFe: {
+        infNFe: {
+          dest: {
+            xNome: "Mock Company",
+            enderDest: {},
+          },
+          emit: {
+            enderEmit: {
+              nro: "10",
+              xBairro: "Mock neighborhood",
+              xLgr: "Mock address",
+              xMun: "Mock city",
+              UF: "SP",
+            },
+            IE: "123456789",
+            xFant: "Mock Company",
+          },
+        },
+      },
+    } as TNfeProc;
+
+    const templateData = cceProcessor["getTemplateData"]({
+      cceXmlObject: mockCCeXmlObject,
+      nfeXmlObject: mockNfeXmlObject,
+    });
+    expect(templateData.chaveAcesso).toBe(
+      mockCCeXmlObject.procEventoNFe.retEvento.infEvento.chNFe
+    );
+    expect(templateData.correcao).toBe(
+      mockCCeXmlObject.procEventoNFe.evento.infEvento.detEvento.xCorrecao
+    );
+    expect(templateData.destinatario).toEqual({
+      cnpj: mockCCeXmlObject.procEventoNFe.retEvento.infEvento.CNPJDest,
+      nome: mockNfeXmlObject.NFe.infNFe.dest.xNome,
+    });
+    expect(templateData.emitente).toEqual({
+      bairro: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.xBairro,
+      cnpj: mockCCeXmlObject.procEventoNFe.retEvento.infEvento.CNPJDest,
+      endereco: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.xLgr,
+      fantasia: mockNfeXmlObject.NFe.infNFe.emit.xFant,
+      ie: mockNfeXmlObject.NFe.infNFe.emit.IE,
+      municipio: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.xMun,
+      numero: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.nro,
+      uf: mockNfeXmlObject.NFe.infNFe.emit.enderEmit.UF,
+    });
+    expect(templateData.numeroSequencia).toBe(
+      mockCCeXmlObject.procEventoNFe.evento.infEvento.nSeqEvento
+    );
   });
   it("should correctly convert the XML to HTML", async () => {
-    const html = await cceProcessor.xmlToHtml(xml);
+    const html = await cceProcessor.xmlStringToHtml({
+      cceXml,
+      nfeXml,
+    });
+    writeFileSync("cce.html", html);
     console.log(html);
   });
 });
