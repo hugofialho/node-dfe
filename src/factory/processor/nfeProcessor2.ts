@@ -88,7 +88,7 @@ export class NFeProcessor {
 
       if (result.envioNF && result.envioNF.data) {
         const data = Object(result.envioNF.data);
-        if (data.retEnviNFe && geral.modelo == "55") {
+        if (data.retEnviNFe && data.retEnviNFe.infRec && geral.modelo == "55") {
           retEnviNFe = data.retEnviNFe;
           const recibo = retEnviNFe.infRec.nRec;
           result.consultaProc = <RetornoProcessamento>(
