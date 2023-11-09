@@ -97,11 +97,15 @@ export class NFeProcessor {
           retConsReciNFe = Object(result.consultaProc.data).retConsReciNFe;
         }
 
-        if (retEnviNFe && retConsReciNFe)
-          if (retEnviNFe.cStat == "103" && retConsReciNFe.cStat == "104") {
-            result.confirmada = true;
-            result.success = true;
-          }
+        if (
+          retEnviNFe &&
+          retConsReciNFe &&
+          retEnviNFe.cStat == "103" &&
+          retConsReciNFe.cStat == "104"
+        ) {
+          result.confirmada = true;
+          result.success = true;
+        }
 
         if (arquivos && arquivos.salvar) {
           if (!fs.existsSync(arquivos.pastaEnvio))

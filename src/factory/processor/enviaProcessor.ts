@@ -37,6 +37,7 @@ import {
   Transportadora,
   Volume,
   Intermediador,
+  RetornoValidacao,
 } from "../interface/nfe";
 
 import { WebServiceHelper } from "../webservices/webserviceHelper";
@@ -133,6 +134,10 @@ export class EnviaProcessor {
       const xmlToValidate = libxmljs.parseXml(xmlLote);
       const valid = xmlToValidate.validate(this.schemaXsdLote);
       if (!valid) {
+        result.validacaoNF = <RetornoValidacao>{
+          xml_validado: xmlLote,
+          erros: xmlToValidate.validationErrors.map((e) => e.message),
+        };
         throw new Error(
           "Erro de validação do XML:\r\n" +
             xmlToValidate.validationErrors

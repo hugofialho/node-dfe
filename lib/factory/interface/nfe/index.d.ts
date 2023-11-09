@@ -13,12 +13,17 @@ export interface RetornoProcessamentoNF {
     error: string;
     nfe: Object;
     confirmada: boolean;
+    validacaoNF: RetornoValidacao;
     envioNF: RetornoProcessamento;
     consultaProc: RetornoProcessamento;
     retornoContingenciaOffline: RetornoContingenciaOffline;
 }
 export interface RetornoContingenciaOffline {
     xml_gerado: string;
+}
+export interface RetornoValidacao {
+    xml_validado: string;
+    erros: string[];
 }
 export interface RetornoProcessamento {
     xml_enviado: string;

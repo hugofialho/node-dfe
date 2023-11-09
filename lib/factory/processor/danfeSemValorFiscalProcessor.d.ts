@@ -1,8 +1,8 @@
 import { TEnviNFe, TNFe } from "../schema";
 import { Configuracoes, NFeDocumento } from "../interface";
 /**
- * Classe para processamento do DANFE em HTML a partir do XML do Lote
- * Gera o DANFE com a marca dagua 'SEM VALOR FISCAL'
+ * Classe para processamento do DANFE em HTML a partir da interface NFeDocumento
+ * Gera o DANFE com a marca dagua 'SEM VALOR FISCAL', sem o cabeçalho
  */
 export declare class DanfeSemValorFiscalProcessor {
     private configuracoes;
