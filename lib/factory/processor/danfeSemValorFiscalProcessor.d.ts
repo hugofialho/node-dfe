@@ -1,13 +1,17 @@
-import { TNfeProc } from "../schema";
+import { TEnviNFe, TNFe } from "../schema";
+import { Configuracoes, NFeDocumento } from "../interface";
 /**
- * Classe para processamento do DANFE em HTML
+ * Classe para processamento do DANFE em HTML a partir do XML do Lote
+ * Gera o DANFE com a marca dagua 'SEM VALOR FISCAL'
  */
-export declare class DanfeProcessor {
-    constructor();
-    xmlStringToHtml(xml: string, emitenteImageUrl: string, cancelada: boolean): Promise<string>;
-    getTemplateData(nfeProc: TNfeProc, emitenteImageUrl: string, cancelada: boolean): {
+export declare class DanfeSemValorFiscalProcessor {
+    private configuracoes;
+    private enviaProcessor;
+    constructor(configuracoes: Configuracoes);
+    DocumentoToHtml(documento: NFeDocumento, emitenteImageUrl: string): Promise<string>;
+    getTemplateData(enviNFe: TEnviNFe, emitenteImageUrl: string): {
         valor_fiscal: boolean;
-        marca_dagua: string | null;
+        marca_dagua: string;
         emitenteImageUrl: string;
         operacao: import("../schema").TNFeInfNFeIdeTpNF;
         natureza: string;
@@ -104,7 +108,7 @@ export declare class DanfeProcessor {
             valor: string;
         }[] | null;
     };
-    getEmitente(nfeProc: TNfeProc): {
+    getEmitente(nfe: TNFe): {
         inscricao_nacional: string | undefined;
         ie: string;
         ie_st: string;
@@ -119,7 +123,7 @@ export declare class DanfeProcessor {
         cep: string;
         telefone: string;
     };
-    getDestinatario(nfeProc: TNfeProc): {
+    getDestinatario(nfe: TNFe): {
         inscricao_nacional: string | undefined;
         ie: string;
         nome: string;
@@ -132,7 +136,7 @@ export declare class DanfeProcessor {
         cep: string;
         telefone: string;
     };
-    getTransportador(nfeProc: TNfeProc): {
+    getTransportador(nfe: TNFe): {
         nome: string;
         inscricao_nacional: string;
         endereco: string;
@@ -140,7 +144,7 @@ export declare class DanfeProcessor {
         uf: import("../schema").TUf;
         ie: string;
     } | null;
-    getVolume(nfeProc: TNfeProc): {
+    getVolume(nfe: TNFe): {
         quantidade: string;
         especie: string;
         marca: string;
@@ -148,7 +152,7 @@ export declare class DanfeProcessor {
         pesoBruto: string;
         pesoLiquido: string;
     } | null;
-    getItens(nfeProc: TNfeProc): {
+    getItens(nfe: TNFe): {
         codigo: string;
         descricao: string;
         ncm: string;
@@ -165,8 +169,8 @@ export declare class DanfeProcessor {
         porcentagem_ipi: string;
         informacoes_produto: string;
     }[];
-    getExibeIPI(nfeProc: TNfeProc): boolean;
-    getDuplicatas(nfeProc: TNfeProc): {
+    getExibeIPI(nfe: TNFe): boolean;
+    getDuplicatas(nfe: TNFe): {
         numero: string;
         vencimento: string;
         valor: string;

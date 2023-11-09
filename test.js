@@ -159,7 +159,7 @@ for (let i = 1; i <= 1; i++) {
     imposto: {
       valorAproximadoTributos: 0,
       icms: {
-        CST: "70",
+        CST: "00",
         orig: "0",
         modBC: "3",
         vBC: "629.90",
@@ -348,23 +348,33 @@ function testHashRespTec() {
 async function testeDANFE() {
   const danfeProcessor = new lib.DanfeProcessor();
 
-  const xml = fs.readFileSync(
-    "31230506540713000124550010000257061560604128.xml",
-    "utf8"
-  );
+  const xml = fs.readFileSync(__dirname + "/mock/procNFe1.xml", "utf8");
   const html = await danfeProcessor.xmlStringToHtml(
     xml,
     `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`
   );
-  fs.writeFileSync("31230506540713000124550010000257061560604128.html", html);
+  fs.writeFileSync(__dirname + "/mock/danfe1.html", html);
 
-  const xml2 = fs.readFileSync(
-    "35230902500781000109550010000008931965267338.xml",
-    "utf8"
-  );
+  const xml2 = fs.readFileSync(__dirname + "/mock/procNFe2.xml", "utf8");
   const html2 = await danfeProcessor.xmlStringToHtml(xml2);
-  fs.writeFileSync("35230902500781000109550010000008931965267338.html", html2);
+  fs.writeFileSync(__dirname + "/mock/danfe2.html", html2);
 }
+
+async function testeDANFESemValidade() {
+  const danfeSemValorFiscalProcessor = new lib.DanfeSemValorFiscalProcessor(
+    configuracoes
+  );
+
+  const html = await danfeSemValorFiscalProcessor.DocumentoToHtml(
+    nfce,
+    `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`
+  );
+
+  fs.writeFileSync(__dirname + "/mock/danfe-sem-valor-fiscal.html", html);
+}
+
+testeDANFESemValidade();
+testeDANFE();
 
 async function testeValidate() {
   const nfeProcXml = fs.readFileSync(
@@ -394,7 +404,7 @@ async function testeValidate() {
 //testeAssinaturaXML();
 //testeConsultaStatusServico(empresa, "2", "65");
 //testeDesereliaze();
-testeEmissaoNFCe();
+// testeEmissaoNFCe();
 //testeEmissaoNFCeContingenciaOffline(empresa);
 //testeQRcodeNFCe();
 //testHashRespTec();

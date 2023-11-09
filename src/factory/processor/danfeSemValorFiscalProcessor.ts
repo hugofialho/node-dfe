@@ -1,7 +1,6 @@
-import { TNfeProc } from "../schema";
+import { TEnviNFe, TNFe } from "../schema";
 import {
   formataCEP,
-  formataChave,
   formataData,
   formataHora,
   formataInscricaoNacional,
@@ -12,46 +11,59 @@ import { XmlHelper } from "../xmlHelper";
 import * as handlebars from "handlebars";
 import * as fs from "fs";
 import * as path from "path";
+import { Configuracoes, NFeDocumento } from "../interface";
+import { EnviaProcessor } from "./enviaProcessor";
 
 const TEMPLATE_DANFE = path.join(__dirname, "..", "templates/danfe.hbs");
 
 /**
- * Classe para processamento do DANFE em HTML
+ * Classe para processamento do DANFE em HTML a partir da interface NFeDocumento
+ * Gera o DANFE com a marca dagua 'SEM VALOR FISCAL', sem o cabeçalho
  */
-export class DanfeProcessor {
-  constructor() {}
+export class DanfeSemValorFiscalProcessor {
+  private enviaProcessor: any = null;
+  
+  constructor(private configuracoes: Configuracoes) {
+    this.enviaProcessor = new EnviaProcessor(this.configuracoes);
+  }
 
-  async xmlStringToHtml(xml: string, emitenteImageUrl: string, cancelada: boolean) {
+  async DocumentoToHtml(documento: NFeDocumento, emitenteImageUrl: string) {
+    documento.docFiscal.isContingenciaOffline = true;
+    const result = await this.enviaProcessor.geraLoteXML(documento);
+    if (!result.success) {
+      throw result.error;
+    }
+
+    const xml = result.retornoContingenciaOffline.xml_gerado;
     const xmlAsJson: any = XmlHelper.deserializeXml(xml);
-    const nfeProc: TNfeProc = xmlAsJson.nfeProc;
+    const enviNFe: TEnviNFe = xmlAsJson.enviNFe;
     const template = fs.readFileSync(TEMPLATE_DANFE, "utf8");
-    const templateData = this.getTemplateData(nfeProc, emitenteImageUrl, cancelada);
+    const templateData = this.getTemplateData(enviNFe, emitenteImageUrl);
     const html = handlebars.compile(template)(templateData);
     return html;
   }
 
-  getTemplateData(nfeProc: TNfeProc, emitenteImageUrl: string, cancelada: boolean) {
-    const ide = nfeProc.NFe.infNFe.ide;
-    const transp = nfeProc.NFe.infNFe.transp;
-    const ICMSTot = nfeProc.NFe.infNFe.total.ICMSTot;
-    const infProt = nfeProc.protNFe.infProt;
-    const infAdic = nfeProc.NFe.infNFe.infAdic;
+  getTemplateData(enviNFe: TEnviNFe, emitenteImageUrl: string) {
+    const nfe = Array.isArray(enviNFe.NFe) ? enviNFe.NFe[0] : enviNFe.NFe;
+    const ide = nfe.infNFe.ide;
+    const transp = nfe.infNFe.transp;
+    const ICMSTot = nfe.infNFe.total.ICMSTot;
+    const infAdic = nfe.infNFe.infAdic;
 
     var data = {
-      valor_fiscal: true,
-      marca_dagua: cancelada ? 'CANCELADA' : null,
+      valor_fiscal: false,
+      marca_dagua: 'SEM VALOR FISCAL',
       emitenteImageUrl,
       operacao: ide.tpNF,
       natureza: ide.natOp,
       numero: ide.nNF,
       serie: ide.serie,
-      chave: formataChave(infProt.chNFe),
-      codigo_barras: infProt.chNFe,
-      protocolo: infProt.nProt,
-      data_protocolo:
-        formataData(infProt.dhRecbto) + " " + formataHora(infProt.dhRecbto),
-      emitente: this.getEmitente(nfeProc),
-      destinatario: this.getDestinatario(nfeProc),
+      chave: '',
+      codigo_barras: '',
+      protocolo: '',
+      data_protocolo: '',
+      emitente: this.getEmitente(nfe),
+      destinatario: this.getDestinatario(nfe),
       data_emissao: formataData(ide.dhEmi),
       data_saida: formataData(ide.dhSaiEnt),
       hora_saida: formataHora(ide.dhSaiEnt),
@@ -67,8 +79,8 @@ export class DanfeProcessor {
       total_despesas: formataMoeda(ICMSTot.vOutro, 2),
       total_ipi: formataMoeda(ICMSTot.vIPI, 2),
       total_nota: formataMoeda(ICMSTot.vNF, 2),
-      transportador: this.getTransportador(nfeProc),
-      volume: this.getVolume(nfeProc),
+      transportador: this.getTransportador(nfe),
+      volume: this.getVolume(nfe),
 
       informacoes_fisco: infAdic.infAdFisco,
       informacoes_complementares: infAdic.infCpl,
@@ -79,16 +91,16 @@ export class DanfeProcessor {
           : transp.modFrete === "1"
           ? "DESTINATÁRIO"
           : "",
-      itens: this.getItens(nfeProc),
-      exibe_ipi: this.getExibeIPI(nfeProc),
-      duplicatas: this.getDuplicatas(nfeProc),
+      itens: this.getItens(nfe),
+      exibe_ipi: this.getExibeIPI(nfe),
+      duplicatas: this.getDuplicatas(nfe),
     };
 
     return data;
   }
 
-  getEmitente(nfeProc: TNfeProc) {
-    const emit = nfeProc.NFe.infNFe.emit;
+  getEmitente(nfe: TNFe) {
+    const emit = nfe.infNFe.emit;
     return {
       inscricao_nacional: formataInscricaoNacional(emit.CNPJ),
       ie: emit.IE,
@@ -106,8 +118,8 @@ export class DanfeProcessor {
     };
   }
 
-  getDestinatario(nfeProc: TNfeProc) {
-    const dest = nfeProc.NFe.infNFe.dest;
+  getDestinatario(nfe: TNFe) {
+    const dest = nfe.infNFe.dest;
     return {
       inscricao_nacional: formataInscricaoNacional(dest.CPF || dest.CNPJ),
       ie: dest.IE,
@@ -123,8 +135,8 @@ export class DanfeProcessor {
     };
   }
 
-  getTransportador(nfeProc: TNfeProc) {
-    const transporta = nfeProc.NFe.infNFe.transp.transporta;
+  getTransportador(nfe: TNFe) {
+    const transporta = nfe.infNFe.transp.transporta;
     return transporta
       ? {
           nome: transporta.xNome,
@@ -137,8 +149,8 @@ export class DanfeProcessor {
       : null;
   }
 
-  getVolume(nfeProc: TNfeProc) {
-    const vol = nfeProc.NFe.infNFe.transp.vol;
+  getVolume(nfe: TNFe) {
+    const vol = nfe.infNFe.transp.vol;
     const vol0 = vol && vol.length > 0 ? vol[0] : null;
     return vol0
       ? {
@@ -152,8 +164,8 @@ export class DanfeProcessor {
       : null;
   }
 
-  getItens(nfeProc: TNfeProc) {
-    const det = nfeProc.NFe.infNFe.det;
+  getItens(nfe: TNFe) {
+    const det = nfe.infNFe.det;
     const dets = det instanceof Array ? det : [det];
     return dets.map((i) => ({
       codigo: i.prod.cProd,
@@ -182,16 +194,16 @@ export class DanfeProcessor {
     }));
   }
 
-  getExibeIPI(nfeProc: TNfeProc) {
-    const det = nfeProc.NFe.infNFe.det;
+  getExibeIPI(nfe: TNFe) {
+    const det = nfe.infNFe.det;
     const dets = det instanceof Array ? det : [det];
     return dets
       .map((i) => !!this.getValueByTag(i.imposto.IPI, "vIPI"))
       .reduce((oculta, vIPI) => oculta || vIPI, false);
   }
 
-  getDuplicatas(nfeProc: TNfeProc) {
-    let dup = nfeProc.NFe.infNFe.cobr?.dup;
+  getDuplicatas(nfe: TNFe) {
+    let dup = nfe.infNFe.cobr?.dup;
     if (!dup) return null;
     if (!(dup instanceof Array)) {
       dup = [dup];
