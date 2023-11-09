@@ -134,6 +134,7 @@ export class EnviaProcessor {
       const xmlToValidate = libxmljs.parseXml(xmlLote);
       const valid = xmlToValidate.validate(this.schemaXsdLote);
       if (!valid) {
+        result.nfe = doc.nfe;
         result.validacaoNF = <RetornoValidacao>{
           xml_validado: xmlLote,
           erros: xmlToValidate.validationErrors.map((e) => e.message),

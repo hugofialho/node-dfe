@@ -196,9 +196,9 @@ let pagamento = {
 };
 
 let icmsTot = {
-  vBC: "629.90",
-  vICMS: "113.40",
-  vICMSDeson: "0.00",
+  // vBC: "629.90",
+  // vICMS: "113.40",
+  // vICMSDeson: "0.00",
   //vFCPUFDest: '0.00',
   //vICMSUFDest:'0.00',
   //vICMSUFRemet: '0.00',
@@ -373,8 +373,8 @@ async function testeDANFESemValidade() {
   fs.writeFileSync(__dirname + "/mock/danfe-sem-valor-fiscal.html", html);
 }
 
-testeDANFESemValidade();
-testeDANFE();
+// testeDANFESemValidade();
+// testeDANFE();
 
 async function testeValidate() {
   const nfeProcXml = fs.readFileSync(
@@ -404,7 +404,7 @@ async function testeValidate() {
 //testeAssinaturaXML();
 //testeConsultaStatusServico(empresa, "2", "65");
 //testeDesereliaze();
-// testeEmissaoNFCe();
+testeEmissaoNFCe();
 //testeEmissaoNFCeContingenciaOffline(empresa);
 //testeQRcodeNFCe();
 //testHashRespTec();
