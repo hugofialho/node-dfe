@@ -47,6 +47,7 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
     },
   };
 
+  // data retrieved from the nfe-example.xml;
   const mockNfeXmlObject = {
     NFe: {
       infNFe: {
@@ -70,7 +71,6 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
     },
   } as TNfeProc;
 
-  // data retrieved from the nfe-example.xml;
   it("should correctly format the template data", () => {
 
 
