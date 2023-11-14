@@ -40,7 +40,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 16px;
     }
 
     .cce-info-area {
@@ -49,89 +49,152 @@
       flex-direction: column;
     }
 
-    .emitter-top-area {
+    .top-area {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .header {
       width: 100%;
+      display: flex;
       min-height: 160px;
-      display: flex;
-      gap: 16px;
     }
 
-    .emitter-info-row {
-      width: 100%;
+    .emitter-details-area {
       display: flex;
-      gap: 16px;
-    }
-
-    .emitter-info-container {
-      width: 100%;
+      align-items: center;
+      justify-content: space-between;
       padding: 8px 16px;
-      border: 2px solid black;
-      border-bottom: none;
+      border: 1px solid #000;
+      border-radius: 8px;
+      width: 50vw;
     }
 
-    .emitter-address-container {
+    .logo-container {
+      flex: 1;
+    }
+
+    .emitter-details {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      gap: 8px;
     }
 
     .emitter-name-text {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       text-align: center;
+    }
+
+    .emitter-fantasy-name-text {
+      text-align: center;
+      font-size: 12px;
     }
 
     .emitter-address-text {
       text-align: center;
+      font-size: 12px;
+    }
+
+    .emitter-phone-number-text {
+      text-align: center;
+      font-size: 12px;
     }
 
     .title-container {
-      padding: 8px 0;
+      width: 10vw;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      border: 1px solid #000;
+      border-radius: 8px;
+      border-left: none;
+      padding: 4px 8px;
+      
+    }
+
+    .title-container-top-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;`
     }
 
     .title-text {
-      font-size: 48px;
+      font-size: 24px;
       font-weight: bold;
     }
 
-    .cce-keys-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .cce-keys-container-top-area {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .cce-key-title-text {
+    .subtitle-text {
       text-transform: uppercase;
-    }
-    
-    .cce-key-text {
-      font-size: 12px;
+      font-size: 10px;
+      text-align: center;
     }
 
     .cce-details-container {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 4px;
+      text-align: center;
     }
 
-    .cce-authorizer-details-container {
+    .cce-keys-container {
+      width: 40vw;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
     }
-    .cce-authorizer-text {
+
+    .bar-code-container {
+      border: 1px solid #000;
+      border-radius: 4px;
+      border-left: none;
+      border-bottom: none;
+      padding: 4px;
+    }
+
+    .access-key-container {
+      padding: 4px 8px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #000;
+      border-radius: 4px;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    .access-key-title-text {
       font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .access-key-code {
+      font-size: 10px;
+      padding-left: 4px;
+    }
+
+    .access-key-information-container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 4px 8px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      border-left: none;
+    }
+
+    .access-key-information-text {
+      font-size: 10px;
       text-align: center;
+    }
+
+    .emitter-top-area {
+      width: 100%;
+      min-height: 160px;
+      display: flex;
+      gap: 16px;
     }
 
     .emitter-bottom-area {
@@ -144,13 +207,14 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      border: 2px solid #000;
+      border: 1px solid #000;
+      border-radius: 8px;
       border-left: none;
       padding: 4px;
     }
 
     .emitter-detail-container:first-child {
-      border-left: 2px solid #000;
+      border-left: 1px solid #000;
     }
 
     .emitter-detail-title {
@@ -175,7 +239,8 @@
     .receiver-detail-container {
       flex: 0.4;
       padding: 4px;
-      border: 2px solid #000;
+      border: 1px solid #000;
+      border-radius: 8px;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -196,7 +261,8 @@
     }
     
     .cce-law-container {
-      border: 2px solid #000;
+      border: 1px solid #000;
+      border-radius: 8px;
       padding: 4px 4px 16px 4px;
     }
 
@@ -212,7 +278,8 @@
     }
 
     .cce-corrections-container {
-      border: 2px solid #000;
+      border: 1px solid #000;
+      border-radius: 8px;
       padding: 8px;
       display: flex;
       min-height: 150px;
@@ -233,39 +300,60 @@
     <div class="cce-container">
       <div class="container">
         <div class="main-container">
-          <div class="cce-info-area">
-            <div class="emitter-top-area">
-              <div class="emitter-info-container emitter-address-container">
-                <span class="emitter-name-text">{{emitente.fantasia}}</span>
-                <span class="emitter-address-text">{{emitente.endereco}},
-                  {{emitente.numero}}
-                  -
-                  {{emitente.bairro}},
-                  {{emitente.municipio}},
-                  {{emitente.uf}}
-                  - CEP:
-                  {{emitente.cep}}</span>
+          <div class="cce-info-area top-area">
+            <div class="header">
+              <div class="emitter-details-area">
+                <div class="logo-container">Logo</div>
+                <div class="emitter-details">
+                  <span class="emitter-name-text">{{emitente.nome}}</span>
+                  <span
+                    class="emitter-fantasy-name-text"
+                  >{{emitente.fantasia}}</span>
+                  <span class="emitter-address-text">
+                    {{emitente.endereco}},
+                    {{emitente.numero}}
+                    {{emitente.bairro}}
+                    -
+                    {{emitente.municipio}}
+                    /
+                    {{emitente.uf}}
+                    CEP
+                    {{emitente.cep}}
+                  </span>
+                  <span class="emitter-phone-number-text">
+                    Fone:
+                    {{emitter.telefone}}
+                  </span>
+                </div>
               </div>
               <div class="title-container">
-                <span class="title-text">CCe</span>
+                <div class="title-container-top-area">
+                  <span class="title-text">CCe</span>
+                  <span class="subtitle-text">
+                    Carta de Correção Eletrônica
+                  </span>
+                </div>
                 <div class="cce-details-container">
                   {{! TODO: FIX THIS NUMBER }}
                   <span><b>Nº 288</b></span>
                   <span><b>SÉRIE: {{versaoEvento}}</b></span>
                 </div>
               </div>
-              <div class="emitter-info-container cce-keys-container">
-                <div class="cce-keys-container-top-area">
-                  <div class="cce-barcode-container">
-                    <svg id="barcode"></svg>
-                  </div>
-                  <span class="cce-key-title-text">Chave de Acesso</span>
-                  <span class="cce-key-text">{{chaveAcesso}}</span>
+              <div class="cce-keys-container">
+                <div class="bar-code-container">
+                  <svg id="barcode"></svg>
                 </div>
-                <div class="cce-authorizer-details-container">
-                  <span class="cce-authorizer-text">Consulta de autenticidade no
-                    portal nacial da NF-e www.nfe.fazenda.gov.br/portal ou no
-                    site da Sefaz Autorizador</span>
+                <div class="access-key-container">
+                  <span class="access-key-title-text">Chave de Acesso</span>
+                  <span class="access-key-code">
+                    {{chaveAcesso}}
+                  </span>
+                </div>
+                <div class="access-key-information-container">
+                  <span class="access-key-information-text">Consulta de
+                    autenticidade no portal nacial da NF-e
+                    www.nfe.fazenda.gov.br/portal ou no site da Sefaz
+                    Autorizador</span>
                 </div>
               </div>
             </div>
@@ -337,7 +425,7 @@
   </script>
   <script>
     JsBarcode("#barcode", "{{chaveAcesso}}", { displayValue: false, height: 36,
-    width: 1.2 })
+    width: 1 })
   </script>
 
 </html>

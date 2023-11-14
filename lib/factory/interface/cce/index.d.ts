@@ -50,7 +50,9 @@ export declare type CCeTemplateData = {
         fantasia: string;
         ie: string;
         municipio: string;
+        nome: string;
         numero: string;
+        telefone: string;
         uf: string;
     };
     numeroSequencia: string;
