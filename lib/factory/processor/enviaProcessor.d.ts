@@ -13,6 +13,11 @@ export declare class EnviaProcessor {
      * @param assincrono Boolean para definir se a execução sera sincrona ou assincrona, por padrao === sincrona!
      */
     executar(documento: NFeBase, assincrono?: boolean): Promise<RetornoProcessamentoNF>;
+    /**
+     * Metodo para gerar o XML do lote da NFe tipo 55
+     * @param documento Array de documentos modelo 55
+     */
+    geraLoteXML(documento: NFeBase): Promise<RetornoProcessamentoNF>;
     private configuraUrlsSefaz;
     private appendQRCodeXML;
     transmitirXml(xmlLote: string, nfeObj: Object): Promise<RetornoProcessamentoNF>;

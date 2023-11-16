@@ -487,10 +487,32 @@
   .display-none {
     display: none;
   }
+
+  .watermark {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .watermark-text {
+    font-size: 180px;
+    -webkit-transform: rotate(-50deg);
+    -moz-transform: rotate(-50deg);
+    color: gray;
+    opacity: 0.5;
+    text-align: center;
+  }
 </style>
 
 <body>
   <div class="container area">
+
+    <!-- MARCA DAGUA  -->
 
     <!-- Canhoto  -->
     <div class="columns grupo">

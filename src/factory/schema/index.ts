@@ -90,7 +90,7 @@ export interface TEnviNFe {
     $: { versao: string, xmlns: string };
     idLote: string;
     indSinc: TEnviNFeIndSinc;
-    //nFe: TNFe[];
+    NFe: TNFe[];
     _: string;
 }
 

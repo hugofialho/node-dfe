@@ -37,6 +37,7 @@ import {
   Transportadora,
   Volume,
   Intermediador,
+  RetornoValidacao,
 } from "../interface/nfe";
 
 import { WebServiceHelper } from "../webservices/webserviceHelper";
@@ -133,6 +134,11 @@ export class EnviaProcessor {
       const xmlToValidate = libxmljs.parseXml(xmlLote);
       const valid = xmlToValidate.validate(this.schemaXsdLote);
       if (!valid) {
+        result.nfe = doc.nfe;
+        result.validacaoNF = <RetornoValidacao>{
+          xml_validado: xmlLote,
+          erros: xmlToValidate.validationErrors.map((e) => e.message),
+        };
         throw new Error(
           "Erro de validação do XML:\r\n" +
             xmlToValidate.validationErrors
@@ -151,6 +157,55 @@ export class EnviaProcessor {
       } else {
         result = await this.transmitirXml(xmlLote, doc.nfe);
       }
+    } catch (ex: any) {
+      result.success = false;
+      result.error = ex;
+    }
+
+    return result;
+  }
+
+  /**
+   * Metodo para gerar o XML do lote da NFe tipo 55
+   * @param documento Array de documentos modelo 55
+   */
+  public async geraLoteXML(documento: NFeBase) {
+    let result = <RetornoProcessamentoNF>{
+      success: false,
+    };
+
+    try {
+      this.configuraUrlsSefaz();
+      let doc = this.gerarXml(documento);
+      let xmlAssinado = Signature.signXmlX509(
+        doc.xml,
+        "infNFe",
+        this.configuracoes.certificado
+      );
+
+      let xmlLote = this.gerarXmlLote(xmlAssinado, false);
+
+      if (this.schemaXsdLote === null) {
+        const pathXsd = path.join(__dirname, "..", "xsd/enviNFe_v4.00.xsd");
+        const nfeProcXsd = fs.readFileSync(pathXsd, "utf8");
+        process.chdir(path.dirname(pathXsd));
+        this.schemaXsdLote = libxmljs.parseXml(nfeProcXsd);
+      }
+
+      const xmlToValidate = libxmljs.parseXml(xmlLote);
+      const valid = xmlToValidate.validate(this.schemaXsdLote);
+      if (!valid) {
+        throw new Error(
+          "Erro de validação do XML:\r\n" +
+            xmlToValidate.validationErrors
+              .map((e) => e.message.replace("Error: ", ""))
+              .join("\r\n")
+        );
+      }
+
+      result.retornoContingenciaOffline = <RetornoContingenciaOffline>{};
+      result.success = true;
+      result.retornoContingenciaOffline.xml_gerado = xmlLote;
     } catch (ex: any) {
       result.success = false;
       result.error = ex;

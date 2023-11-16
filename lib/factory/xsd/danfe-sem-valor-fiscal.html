@@ -487,37 +487,10 @@
   .display-none {
     display: none;
   }
-
-  .watermark {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    overflow: hidden;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .watermark-text {
-    font-size: 180px;
-    -webkit-transform: rotate(-50deg);
-    -moz-transform: rotate(-50deg);
-    color: gray;
-    opacity: 0.5;
-    text-align: center;
-  }
 </style>
 
 <body>
   <div class="container area">
-
-    <!-- MARCA DAGUA  -->
-    {{#if marca_dagua}}
-    <div class="watermark">
-      <p class="watermark-text">{{marca_dagua}}</p>
-    </div>
-    {{/if}}
 
     <!-- Canhoto  -->
     <div class="columns grupo">
@@ -530,9 +503,9 @@
           <div class="columns linha all-rounded-corners">
             <div class="column campo all-rounded-corners">
               <div class="texto_recibo conteudo_campo">
-                RECEBEMOS DE '{{emitente.nome}}' OS PRODUTOS E/OU SERVIÇOS CONSTANTES DA NOTA FISCAL ELETRÔNICA INDICADA ABAIXO. EMISSÃO:
-                {{data_emissao}} - VALOR TOTAL: {{total_nota}} - DESTINATÁRIO: {{destinatario.nome}} - ENDEREÇO: {{destinatario.endereco}},
-                {{destinatario.numero}}, {{destinatario.bairro}} - {{destinatario.municipio}}/{{destinatario.uf}}
+                RECEBEMOS DE 'TESTE' OS PRODUTOS E/OU SERVIÇOS CONSTANTES DA NOTA FISCAL ELETRÔNICA INDICADA ABAIXO. EMISSÃO:
+                09/11/2023 - VALOR TOTAL: 31,80 - DESTINATÁRIO: NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL - ENDEREÇO: RUA TEST,
+                1231, teste - testeee/RS
               </div>
             </div>
           </div>
@@ -555,8 +528,8 @@
           <div class="columns linha all-rounded-corners">
             <div class="column area_canhoto_nr all-rounded-corners">
               <div class="center font-14">NF-e</div>
-              <div class="center font-10 reset-marpads">Nº {{numero}}</div>
-              <div class="center font-10 reset-marpads">Série: {{serie}}</div>
+              <div class="center font-10 reset-marpads">Nº 7896</div>
+              <div class="center font-10 reset-marpads">Série: 20</div>
             </div>
           </div>
         </div>
@@ -581,36 +554,33 @@
                     <div class="columns linha quadro_cabecalho all-rounded-corners">
                       <div class="column quadro_identificacao all-rounded-corners">
                         <div class="id-emitente">
-                          {{#if emitenteImageUrl}}
                           <div class="perfect-center flex-column">
-                            <img src="{{emitenteImageUrl}}" class="bg-logo" />
+                            <img src="https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg" class="bg-logo" />
                           </div>
-                          {{/if}}
 
                           <div class="perfect-center flex-column">
-                            <div class="conteudo_campo font-10 center margin-bottom">{{emitente.nome}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.fantasia}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.endereco}}, {{emitente.numero}} {{emitente.complemento}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.bairro}} - {{emitente.municipio}} / {{emitente.uf}} CEP {{emitente.cep}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">Fone: {{emitente.telefone}}</div>
+                            <div class="conteudo_campo font-10 center margin-bottom">TESTE</div>
+                            <div class="conteudo_campo font-8 center reset-font">TEST</div>
+                            <div class="conteudo_campo font-8 center reset-font">Rua Teste, 123 </div>
+                            <div class="conteudo_campo font-8 center reset-font">Bairro Teste - Cachoeirinha / MG CEP 99999-999</div>
+                            <div class="conteudo_campo font-8 center reset-font">Fone: (99) 9999 - 999</div>
                           </div>
                         </div>
                       </div>
 
-                      {{#if valor_fiscal}}
                       <div class="column quadro_danfe all-rounded-corners padding-top">
                         <div class="center danfe font-14">DANFE</div>
                         <div class="center font-6">Documento Auxiliar da Nota Fiscal Eletrônica</div>
                         <br>
                         <span class="numero center">
-                          <div class="center is-pulled-right operacao all-rounded-corners">{{operacao}}</div>
+                          <div class="center is-pulled-right operacao all-rounded-corners">1</div>
                           <div class="align-left margin-left">
                             <div class="reset-font">0- ENTRADA</div>
                             <div class="reset-font">1- SAÍDA</div>
                           </div>
                           <br>
-                          <div>Nº {{numero}}</div>
-                          <div>Série {{serie}}</div>
+                          <div>Nº 7896</div>
+                          <div>Série 20</div>
                           <div class="reset-font italic">Folha 1/1</div>
                         </span>
                       </div>
@@ -620,14 +590,13 @@
                         </div>
                         <div class="chave all-rounded-corners">
                           <div class="tcampo reset-font">CHAVE DE ACESSO</div>
-                          <div class="padding-top">{{chave}}</div>
+                          <div class="padding-top"></div>
                         </div>
                         <div class="consulta all-rounded-corners">
                           <br> Consulta de autenticidade no portal nacional da NF-e www.nfe.fazenda.gov.br/portal ou no site
                           da Sefaz Autorizadora
                         </div>
                       </div>
-                      {{/if}}
                     </div>
                   </div>
                 </div>
@@ -642,25 +611,25 @@
                     <div class="columns linha all-rounded-corners">
                       <div class="column campo all-rounded-corners padding-top">
                         <div class="tcampo reset-font">NATUREZA DA OPERAÇÃO</div>
-                        <span class="conteudo_campo bold">{{natureza}}</span>
+                        <span class="conteudo_campo bold">VENDA</span>
                       </div>
                       <div class="column protocolo all-rounded-corners">
                         <div class="tcampo reset-font">PROTOCOLO DE AUTORIZACAO DE USO </div>
-                        <span class="conteudo_campo bold padding-top">{{protocolo}} - {{data_protocolo}}</span>
+                        <span class="conteudo_campo bold padding-top"> - </span>
                       </div>
                     </div>
                     <div class="columns linha">
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL</div>
-                        <span class="conteudo_campo bold">{{emitente.ie}}</span>
+                        <span class="conteudo_campo bold">1234567890</span>
                       </div>
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL DO SUBST. TRIB.</div>
-                        <span class="conteudo_campo bold">{{emitente.ie_st}}</span>
+                        <span class="conteudo_campo bold"></span>
                       </div>
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">CNPJ</div>
-                        <span class="conteudo_campo bold">{{emitente.inscricao_nacional}}</span>
+                        <span class="conteudo_campo bold">12.345.678/9012-34</span>
                       </div>
                     </div>
                   </div>
@@ -686,55 +655,55 @@
                   <div class="columns linha all-rounded-corners">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">NOME/RAZÃO SOCIAL</div>
-                      <span class="conteudo_campo bold">{{destinatario.nome}}</span>
+                      <span class="conteudo_campo bold">NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</span>
                     </div>
                     <div class="column is-2 all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">CNPJ/CPF</div>
-                      <span class="conteudo_campo bold">{{destinatario.inscricao_nacional}}</span>
+                      <span class="conteudo_campo bold">412.673.103-24</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">DATA DA EMISSÃO</div>
-                      <span class="conteudo_campo bold">{{data_emissao}}</span>
+                      <span class="conteudo_campo bold">09/11/2023</span>
                     </div>
                   </div>
                   <div class="columns linha all-rounded-corners">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">ENDEREÇO</div>
-                      <span class="conteudo_campo bold">{{destinatario.endereco}}, {{destinatario.numero}}</span>
+                      <span class="conteudo_campo bold">RUA TEST, 1231</span>
                     </div>
                     <div class="column bairro all-rounded-corners padding-top">
                       <div class="tcampo reset-font">BAIRRO/DISTRITO</div>
-                      <span class="conteudo_campo bold">{{destinatario.bairro}}</span>
+                      <span class="conteudo_campo bold">teste</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">CEP</div>
-                      <span class="conteudo_campo bold">{{destinatario.cep}}</span>
+                      <span class="conteudo_campo bold">11111-111</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">DATA SAÍDA/ENTRADA</div>
-                      <span class="conteudo_campo bold">{{data_saida}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                   </div>
                   <div class="columns linha">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">MUNICÍPIO</div>
-                      <span class="conteudo_campo bold">{{destinatario.municipio}}</span>
+                      <span class="conteudo_campo bold">testeee</span>
                     </div>
                     <div class="column uf all-rounded-corners padding-top">
                       <div class="tcampo reset-font">UF</div>
-                      <span class="conteudo_campo bold">{{destinatario.uf}}</span>
+                      <span class="conteudo_campo bold">RS</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">FONE/FAX</div>
-                      <span class="conteudo_campo bold">{{destinatario.telefone}}</span>
+                      <span class="conteudo_campo bold">(51) 1111 - 1111</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL</div>
-                      <span class="conteudo_campo bold">{{destinatario.ie}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">HORA DA SAÍDA</div>
-                      <span class="conteudo_campo bold">{{hora_saida}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                   </div>
                 </div>
@@ -743,39 +712,6 @@
 
 
             <!-- Faturas  -->
-            {{#if duplicatas}}
-            <div class="columns grupo">
-              <div class="column">
-                <div class="quadro duplicatas">
-                  <div class="columns padding-top">
-                    <div class="column bold">
-                      FATURA/DUPLICATA
-                    </div>
-                  </div>
-                  <div class="columns" id="reset-border-duplicata">
-                    <div class="column">
-                      {{#each duplicatas}}
-                      <div class="duplicata is-pulled-left all-rounded-corners">
-                        <div class="dup-flex reset-marpads">
-                          <div class="font-6 margin-right">Num.</div>
-                          <div class="bold">{{this.numero}}</div>
-                        </div>
-                        <div class="dup-flex reset-marpads">
-                          <div class="font-6 margin-right">Venc.</div>
-                          <div class="bold">{{this.vencimento}}</div>
-                        </div>
-                        <div class="dup-flex reset-marpads">
-                          <div class="font-6 margin-right">Valor</div>
-                          <div class="bold">{{this.valor}}</div>
-                        </div>
-                      </div>
-                      {{/each}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {{/if}}
 
             <!-- Impostos  -->
             <div class="columns grupo">
@@ -789,49 +725,49 @@
                   <div class="columns linha all-rounded-corners">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">BASE DE CÁLC. DO ICMS</div>
-                      <div class="bold">{{base_calculo_icms}}</div>
+                      <div class="bold">629,90</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR DO ICMS</div>
-                      <div class="bold">{{imposto_icms}}</div>
+                      <div class="bold">113,40</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">BASE DE CÁLC. ICMS S.T.</div>
-                      <div class="bold">{{base_calculo_icms_st}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR DO ICMS SUBST.</div>
-                      <div class="bold">{{imposto_icms_st}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">V. TOTAL PRODUTOS</div>
-                      <div class="bold">{{total_produtos}}</div>
+                      <div class="bold">31,80</div>
                     </div>
                   </div>
                   <div class="columns linha">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR DO FRETE</div>
-                      <div class="bold">{{total_frete}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR DO SEGURO</div>
-                      <div class="bold">{{total_seguro}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">DESCONTO</div>
-                      <div class="bold">{{total_desconto}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">OUTRAS DESPESAS</div>
-                      <div class="bold">{{total_despesas}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR TOTAL IPI</div>
-                      <div class="bold">{{total_ipi}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">V. TOTAL DA NOTA</div>
-                      <div class="bold">{{total_nota}}</div>
+                      <div class="bold">31,80</div>
                     </div>
                   </div>
                 </div>
@@ -850,71 +786,71 @@
                   <div class="columns linha all-rounded-corners">
                     <div class="column nome all-rounded-corners padding-top">
                       <div class="tcampo reset-font">RAZÃO SOCIAL</div>
-                      <span class="conteudo_campo bold">{{transportador.nome}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">FRETE POR CONTA</div>
-                      <span class="conteudo_campo bold">{{modalidade_frete}} - {{modalidade_frete_texto}}</span>
+                      <span class="conteudo_campo bold">9 - </span>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">CÓDIGO ANTT</div>
-                      <span class="conteudo_campo bold">{{veiculo.antt}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column placa all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">PLACA DO VEÍCULO</div>
-                      <span class="conteudo_campo bold">{{veiculo.placa}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column uf all-rounded-corners padding-top">
                       <div class="tcampo reset-font">UF</div>
-                      <span class="conteudo_campo bold">{{veiculo.placa_uf}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">CNPJ/CPF</div>
-                      <span class="conteudo_campo bold">{{transportador.inscricao_nacional}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                   </div>
                   <div class="columns linha">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">ENDEREÇO</div>
-                      <span class="conteudo_campo bold">{{transportador.endereco}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">MUNICÍPIO</div>
-                      <span class="conteudo_campo bold">{{transportador.municipio}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column uf all-rounded-corners padding-top">
                       <div class="tcampo reset-font">UF</div>
-                      <span class="conteudo_campo bold">{{transportador.uf}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL</div>
-                      <span class="conteudo_campo bold">{{transportador.ie}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                   </div>
                   <div class="columns linha">
                     <div class="column direita all-rounded-corners padding-top">
                       <div class="tcampo reset-font">QUANTIDADE</div>
-                      <span class="conteudo_campo bold">{{volume.quantidade}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">ESPÉCIE</div>
-                      <span class="conteudo_campo bold">{{volume.especie}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">MARCA</div>
-                      <span class="conteudo_campo bold">{{volume.marca}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">NUMERAÇÃO</div>
-                      <span class="conteudo_campo bold">{{volume.numeracao}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column direita all-rounded-corners padding-top">
                       <div class="tcampo reset-font">PESO BRUTO</div>
-                      <span class="conteudo_campo bold">{{volume.pesoBruto}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column direita all-rounded-corners padding-top">
                       <div class="tcampo reset-font">PESO LÍQUIDO</div>
-                      <span class="conteudo_campo bold">{{volume.pesoLiquido}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                   </div>
                 </div>
@@ -948,33 +884,31 @@
                           <th>V.TOTAL</th>
                           <th>BC.ICMS</th>
                           <th>V.ICMS</th>
-                          {{#if exibe_ipi}}<th>V.IPI</th>{{/if}}
+                          
                           <th>%ICMS</th>
-                          {{#if exibe_ipi}}<th>%IPI</th>{{/if}}
+                          
                         </tr>
                       </thead>
                       <tbody>
-                        {{#each itens}}
                         <tr>
-                          <td>{{this.codigo}}</td>
+                          <td>84233</td>
                           <td>
-                            {{this.descricao}}<br/>
-                            {{this.informacoes_produto}}
+                            NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL<br/>
+                            
                           </td>
-                          <td>{{this.ncm}}</td>
-                          <td>{{this.cst}}</td>
-                          <td>{{this.cfop}}</td>
-                          <td>{{this.unidade}}</td>
-                          <td class="direita">{{this.quantidade}}</td>
-                          <td class="direita">{{this.valor}}</td>
-                          <td class="direita">{{this.total}}</td>
-                          <td class="direita">{{this.base_calculo}}</td>
-                          <td class="direita">{{this.icms}}</td>
-                          {{#if exibe_ipi}}<td class="direita">{{this.ipi}}</td>{{/if}}
-                          <td class="direita">{{this.porcentagem_icms}}</td>
-                          {{#if exibe_ipi}}<td class="direita">{{this.porcentagem_ipi}}</td>{{/if}}
+                          <td>85164000</td>
+                          <td>00</td>
+                          <td>5102</td>
+                          <td>SAC</td>
+                          <td class="direita">1,00</td>
+                          <td class="direita">31,80</td>
+                          <td class="direita">31,80</td>
+                          <td class="direita">629,90</td>
+                          <td class="direita">113,40</td>
+                          
+                          <td class="direita">18,00</td>
+                          
                         </tr>
-                        {{/each}}
                       </tbody>
                     </table>
                   </div>
@@ -998,8 +932,8 @@
           <div class="columns linha complemento all-rounded-corners">
             <div class="column all-rounded-corners padding-top">
               <div class="tcampo">INFORMAÇÕES COMPLEMENTARES</div>
-              <span class="conteudo_campo">{{informacoes_fisco}}</span>
-              <span class="conteudo_campo">{{informacoes_complementares}}</span>
+              <span class="conteudo_campo"></span>
+              <span class="conteudo_campo">TESTTESTETSTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</span>
             </div>
             <div class="column fisco all-rounded-corners padding-top">
               <div class="tcampo">RESERVADO AO FISCO</div>
@@ -1016,7 +950,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/JsBarcode.all.min.js">
 </script>
 <script>
-  JsBarcode("#barcode", "{{ codigo_barras }}", { displayValue: false, height: 35, width: 1 })
+  JsBarcode("#barcode", "", { displayValue: false, height: 35, width: 1 })
 </script>
 
 </html>

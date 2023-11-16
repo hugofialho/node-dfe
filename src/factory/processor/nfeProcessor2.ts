@@ -88,7 +88,7 @@ export class NFeProcessor {
 
       if (result.envioNF && result.envioNF.data) {
         const data = Object(result.envioNF.data);
-        if (data.retEnviNFe && geral.modelo == "55") {
+        if (data.retEnviNFe && data.retEnviNFe.infRec && geral.modelo == "55") {
           retEnviNFe = data.retEnviNFe;
           const recibo = retEnviNFe.infRec.nRec;
           result.consultaProc = <RetornoProcessamento>(
@@ -97,11 +97,15 @@ export class NFeProcessor {
           retConsReciNFe = Object(result.consultaProc.data).retConsReciNFe;
         }
 
-        if (retEnviNFe && retConsReciNFe)
-          if (retEnviNFe.cStat == "103" && retConsReciNFe.cStat == "104") {
-            result.confirmada = true;
-            result.success = true;
-          }
+        if (
+          retEnviNFe &&
+          retConsReciNFe &&
+          retEnviNFe.cStat == "103" &&
+          retConsReciNFe.cStat == "104"
+        ) {
+          result.confirmada = true;
+          result.success = true;
+        }
 
         if (arquivos && arquivos.salvar) {
           if (!fs.existsSync(arquivos.pastaEnvio))
