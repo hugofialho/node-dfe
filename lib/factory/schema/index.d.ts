@@ -69,6 +69,7 @@ export interface TEnviNFe {
     };
     idLote: string;
     indSinc: TEnviNFeIndSinc;
+    NFe: TNFe[];
     _: string;
 }
 export declare enum TEnviNFeIndSinc {

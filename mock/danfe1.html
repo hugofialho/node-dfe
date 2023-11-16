@@ -513,11 +513,6 @@
   <div class="container area">
 
     <!-- MARCA DAGUA  -->
-    {{#if marca_dagua}}
-    <div class="watermark">
-      <p class="watermark-text">{{marca_dagua}}</p>
-    </div>
-    {{/if}}
 
     <!-- Canhoto  -->
     <div class="columns grupo">
@@ -530,9 +525,9 @@
           <div class="columns linha all-rounded-corners">
             <div class="column campo all-rounded-corners">
               <div class="texto_recibo conteudo_campo">
-                RECEBEMOS DE '{{emitente.nome}}' OS PRODUTOS E/OU SERVIÇOS CONSTANTES DA NOTA FISCAL ELETRÔNICA INDICADA ABAIXO. EMISSÃO:
-                {{data_emissao}} - VALOR TOTAL: {{total_nota}} - DESTINATÁRIO: {{destinatario.nome}} - ENDEREÇO: {{destinatario.endereco}},
-                {{destinatario.numero}}, {{destinatario.bairro}} - {{destinatario.municipio}}/{{destinatario.uf}}
+                RECEBEMOS DE 'DISTRIB. RIBEIRO E ROSA EIRELI - ME' OS PRODUTOS E/OU SERVIÇOS CONSTANTES DA NOTA FISCAL ELETRÔNICA INDICADA ABAIXO. EMISSÃO:
+                29/05/2023 - VALOR TOTAL: 479,46 - DESTINATÁRIO: MARIANA PAGANINI BARCELOS - ENDEREÇO: RUA PROF EROTILDES SILVA DE MENEZES,
+                260, SHOPING PARK - UBERLANDIA/MG
               </div>
             </div>
           </div>
@@ -555,8 +550,8 @@
           <div class="columns linha all-rounded-corners">
             <div class="column area_canhoto_nr all-rounded-corners">
               <div class="center font-14">NF-e</div>
-              <div class="center font-10 reset-marpads">Nº {{numero}}</div>
-              <div class="center font-10 reset-marpads">Série: {{serie}}</div>
+              <div class="center font-10 reset-marpads">Nº 25706</div>
+              <div class="center font-10 reset-marpads">Série: 1</div>
             </div>
           </div>
         </div>
@@ -581,36 +576,33 @@
                     <div class="columns linha quadro_cabecalho all-rounded-corners">
                       <div class="column quadro_identificacao all-rounded-corners">
                         <div class="id-emitente">
-                          {{#if emitenteImageUrl}}
                           <div class="perfect-center flex-column">
-                            <img src="{{emitenteImageUrl}}" class="bg-logo" />
+                            <img src="https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg" class="bg-logo" />
                           </div>
-                          {{/if}}
 
                           <div class="perfect-center flex-column">
-                            <div class="conteudo_campo font-10 center margin-bottom">{{emitente.nome}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.fantasia}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.endereco}}, {{emitente.numero}} {{emitente.complemento}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.bairro}} - {{emitente.municipio}} / {{emitente.uf}} CEP {{emitente.cep}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">Fone: {{emitente.telefone}}</div>
+                            <div class="conteudo_campo font-10 center margin-bottom">DISTRIB. RIBEIRO E ROSA EIRELI - ME</div>
+                            <div class="conteudo_campo font-8 center reset-font">DISTRIBUIDORA VITORIA</div>
+                            <div class="conteudo_campo font-8 center reset-font">RUA PAULO LUIS ROTELLE, 580 </div>
+                            <div class="conteudo_campo font-8 center reset-font">LUIZOTE - UBERLANDIA / MG CEP 38414-314</div>
+                            <div class="conteudo_campo font-8 center reset-font">Fone: (34) 3223 - 7455</div>
                           </div>
                         </div>
                       </div>
 
-                      {{#if valor_fiscal}}
                       <div class="column quadro_danfe all-rounded-corners padding-top">
                         <div class="center danfe font-14">DANFE</div>
                         <div class="center font-6">Documento Auxiliar da Nota Fiscal Eletrônica</div>
                         <br>
                         <span class="numero center">
-                          <div class="center is-pulled-right operacao all-rounded-corners">{{operacao}}</div>
+                          <div class="center is-pulled-right operacao all-rounded-corners">1</div>
                           <div class="align-left margin-left">
                             <div class="reset-font">0- ENTRADA</div>
                             <div class="reset-font">1- SAÍDA</div>
                           </div>
                           <br>
-                          <div>Nº {{numero}}</div>
-                          <div>Série {{serie}}</div>
+                          <div>Nº 25706</div>
+                          <div>Série 1</div>
                           <div class="reset-font italic">Folha 1/1</div>
                         </span>
                       </div>
@@ -620,14 +612,13 @@
                         </div>
                         <div class="chave all-rounded-corners">
                           <div class="tcampo reset-font">CHAVE DE ACESSO</div>
-                          <div class="padding-top">{{chave}}</div>
+                          <div class="padding-top">3123 0506 5407 1300 0124 5500 1000 0257 0615 6060 4128</div>
                         </div>
                         <div class="consulta all-rounded-corners">
                           <br> Consulta de autenticidade no portal nacional da NF-e www.nfe.fazenda.gov.br/portal ou no site
                           da Sefaz Autorizadora
                         </div>
                       </div>
-                      {{/if}}
                     </div>
                   </div>
                 </div>
@@ -642,25 +633,25 @@
                     <div class="columns linha all-rounded-corners">
                       <div class="column campo all-rounded-corners padding-top">
                         <div class="tcampo reset-font">NATUREZA DA OPERAÇÃO</div>
-                        <span class="conteudo_campo bold">{{natureza}}</span>
+                        <span class="conteudo_campo bold">SAIDA - VENDA PJ EM GERAL</span>
                       </div>
                       <div class="column protocolo all-rounded-corners">
                         <div class="tcampo reset-font">PROTOCOLO DE AUTORIZACAO DE USO </div>
-                        <span class="conteudo_campo bold padding-top">{{protocolo}} - {{data_protocolo}}</span>
+                        <span class="conteudo_campo bold padding-top">131235406124904 - 29/05/2023 08:10:37</span>
                       </div>
                     </div>
                     <div class="columns linha">
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL</div>
-                        <span class="conteudo_campo bold">{{emitente.ie}}</span>
+                        <span class="conteudo_campo bold">7023103750022</span>
                       </div>
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL DO SUBST. TRIB.</div>
-                        <span class="conteudo_campo bold">{{emitente.ie_st}}</span>
+                        <span class="conteudo_campo bold"></span>
                       </div>
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">CNPJ</div>
-                        <span class="conteudo_campo bold">{{emitente.inscricao_nacional}}</span>
+                        <span class="conteudo_campo bold">06.540.713/0001-24</span>
                       </div>
                     </div>
                   </div>
@@ -686,55 +677,55 @@
                   <div class="columns linha all-rounded-corners">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">NOME/RAZÃO SOCIAL</div>
-                      <span class="conteudo_campo bold">{{destinatario.nome}}</span>
+                      <span class="conteudo_campo bold">MARIANA PAGANINI BARCELOS</span>
                     </div>
                     <div class="column is-2 all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">CNPJ/CPF</div>
-                      <span class="conteudo_campo bold">{{destinatario.inscricao_nacional}}</span>
+                      <span class="conteudo_campo bold">40.144.000/0001-80</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">DATA DA EMISSÃO</div>
-                      <span class="conteudo_campo bold">{{data_emissao}}</span>
+                      <span class="conteudo_campo bold">29/05/2023</span>
                     </div>
                   </div>
                   <div class="columns linha all-rounded-corners">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">ENDEREÇO</div>
-                      <span class="conteudo_campo bold">{{destinatario.endereco}}, {{destinatario.numero}}</span>
+                      <span class="conteudo_campo bold">RUA PROF EROTILDES SILVA DE MENEZES, 260</span>
                     </div>
                     <div class="column bairro all-rounded-corners padding-top">
                       <div class="tcampo reset-font">BAIRRO/DISTRITO</div>
-                      <span class="conteudo_campo bold">{{destinatario.bairro}}</span>
+                      <span class="conteudo_campo bold">SHOPING PARK</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">CEP</div>
-                      <span class="conteudo_campo bold">{{destinatario.cep}}</span>
+                      <span class="conteudo_campo bold">38425-463</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">DATA SAÍDA/ENTRADA</div>
-                      <span class="conteudo_campo bold">{{data_saida}}</span>
+                      <span class="conteudo_campo bold">29/05/2023</span>
                     </div>
                   </div>
                   <div class="columns linha">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">MUNICÍPIO</div>
-                      <span class="conteudo_campo bold">{{destinatario.municipio}}</span>
+                      <span class="conteudo_campo bold">UBERLANDIA</span>
                     </div>
                     <div class="column uf all-rounded-corners padding-top">
                       <div class="tcampo reset-font">UF</div>
-                      <span class="conteudo_campo bold">{{destinatario.uf}}</span>
+                      <span class="conteudo_campo bold">MG</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">FONE/FAX</div>
-                      <span class="conteudo_campo bold">{{destinatario.telefone}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL</div>
-                      <span class="conteudo_campo bold">{{destinatario.ie}}</span>
+                      <span class="conteudo_campo bold">0039234690087</span>
                     </div>
                     <div class="column data all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">HORA DA SAÍDA</div>
-                      <span class="conteudo_campo bold">{{hora_saida}}</span>
+                      <span class="conteudo_campo bold">08:10:29</span>
                     </div>
                   </div>
                 </div>
@@ -743,7 +734,6 @@
 
 
             <!-- Faturas  -->
-            {{#if duplicatas}}
             <div class="columns grupo">
               <div class="column">
                 <div class="quadro duplicatas">
@@ -754,28 +744,25 @@
                   </div>
                   <div class="columns" id="reset-border-duplicata">
                     <div class="column">
-                      {{#each duplicatas}}
                       <div class="duplicata is-pulled-left all-rounded-corners">
                         <div class="dup-flex reset-marpads">
                           <div class="font-6 margin-right">Num.</div>
-                          <div class="bold">{{this.numero}}</div>
+                          <div class="bold">001</div>
                         </div>
                         <div class="dup-flex reset-marpads">
                           <div class="font-6 margin-right">Venc.</div>
-                          <div class="bold">{{this.vencimento}}</div>
+                          <div class="bold">2023-06-26</div>
                         </div>
                         <div class="dup-flex reset-marpads">
                           <div class="font-6 margin-right">Valor</div>
-                          <div class="bold">{{this.valor}}</div>
+                          <div class="bold">479.46</div>
                         </div>
                       </div>
-                      {{/each}}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            {{/if}}
 
             <!-- Impostos  -->
             <div class="columns grupo">
@@ -789,49 +776,49 @@
                   <div class="columns linha all-rounded-corners">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">BASE DE CÁLC. DO ICMS</div>
-                      <div class="bold">{{base_calculo_icms}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR DO ICMS</div>
-                      <div class="bold">{{imposto_icms}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">BASE DE CÁLC. ICMS S.T.</div>
-                      <div class="bold">{{base_calculo_icms_st}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR DO ICMS SUBST.</div>
-                      <div class="bold">{{imposto_icms_st}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">V. TOTAL PRODUTOS</div>
-                      <div class="bold">{{total_produtos}}</div>
+                      <div class="bold">479,46</div>
                     </div>
                   </div>
                   <div class="columns linha">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR DO FRETE</div>
-                      <div class="bold">{{total_frete}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR DO SEGURO</div>
-                      <div class="bold">{{total_seguro}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">DESCONTO</div>
-                      <div class="bold">{{total_desconto}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">OUTRAS DESPESAS</div>
-                      <div class="bold">{{total_despesas}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">VALOR TOTAL IPI</div>
-                      <div class="bold">{{total_ipi}}</div>
+                      <div class="bold">0,00</div>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">V. TOTAL DA NOTA</div>
-                      <div class="bold">{{total_nota}}</div>
+                      <div class="bold">479,46</div>
                     </div>
                   </div>
                 </div>
@@ -850,71 +837,71 @@
                   <div class="columns linha all-rounded-corners">
                     <div class="column nome all-rounded-corners padding-top">
                       <div class="tcampo reset-font">RAZÃO SOCIAL</div>
-                      <span class="conteudo_campo bold">{{transportador.nome}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">FRETE POR CONTA</div>
-                      <span class="conteudo_campo bold">{{modalidade_frete}} - {{modalidade_frete_texto}}</span>
+                      <span class="conteudo_campo bold">0 - EMITENTE</span>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">CÓDIGO ANTT</div>
-                      <span class="conteudo_campo bold">{{veiculo.antt}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column placa all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">PLACA DO VEÍCULO</div>
-                      <span class="conteudo_campo bold">{{veiculo.placa}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column uf all-rounded-corners padding-top">
                       <div class="tcampo reset-font">UF</div>
-                      <span class="conteudo_campo bold">{{veiculo.placa_uf}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">CNPJ/CPF</div>
-                      <span class="conteudo_campo bold">{{transportador.inscricao_nacional}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                   </div>
                   <div class="columns linha">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">ENDEREÇO</div>
-                      <span class="conteudo_campo bold">{{transportador.endereco}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">MUNICÍPIO</div>
-                      <span class="conteudo_campo bold">{{transportador.municipio}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column uf all-rounded-corners padding-top">
                       <div class="tcampo reset-font">UF</div>
-                      <span class="conteudo_campo bold">{{transportador.uf}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL</div>
-                      <span class="conteudo_campo bold">{{transportador.ie}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                   </div>
                   <div class="columns linha">
                     <div class="column direita all-rounded-corners padding-top">
                       <div class="tcampo reset-font">QUANTIDADE</div>
-                      <span class="conteudo_campo bold">{{volume.quantidade}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">ESPÉCIE</div>
-                      <span class="conteudo_campo bold">{{volume.especie}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">MARCA</div>
-                      <span class="conteudo_campo bold">{{volume.marca}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column all-rounded-corners padding-top center">
                       <div class="tcampo reset-font">NUMERAÇÃO</div>
-                      <span class="conteudo_campo bold">{{volume.numeracao}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column direita all-rounded-corners padding-top">
                       <div class="tcampo reset-font">PESO BRUTO</div>
-                      <span class="conteudo_campo bold">{{volume.pesoBruto}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                     <div class="column direita all-rounded-corners padding-top">
                       <div class="tcampo reset-font">PESO LÍQUIDO</div>
-                      <span class="conteudo_campo bold">{{volume.pesoLiquido}}</span>
+                      <span class="conteudo_campo bold"></span>
                     </div>
                   </div>
                 </div>
@@ -948,33 +935,392 @@
                           <th>V.TOTAL</th>
                           <th>BC.ICMS</th>
                           <th>V.ICMS</th>
-                          {{#if exibe_ipi}}<th>V.IPI</th>{{/if}}
+                          
                           <th>%ICMS</th>
-                          {{#if exibe_ipi}}<th>%IPI</th>{{/if}}
+                          
                         </tr>
                       </thead>
                       <tbody>
-                        {{#each itens}}
                         <tr>
-                          <td>{{this.codigo}}</td>
+                          <td>908</td>
                           <td>
-                            {{this.descricao}}<br/>
-                            {{this.informacoes_produto}}
+                            VASSOURA PELO VITORIA<br/>
+                            
                           </td>
-                          <td>{{this.ncm}}</td>
-                          <td>{{this.cst}}</td>
-                          <td>{{this.cfop}}</td>
-                          <td>{{this.unidade}}</td>
-                          <td class="direita">{{this.quantidade}}</td>
-                          <td class="direita">{{this.valor}}</td>
-                          <td class="direita">{{this.total}}</td>
-                          <td class="direita">{{this.base_calculo}}</td>
-                          <td class="direita">{{this.icms}}</td>
-                          {{#if exibe_ipi}}<td class="direita">{{this.ipi}}</td>{{/if}}
-                          <td class="direita">{{this.porcentagem_icms}}</td>
-                          {{#if exibe_ipi}}<td class="direita">{{this.porcentagem_ipi}}</td>{{/if}}
+                          <td>96039000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">2,00</td>
+                          <td class="direita">9,99</td>
+                          <td class="direita">19,98</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
                         </tr>
-                        {{/each}}
+                        <tr>
+                          <td>909</td>
+                          <td>
+                            VASSOURA POP VITORIA<br/>
+                            
+                          </td>
+                          <td>96039000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">2,00</td>
+                          <td class="direita">7,49</td>
+                          <td class="direita">14,98</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>768</td>
+                          <td>
+                            RODO PLASTICO 30 CM VITORIA<br/>
+                            
+                          </td>
+                          <td>96039000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">2,00</td>
+                          <td class="direita">6,49</td>
+                          <td class="direita">12,98</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>1111</td>
+                          <td>
+                            VASSOURA POPINHA VITORIA<br/>
+                            
+                          </td>
+                          <td>96039000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">2,00</td>
+                          <td class="direita">4,99</td>
+                          <td class="direita">9,98</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>771</td>
+                          <td>
+                            RODO PLASTICO 60 CM VITORIA<br/>
+                            
+                          </td>
+                          <td>96039000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">2,00</td>
+                          <td class="direita">9,99</td>
+                          <td class="direita">19,98</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>899</td>
+                          <td>
+                            VASSOURA ESFREGAO CAPA VITORIA<br/>
+                            
+                          </td>
+                          <td>96039000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">2,00</td>
+                          <td class="direita">12,99</td>
+                          <td class="direita">25,98</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>31059</td>
+                          <td>
+                            VASSOURA V-9 CONDOR<br/>
+                            
+                          </td>
+                          <td>96039000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">2,00</td>
+                          <td class="direita">17,99</td>
+                          <td class="direita">35,98</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>1016</td>
+                          <td>
+                            ESPONJA BANHO FLORA VITORIA<br/>
+                            
+                          </td>
+                          <td>68053090</td>
+                          <td>500</td>
+                          <td>5405</td>
+                          <td>UND</td>
+                          <td class="direita">3,00</td>
+                          <td class="direita">3,99</td>
+                          <td class="direita">11,97</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>934</td>
+                          <td>
+                            BUCHA VEGETAL LUVA VITORIA<br/>
+                            
+                          </td>
+                          <td>14049010</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">3,00</td>
+                          <td class="direita">3,99</td>
+                          <td class="direita">11,97</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>30908</td>
+                          <td>
+                            SABAO ATLAS COCO 200GR<br/>
+                            
+                          </td>
+                          <td>34011900</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">15,00</td>
+                          <td class="direita">2,09</td>
+                          <td class="direita">31,35</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>1083</td>
+                          <td>
+                            ESPONJA DUPLAFACE MULTIUSO PLUS 100MMX71MMX21MM SU<br/>
+                            
+                          </td>
+                          <td>68053090</td>
+                          <td>500</td>
+                          <td>5405</td>
+                          <td>UND</td>
+                          <td class="direita">10,00</td>
+                          <td class="direita">1,39</td>
+                          <td class="direita">13,90</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>892</td>
+                          <td>
+                            SACO LIXO 100L PRETO REF VITORIA<br/>
+                            
+                          </td>
+                          <td>39232990</td>
+                          <td>500</td>
+                          <td>5405</td>
+                          <td>UND</td>
+                          <td class="direita">10,00</td>
+                          <td class="direita">4,49</td>
+                          <td class="direita">44,90</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>1052</td>
+                          <td>
+                            SACO LIXO 200L PRETO REF VITORIA<br/>
+                            
+                          </td>
+                          <td>39232990</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">8,00</td>
+                          <td class="direita">8,59</td>
+                          <td class="direita">68,72</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>34487</td>
+                          <td>
+                            COLA THREE BOND 02G<br/>
+                            
+                          </td>
+                          <td>35061010</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">10,00</td>
+                          <td class="direita">2,09</td>
+                          <td class="direita">20,90</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>942</td>
+                          <td>
+                            FLANELA VITORIA 28CMX38CM AMARELA<br/>
+                            
+                          </td>
+                          <td>63071000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">4,00</td>
+                          <td class="direita">2,29</td>
+                          <td class="direita">9,16</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>32070</td>
+                          <td>
+                            RATICIDA RATOKILL GRANULADO 25GR<br/>
+                            
+                          </td>
+                          <td>38089919</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">40,00</td>
+                          <td class="direita">0,99</td>
+                          <td class="direita">39,60</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>1178</td>
+                          <td>
+                            KELLMAT RATICIDA COLA RATO UN<br/>
+                            
+                          </td>
+                          <td>38089996</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">5,00</td>
+                          <td class="direita">3,89</td>
+                          <td class="direita">19,45</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>30557</td>
+                          <td>
+                            SABAO MARLUCE GLICER NEUTRO 200GR<br/>
+                            
+                          </td>
+                          <td>34011900</td>
+                          <td>500</td>
+                          <td>5405</td>
+                          <td>UND</td>
+                          <td class="direita">15,00</td>
+                          <td class="direita">1,99</td>
+                          <td class="direita">29,85</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>1197</td>
+                          <td>
+                            SABAO MARLUCE AZUL PERFUMADO 200GRS<br/>
+                            
+                          </td>
+                          <td>34011900</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">15,00</td>
+                          <td class="direita">1,99</td>
+                          <td class="direita">29,85</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
+                        <tr>
+                          <td>31974</td>
+                          <td>
+                            ESCOVA R.MADEIRA CONDOR REF 16<br/>
+                            
+                          </td>
+                          <td>96039000</td>
+                          <td>102</td>
+                          <td>5102</td>
+                          <td>UND</td>
+                          <td class="direita">2,00</td>
+                          <td class="direita">3,99</td>
+                          <td class="direita">7,98</td>
+                          <td class="direita"></td>
+                          <td class="direita"></td>
+                          
+                          <td class="direita"></td>
+                          
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -998,8 +1344,8 @@
           <div class="columns linha complemento all-rounded-corners">
             <div class="column all-rounded-corners padding-top">
               <div class="tcampo">INFORMAÇÕES COMPLEMENTARES</div>
-              <span class="conteudo_campo">{{informacoes_fisco}}</span>
-              <span class="conteudo_campo">{{informacoes_complementares}}</span>
+              <span class="conteudo_campo"></span>
+              <span class="conteudo_campo">EMPRESA OPTANTE SIMPLES NACIONAL PERMITE O APROV. DE CREDITO ICMS CORRESP. A ALIQUOTA DE 2,98%, NOS TERMOS DO ARTIGO 23 DA LC 123/2006. ICMS RECOLHIDO POR SUBST. TRIBUTARIA CONF. ANEXO XV DO RICMS/MG</span>
             </div>
             <div class="column fisco all-rounded-corners padding-top">
               <div class="tcampo">RESERVADO AO FISCO</div>
@@ -1016,7 +1362,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/JsBarcode.all.min.js">
 </script>
 <script>
-  JsBarcode("#barcode", "{{ codigo_barras }}", { displayValue: false, height: 35, width: 1 })
+  JsBarcode("#barcode", "31230506540713000124550010000257061560604128", { displayValue: false, height: 35, width: 1 })
 </script>
 
 </html>
