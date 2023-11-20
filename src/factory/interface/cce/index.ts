@@ -37,25 +37,14 @@ export type CCeXml = {
 };
 
 export type CCeTemplateData = {
-  chaveAcesso: string;
+  emitenteImageUrl: string;
+  numero: string;
+  serie: string;
+  chave: string,
+  codigo_barras: string,
   correcao: string;
-  destinatario: {
-    cnpj: string;
-    nome: string;
-  };
-  emitente: {
-    bairro: string;
-    cep: string;
-    cnpj: string;
-    endereco: string;
-    fantasia: string;
-    ie: string;
-    municipio: string;
-    nome: string;
-    numero: string;
-    telefone: string;
-    uf: string;
-  };
+  destinatario: any;
+  emitente: any;
   numeroSequencia: string;
   versaoEvento: string;
 };

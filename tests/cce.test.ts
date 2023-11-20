@@ -74,10 +74,10 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
   it("should correctly format the template data", () => {
 
 
-    const templateData = cceProcessor["getTemplateData"]({
-      cceXmlObject: mockCCeXmlObject,
-      nfeXmlObject: mockNfeXmlObject,
-    });
+    const templateData = cceProcessor["getTemplateData"](
+      mockCCeXmlObject,
+      mockNfeXmlObject,
+    );
     expect(templateData.chaveAcesso).toBe(
       mockCCeXmlObject.procEventoNFe.retEvento.infEvento.chNFe
     );
@@ -104,10 +104,10 @@ describe("Test coverage for the 'Carta de Correção' module", () => {
     );
   });
   it("should correctly convert the XML to HTML", async () => {
-    const html = await cceProcessor.xmlStringToHtml({
+    const html = await cceProcessor.xmlStringToHtml(
       cceXml,
       nfeXml,
-    });
+    );
 
     expect(html).toMatch(/35170202500781000109550010000002881000000005/);
     expect(html).toMatch(/02.500.781\/0001-09/);

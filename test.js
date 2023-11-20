@@ -196,10 +196,10 @@ let pagamento = {
 };
 
 let icmsTot = {
-  // vBC: "629.90",
-  // vICMS: "113.40",
-  // vICMSDeson: "0.00",
-  //vFCPUFDest: '0.00',
+  vBC: "629.90",
+  vICMS: "113.40",
+  vICMSDeson: "0.00",
+  vFCPUFDest: "0.00",
   //vICMSUFDest:'0.00',
   //vICMSUFRemet: '0.00',
   vFCP: "0.00",
@@ -373,8 +373,24 @@ async function testeDANFESemValidade() {
   fs.writeFileSync(__dirname + "/mock/danfe-sem-valor-fiscal.html", html);
 }
 
-// testeDANFESemValidade();
-// testeDANFE();
+async function testeCCe() {
+  const cceProcessor = new lib.CCeProcessor();
+
+  const nfeXml = fs.readFileSync(__dirname + "/mock/procNFe1.xml", "utf8");
+  const cceXml = fs.readFileSync(__dirname + "/mock/cce.xml", "utf8");
+  const html = await cceProcessor.xmlStringToHtml(
+    cceXml,
+    nfeXml,
+    `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`
+  );
+  fs.writeFileSync(__dirname + "/mock/cce.html", html);
+}
+
+// testeCCe();
+
+testeDANFESemValidade();
+testeDANFE();
+testeCCe();
 
 async function testeValidate() {
   const nfeProcXml = fs.readFileSync(
@@ -404,7 +420,7 @@ async function testeValidate() {
 //testeAssinaturaXML();
 //testeConsultaStatusServico(empresa, "2", "65");
 //testeDesereliaze();
-testeEmissaoNFCe();
+//testeEmissaoNFCe();
 //testeEmissaoNFCeContingenciaOffline(empresa);
 //testeQRcodeNFCe();
 //testHashRespTec();

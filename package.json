@@ -4,8 +4,9 @@
   "description": "Geração e integração de NF-e/NFC-e para node.js",
   "main": "lib/index.js",
   "scripts": {
+    "copy-files": "cp -r -f ./src/factory/templates ./src/factory/xsd ./lib/factory/",
     "test": "npm run build && node test.js",
-    "build": "tsc",
+    "build": "tsc && npm run copy-files",
     "cxsd": "cxsd",
     "dev": "ts-node-dev --respawn ./src/index.ts"
   },

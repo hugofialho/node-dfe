@@ -508,18 +508,16 @@
                     <div class="columns linha quadro_cabecalho all-rounded-corners">
                       <div class="column quadro_identificacao all-rounded-corners">
                         <div class="id-emitente">
-                          {{#if emitenteImageUrl}}
                           <div class="perfect-center flex-column">
-                            <img src="{{emitenteImageUrl}}" class="bg-logo" />
+                            <img src="https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg" class="bg-logo" />
                           </div>
-                          {{/if}}
 
                           <div class="perfect-center flex-column">
-                            <div class="conteudo_campo font-10 center margin-bottom">{{emitente.nome}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.fantasia}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.endereco}}, {{emitente.numero}} {{emitente.complemento}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">{{emitente.bairro}} - {{emitente.municipio}} / {{emitente.uf}} CEP {{emitente.cep}}</div>
-                            <div class="conteudo_campo font-8 center reset-font">Fone: {{emitente.telefone}}</div>
+                            <div class="conteudo_campo font-10 center margin-bottom">DISTRIB. RIBEIRO E ROSA EIRELI - ME</div>
+                            <div class="conteudo_campo font-8 center reset-font">DISTRIBUIDORA VITORIA</div>
+                            <div class="conteudo_campo font-8 center reset-font">RUA PAULO LUIS ROTELLE, 580 </div>
+                            <div class="conteudo_campo font-8 center reset-font">LUIZOTE - UBERLANDIA / MG CEP 38414-314</div>
+                            <div class="conteudo_campo font-8 center reset-font">Fone: (34) 3223 - 7455</div>
                           </div>
                         </div>
                       </div>
@@ -528,8 +526,8 @@
                         <div class="center danfe font-14">CCe</div>
                         <br>
                         <span class="numero center">
-                          <div>Nº {{numero}}</div>
-                          <div>Série {{serie}}</div>
+                          <div>Nº 25706</div>
+                          <div>Série 1</div>
                         </span>
                       </div>
                       <div class="column quadro_codigo_barra all-rounded-corners">
@@ -538,7 +536,7 @@
                         </div>
                         <div class="chave all-rounded-corners">
                           <div class="tcampo reset-font">CHAVE DE ACESSO</div>
-                          <div class="padding-top">{{chave}}</div>
+                          <div class="padding-top">3123 0506 5407 1300 0124 5500 1000 0257 0615 6060 4128</div>
                         </div>
                         <div class="consulta all-rounded-corners">
                           <br> Consulta de autenticidade no portal nacional da NF-e www.nfe.fazenda.gov.br/portal ou no site
@@ -555,15 +553,15 @@
                     <div class="columns linha">
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">CNPJ</div>
-                        <span class="conteudo_campo bold">{{emitente.inscricao_nacional}}</span>
+                        <span class="conteudo_campo bold">06.540.713/0001-24</span>
                       </div>
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">INSCRIÇÃO ESTADUAL</div>
-                        <span class="conteudo_campo bold">{{emitente.ie}}</span>
+                        <span class="conteudo_campo bold">7023103750022</span>
                       </div>
                       <div class="column all-rounded-corners center padding-top">
                         <div class="tcampo reset-font">SEQUENCIA CCE</div>
-                        <span class="conteudo_campo bold">{{numeroSequencia}}</span>
+                        <span class="conteudo_campo bold">1</span>
                       </div>
                     </div>
                   </div>
@@ -589,11 +587,11 @@
                   <div class="columns linha all-rounded-corners">
                     <div class="column all-rounded-corners padding-top">
                       <div class="tcampo reset-font">NOME/RAZÃO SOCIAL</div>
-                      <span class="conteudo_campo bold">{{destinatario.nome}}</span>
+                      <span class="conteudo_campo bold">MARIANA PAGANINI BARCELOS</span>
                     </div>
                     <div class="column is-2 all-rounded-corners center padding-top">
                       <div class="tcampo reset-font">CNPJ/CPF</div>
-                      <span class="conteudo_campo bold">{{destinatario.inscricao_nacional}}</span>
+                      <span class="conteudo_campo bold">40.144.000/0001-80</span>
                     </div>
                   </div>
                 </div>
@@ -647,7 +645,7 @@ ou de saida.
           </div>
           <div class="columns linha correcao-cce all-rounded-corners">
             <div class="column all-rounded-corners padding-top">
-              <span class="conteudo_campo font-10">{{correcao}}</span>
+              <span class="conteudo_campo font-10">No Item 3 Onde esta Serie 000214624-02  leia-se  Serie  000214618-56</span>
             </div>
           </div>
         </div>
@@ -660,7 +658,7 @@ ou de saida.
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/JsBarcode.all.min.js">
 </script>
 <script>
-  JsBarcode("#barcode", "{{ codigo_barras }}", { displayValue: false, height: 35, width: 1 })
+  JsBarcode("#barcode", "31230506540713000124550010000257061560604128", { displayValue: false, height: 35, width: 1 })
 </script>
 
 </html>
