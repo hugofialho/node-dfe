@@ -324,7 +324,8 @@ export declare enum TEnderEmiXPais {
 export declare enum TNFeInfNFeEmitCRT {
     Item1 = "1",
     Item2 = "2",
-    Item3 = "3"
+    Item3 = "3",
+    Item4 = "4"
 }
 export interface TNFeInfNFeAvulsa {
     cNPJ: string;

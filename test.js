@@ -351,12 +351,13 @@ async function testeDANFE() {
   const xml = fs.readFileSync(__dirname + "/mock/procNFe1.xml", "utf8");
   const html = await danfeProcessor.xmlStringToHtml(
     xml,
-    `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`
+    `https://pallas-nuvem.nyc3.digitaloceanspaces.com/1/loja_perfil/d2597cb7-a111-46be-a4f2-91cf0683da4f/PALLAS_branco2.jpg`,
+    true
   );
   fs.writeFileSync(__dirname + "/mock/danfe1.html", html);
 
   const xml2 = fs.readFileSync(__dirname + "/mock/procNFe2.xml", "utf8");
-  const html2 = await danfeProcessor.xmlStringToHtml(xml2);
+  const html2 = await danfeProcessor.xmlStringToHtml(xml2, null, true);
   fs.writeFileSync(__dirname + "/mock/danfe2.html", html2);
 }
 
@@ -388,9 +389,9 @@ async function testeCCe() {
 
 // testeCCe();
 
-testeDANFESemValidade();
+// testeDANFESemValidade();
 testeDANFE();
-testeCCe();
+// testeCCe();
 
 async function testeValidate() {
   const nfeProcXml = fs.readFileSync(
