@@ -17,6 +17,10 @@
             "inutilizacao": {
                 "url_producao": "https://nfce.sefaz.am.gov.br/nfce-services/services/NFeInutilizacao4",
                 "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NFeInutilizacao4.asmx?wsdl"
+            },
+            "recepcaoEvento": {
+                "url_producao": "https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento4",
+                "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento4"
             }
         }
     },
@@ -59,6 +63,10 @@
             "inutilizacao": {
                 "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeInutilizacao4",
                 "url_homologacao": "https://homolog.sefaz.go.gov.br/nfe/services/Nfeinutilizacao4.asmx"
+            },
+            "recepcaoEvento": {
+                "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4",
+                "url_homologacao": "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4"
             }
         }
     },
@@ -78,8 +86,12 @@
                 "url_homologacao": "https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeStatusServico4"
             },
             "inutilizacao": {
-                "url_producao": "https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao4",
-                "url_homologacao": "https://homologacao.sefaz.mt.gov.br/nfcews/services/Nfeinutilizacao4.asmx"
+                "url_producao": "https://nfce.sefaz.mt.gov.br/nfcews/services/NfeInutilizacao4",
+                "url_homologacao": "https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeInutilizacao4"
+            },
+            "recepcaoEvento": {
+                "url_producao": "https://nfce.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento4",
+                "url_homologacao": "https://homologacao.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento4"
             }
         }
     },
@@ -99,8 +111,12 @@
                 "url_homologacao": "https://hom.nfce.sefaz.ms.gov.br/ws/NFeStatusServico4"
             },
             "inutilizacao": {
-                "url_producao": "https://nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4",
-                "url_homologacao": "https://hom.nfce.sefaz.ms.gov.br/ws/Nfeinutilizacao4.asmx"
+                "url_producao": "https://nfce.sefaz.ms.gov.br/ws/NFeInutilizacao4",
+                "url_homologacao": "https://hom.nfce.sefaz.ms.gov.br/ws/NFeInutilizacao4"
+            },
+            "recepcaoEvento": {
+                "url_producao": "https://nfce.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4",
+                "url_homologacao": "https://hom.nfce.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4"
             }
         }
     },
@@ -121,7 +137,11 @@
             },
             "inutilizacao": {
                 "url_producao": "https://nfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4",
-                "url_homologacao": "https://hnfce.fazenda.mg.gov.br/nfce/services/Nfeinutilizacao4.asmx"
+                "url_homologacao": "https://hnfce.fazenda.mg.gov.br/nfce/services/Nfeinutilizacao4"
+            },
+            "recepcaoEvento": {
+                "url_producao": "https://nfce.fazenda.mg.gov.br/nfce/services/NFeRecepcaoEvento4",
+                "url_homologacao": "https://hnfce.fazenda.mg.gov.br/nfce/services/NFeRecepcaoEvento4"
             }
         }
     },
@@ -141,8 +161,12 @@
                 "url_homologacao": "https://homologacao.nfce.sefa.pr.gov.br/nfce/NFeStatusServico4"
             },
             "inutilizacao": {
-                "url_producao": "https://nfe.sefa.pr.gov.br/nfe/NFeInutilizacao4",
-                "url_homologacao": "https://homologacao.nfce.sefa.pr.gov.br/nfce/Nfeinutilizacao4.asmx"
+                "url_producao": "https://nfce.sefa.pr.gov.br/nfce/NFeInutilizacao4",
+                "url_homologacao": "https://homologacao.nfce.sefa.pr.gov.br/nfce/NFeInutilizacao4"
+            },
+            "recepcaoEvento": {
+                "url_producao": "https://nfce.sefa.pr.gov.br/nfce/NFeRecepcaoEvento4",
+                "url_homologacao": "https://homologacao.nfce.sefa.pr.gov.br/nfce/NFeRecepcaoEvento4"
             }
         }
     },
@@ -164,6 +188,10 @@
             "inutilizacao": {
                 "url_producao": "https://nfe.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx",
                 "url_homologacao": "https://nfce-homologacao.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx"
+            },
+            "recepcaoEvento": {
+                "url_producao": "https://nfce.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx",
+                "url_homologacao": "https://nfce-homologacao.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx"
             }
         }
     },
@@ -183,8 +211,12 @@
                 "url_homologacao": "https://nfce-homologacao.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx"
             },
             "inutilizacao": {
-                "url_producao": "https://nfe.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx",
+                "url_producao": "https://nfce.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx",
                 "url_homologacao": "https://nfce-homologacao.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx"
+            },
+            "recepcaoEvento": {
+                "url_producao": "https://nfce.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx",
+                "url_homologacao": "https://nfce-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx"
             }
         }
     },
