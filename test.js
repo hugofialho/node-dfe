@@ -6,10 +6,10 @@ const path = require("path");
 const libxmljs = require("libxmljs");
 
 let cert = {
-  pfx: fs.readFileSync("certificado/certificado.pfx"),
-  pem: fs.readFileSync("certificado/cert.pem", "utf8"),
-  key: fs.readFileSync("certificado/key.pem", "utf8"),
-  password: fs.readFileSync("certificado/senha", "utf8"),
+  // pfx: fs.readFileSync("certificado/certificado.pfx"),
+  // pem: fs.readFileSync("certificado/cert.pem", "utf8"),
+  // key: fs.readFileSync("certificado/key.pem", "utf8"),
+  // password: fs.readFileSync("certificado/senha", "utf8"),
 };
 
 let empresa = {
@@ -240,16 +240,10 @@ const configuracoes = {
     modelo: "55",
     versao: "4.00",
   },
-  arquivos: {
-    salvar: true,
-    pastaEnvio: path.join(__dirname, "xml_envio"),
-    pastaRetorno: path.join(__dirname, "xml_retorno"),
-    pastaXML: path.join(__dirname, "xml"),
-  },
 };
 
 async function testeEmissaoNFCe() {
-  const nfeProc = new lib.NFeProcessor(configuracoes, null);
+  const nfeProc = new lib.NFeProcessor(configuracoes);
 
   const ini = new Date();
   let result = await nfeProc.processarDocumento(nfce);
@@ -257,40 +251,7 @@ async function testeEmissaoNFCe() {
   console.log(`${(fin.getTime() - ini.getTime()) / 1000}s`);
 
   // result = require("util").inspect(result, false, null);
-  console.log("Resultado Emissão NFC-e: \n\n" + result.error.message);
-}
-
-async function testeEmissaoNFCeAsync(empresa) {
-  const nfeProc = new lib.NFeProcessor(empresa);
-
-  const ini = new Date();
-  let result = await nfeProc.processarDocumentoAsync(nfce);
-  const fin = new Date();
-  console.log(`${(fin.getTime() - ini.getTime()) / 1000}s`);
-
-  //result = require('util').inspect(result, false, null);
-  //console.log('Resultado Emissão NFC-e: \n\n' + result);
-}
-
-async function testeEmissaoNFCeContingenciaOffline(empresa) {
-  const nfeProc = new lib.NFeProcessor(empresa);
-
-  nfce.docFiscal.isContingenciaOffline = true;
-  nfce.docFiscal.dhContingencia = moment().format();
-  nfce.docFiscal.justificativaContingencia = "TESTE CONTINGENCIA";
-
-  let result = await nfeProc.processarDocumento(nfce);
-  //console.log('Resultado Geração XML NFC-e Contingencia: \n\n' + require('util').inspect(result, false, null) + '\n\n');
-
-  let result_emissao = await nfeProc.transmitirXml(
-    Object(result.retornoContingenciaOffline).xml_gerado,
-    "2",
-    null
-  );
-  console.log(
-    "Resultado Transmissão XML Contingencia: \n\n" +
-      require("util").inspect(result_emissao, false, null)
-  );
+  console.log("Resultado Emissão NFC-e: \n\n" + result.error.stack);
 }
 
 function testeAssinaturaXML() {
@@ -390,7 +351,7 @@ async function testeCCe() {
 // testeCCe();
 
 // testeDANFESemValidade();
-testeDANFE();
+// testeDANFE();
 // testeCCe();
 
 async function testeValidate() {
@@ -418,10 +379,9 @@ async function testeValidate() {
 
 // testeValidate();
 
-//testeAssinaturaXML();
+// testeAssinaturaXML();
 //testeConsultaStatusServico(empresa, "2", "65");
 //testeDesereliaze();
-//testeEmissaoNFCe();
-//testeEmissaoNFCeContingenciaOffline(empresa);
+testeEmissaoNFCe();
 //testeQRcodeNFCe();
 //testHashRespTec();

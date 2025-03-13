@@ -1,14 +1,12 @@
 import * as schema from '../schema/index'
 import { XmlHelper } from "../xmlHelper";
-import { WebServiceHelper, WebProxy } from "../webservices/webserviceHelper";
-import { Empresa, ServicosSefaz, Configuracoes, RetornoProcessamento } from "../interface/nfe";
+import { WebServiceHelper } from "../webservices/webserviceHelper";
+import { ServicosSefaz, Configuracoes, RetornoProcessamento } from "../interface/nfe";
 import * as Utils from "../utils/utils";
 import { SefazNFCe } from "../webservices/sefazNfce";
 import { SefazNFe } from "../webservices/sefazNfe";
-import { Evento, DetalheEvento } from '../interface';
+import { Evento } from '../interface';
 import { Signature } from '../signature';
-import * as fs from 'fs';
-import * as path from 'path';
 
 let soapEvento: any = null;
 
@@ -17,21 +15,8 @@ let soapEvento: any = null;
  */
 export class EventoProcessor {
 
-    constructor(
-        private configuracoes: Configuracoes
-    ) {
-        if (!this.configuracoes.geral.versao) this.configuracoes.geral.versao = '4.00';
-        if (!this.configuracoes.webservices) this.configuracoes.webservices = { tentativas: 3, aguardarConsultaRetorno: 1000 };
-        if (!this.configuracoes.webservices.tentativas) this.configuracoes.webservices.tentativas = 3;
-        if (!this.configuracoes.webservices.aguardarConsultaRetorno) this.configuracoes.webservices.aguardarConsultaRetorno = 1000;
-        if (this.configuracoes.arquivos) {
-            if (this.configuracoes.arquivos.pastaEnvio && (!'/\\'.includes(this.configuracoes.arquivos.pastaEnvio.substr(-1))))
-                this.configuracoes.arquivos.pastaEnvio = this.configuracoes.arquivos.pastaEnvio + path.sep;
-            if (this.configuracoes.arquivos.pastaRetorno && (!'/\\'.includes(this.configuracoes.arquivos.pastaRetorno.substr(-1))))
-                this.configuracoes.arquivos.pastaRetorno = this.configuracoes.arquivos.pastaRetorno + path.sep;
-            if (this.configuracoes.arquivos.pastaXML && (!'/\\'.includes(this.configuracoes.arquivos.pastaXML.substr(-1))))
-                this.configuracoes.arquivos.pastaXML = this.configuracoes.arquivos.pastaXML + path.sep;
-        }
+    constructor(private configuracoes: Configuracoes) {
+        Utils.setConfigDefaultValues(this.configuracoes);
     }
 
     public async executar(evento: Evento) {
@@ -65,7 +50,7 @@ export class EventoProcessor {
         }
 
         try {
-            const { geral: { modelo, ambiente }, empresa, arquivos } = this.configuracoes
+            const { geral: { modelo, ambiente }, empresa } = this.configuracoes
             const Sefaz = modelo == '65' ? SefazNFCe : SefazNFe;
 
             soapEvento = Sefaz.getSoapInfo(empresa.endereco.uf, ambiente, ServicosSefaz.evento);
@@ -76,34 +61,6 @@ export class EventoProcessor {
             let xmlLote = this.gerarXmlLote(xmlAssinado);
 
             result = await this.transmitirXml(xmlLote);
-
-            if (arquivos.salvar) {
-                if (! await fs.existsSync(arquivos.pastaEnvio)) await fs.mkdirSync(arquivos.pastaEnvio, { recursive: true });
-                if (! await fs.existsSync(arquivos.pastaRetorno)) await fs.mkdirSync(arquivos.pastaRetorno, { recursive: true });
-                if (!await fs.existsSync(arquivos.pastaXML)) await fs.mkdirSync(arquivos.pastaXML, { recursive: true });
-
-                if ((result.success == true) && (Object(result.data).retEnvEvento.retEvento.infEvento.cStat == 135)) {
-                    const filename = `${arquivos.pastaXML}${evento.chNFe}${evento.tpEvento}-procEventoNFe.xml`;
-
-                    const procEvento = <schema.TProcEvento>{
-                        $: { versao: "1.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
-                        _: '[XML_EVENTO]',
-                        retEvento: Object(result.data).retEnvEvento.retEvento
-                    };
-
-                    Utils.removeSelfClosedFields(procEvento);
-                    let xmlProcEvento = XmlHelper.serializeXml(procEvento, 'procEvento');
-                    xmlProcEvento = xmlProcEvento.replace('[XML_EVENTO]', xmlAssinado);
-
-                    await fs.writeFileSync(filename, xmlProcEvento);
-                } else {
-                    const filenameEnvio = `${arquivos.pastaEnvio}${evento.chNFe}${evento.tpEvento}-envEventoCancNFe.xml`;
-                    const filenameRetorno = `${arquivos.pastaRetorno}${evento.chNFe}${evento.tpEvento}-retEnvEventoCancNFe.xml`;
-
-                    await fs.writeFileSync(filenameEnvio, result.xml_enviado);
-                    await fs.writeFileSync(filenameRetorno, result.xml_recebido);
-                }
-            }
         } catch (ex: any) {
             result.success = false;
             result.error = ex;

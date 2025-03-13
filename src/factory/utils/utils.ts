@@ -1,3 +1,19 @@
+import { Configuracoes } from '../interface/index'
+
+export function setConfigDefaultValues(configuracoes: Configuracoes) {
+    if (!configuracoes.geral.versao) 
+        configuracoes.geral.versao = '4.00';
+
+    if (!configuracoes.webservices) 
+        configuracoes.webservices = { tentativas: 3, aguardarConsultaRetorno: 1000 };
+
+    if (!configuracoes.webservices.tentativas) 
+        configuracoes.webservices.tentativas = 3;
+    
+    if (!configuracoes.webservices.aguardarConsultaRetorno) 
+        configuracoes.webservices.aguardarConsultaRetorno = 1000;
+}
+
 
 export function getEnumByValue (enumType: any, value: any): any {
     if (!value) {

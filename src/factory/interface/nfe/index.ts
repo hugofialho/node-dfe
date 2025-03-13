@@ -492,13 +492,6 @@ export interface Webservices {
   aguardarConsultaRetorno: number; //tempo em milisegundos
 }
 
-export interface Arquivos {
-  salvar: boolean;
-  pastaEnvio: string;
-  pastaRetorno: string;
-  pastaXML: string;
-}
-
 export enum TipoEvento {
   cancelamento = "110111",
   cartaCorrecao = "110110",
@@ -516,5 +509,4 @@ export interface Configuracoes {
   geral: Geral;
   webservices: Webservices;
   responsavelTecnico?: ResponsavelTecnico;
-  arquivos: Arquivos;
 }

@@ -61,37 +61,7 @@ export class EnviaProcessor {
   private schemaXsdLote: any = null;
 
   constructor(private configuracoes: Configuracoes) {
-    if (!this.configuracoes.geral.versao)
-      this.configuracoes.geral.versao = "4.00";
-    if (!this.configuracoes.webservices)
-      this.configuracoes.webservices = {
-        tentativas: 3,
-        aguardarConsultaRetorno: 1000,
-      };
-    if (!this.configuracoes.webservices.tentativas)
-      this.configuracoes.webservices.tentativas = 3;
-    if (!this.configuracoes.webservices.aguardarConsultaRetorno)
-      this.configuracoes.webservices.aguardarConsultaRetorno = 1000;
-    if (this.configuracoes.arquivos) {
-      if (
-        this.configuracoes.arquivos.pastaEnvio &&
-        !"/\\".includes(this.configuracoes.arquivos.pastaEnvio.substr(-1))
-      )
-        this.configuracoes.arquivos.pastaEnvio =
-          this.configuracoes.arquivos.pastaEnvio + path.sep;
-      if (
-        this.configuracoes.arquivos.pastaRetorno &&
-        !"/\\".includes(this.configuracoes.arquivos.pastaRetorno.substr(-1))
-      )
-        this.configuracoes.arquivos.pastaRetorno =
-          this.configuracoes.arquivos.pastaRetorno + path.sep;
-      if (
-        this.configuracoes.arquivos.pastaXML &&
-        !"/\\".includes(this.configuracoes.arquivos.pastaXML.substr(-1))
-      )
-        this.configuracoes.arquivos.pastaXML =
-          this.configuracoes.arquivos.pastaXML + path.sep;
-    }
+    Utils.setConfigDefaultValues(this.configuracoes);
   }
 
   /**

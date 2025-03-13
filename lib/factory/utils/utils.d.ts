@@ -1,3 +1,5 @@
+import { Configuracoes } from '../interface/index';
+export declare function setConfigDefaultValues(configuracoes: Configuracoes): void;
 export declare function getEnumByValue(enumType: any, value: any): any;
 export declare function randomInt(min: number, max: number): number;
 export declare function removeSelfClosedFields(o: Object | any): void;
