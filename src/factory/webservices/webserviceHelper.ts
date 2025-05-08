@@ -52,8 +52,8 @@ export abstract class WebServiceHelper {
         let result = <RetornoProcessamento>{ xml_enviado: xml };
         try {
             const headers: HeadersInit = {
-                "Content-Type": `application/soap+xml; charset=utf-8`,
-                "SAOPAction": soap.action,
+                "Content-Type": `application/soap+xml; charset=utf-8; action="${soap.action}"`,
+                // "SAOPAction": soap.action,
             };
             const agent = new https.Agent({
                 rejectUnauthorized: false,
