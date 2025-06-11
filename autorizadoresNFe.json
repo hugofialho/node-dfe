@@ -270,7 +270,7 @@
         "url_homologacao": "https://nfe-homologacao.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx"
       },
       "recepcaoEvento": {
-        "url_producao": "https://www.sefazvirtual.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx",
+        "url_producao": "https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx",
         "url_homologacao": ""
       }
     }
