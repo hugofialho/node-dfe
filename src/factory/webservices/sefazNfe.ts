@@ -47,8 +47,6 @@ export abstract class SefazNFe {
                 return autorizadores.AM;
             case 'BA':
                 return autorizadores.BA;
-            case 'CE':
-                return autorizadores.CE;
             case 'GO':
                 return autorizadores.GO;
             case 'MG':
@@ -71,6 +69,7 @@ export abstract class SefazNFe {
             case 'AC':
             case 'AL':
             case 'AP':
+            case 'CE':
             case 'DF':
             case 'ES':
             case 'PB':
