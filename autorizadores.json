@@ -240,7 +240,7 @@
         "url_homologacao": ""
       },
       "recepcaoEvento": {
-        "url_producao": "https://nfce.fazenda.sp.gov.br/ws/RecepcaoEvento.asmx",
+        "url_producao": "https://nfce.fazenda.sp.gov.br/ws/NFeRecepcaoEvento4.asmx",
         "url_homologacao": ""
       }
     }
