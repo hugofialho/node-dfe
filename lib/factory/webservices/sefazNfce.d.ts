@@ -1,4 +1,4 @@
-import { ServicosSefaz } from '../interface/nfe';
+import { ServicosSefaz } from "../interface/nfe";
 export declare abstract class SefazNFCe {
     private static getAutorizadorByUF;
     private static getInfoQRCodeByUF;

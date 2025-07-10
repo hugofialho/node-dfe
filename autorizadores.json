@@ -24,27 +24,6 @@
       }
     }
   },
-  "CE": {
-    "nome": "Ceará",
-    "servicos": {
-      "autorizacao": {
-        "url_producao": "https://nfce.sefaz.ce.gov.br/nfce4/services/NFeAutorizacao4?WSDL",
-        "url_homologacao": "https://nfceh.sefaz.ce.gov.br/nfce4/services/NFeAutorizacao4?WSDL"
-      },
-      "retAutorizacao": {
-        "url_producao": "https://nfce.sefaz.ce.gov.br/nfce4/services/NFeRetAutorizacao4?WSDL",
-        "url_homologacao": "https://nfceh.sefaz.ce.gov.br/nfce4/services/NFeRetAutorizacao4?WSDL"
-      },
-      "consultarStatusServico": {
-        "url_producao": "https://nfce.sefaz.ce.gov.br/nfce4/services/NFeStatusServico4?WSDL",
-        "url_homologacao": "https://nfceh.sefaz.ce.gov.br/nfce4/services/NFeStatusServico4?WSDL"
-      },
-      "inutilizacao": {
-        "url_producao": "https://nfce.sefaz.ce.gov.br/nfce4/services/NFeInutilizacao4?WSDL",
-        "url_homologacao": "https://nfceh.sefaz.ce.gov.br/nfce4/services/NFeInutilizacao4?WSDL"
-      }
-    }
-  },
   "GO": {
     "nome": "Goiás",
     "servicos": {
