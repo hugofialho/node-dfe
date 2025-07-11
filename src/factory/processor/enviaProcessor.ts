@@ -65,11 +65,48 @@ export class EnviaProcessor {
   }
 
   /**
+   * Metodo para realizar o assinatura e transmissão do XML da NFCe (modelo 65)
+   * @param xml da NFCe
+   */
+  public async NFCeAssinaTransmite(xml: string) {
+    let result = <RetornoProcessamentoNF>{
+      success: false,
+    };
+
+    try {
+      this.configuraUrlsSefaz();
+
+      let xmlAssinado = Signature.signXmlX509(
+        xml,
+        "infNFe",
+        this.configuracoes.certificado
+      );
+
+      let nfceObj = XmlHelper.deserializeXml(xml, {
+        explicitArray: false,
+      });
+      let nfce = nfceObj.NFe as schema.TNFe;
+
+      let appendQRCode = this.appendQRCodeXML_V2(nfce, xmlAssinado);
+      nfce.infNFeSupl = appendQRCode.qrCode;
+
+      let xmlLote = this.gerarXmlLote(appendQRCode.xml);
+      this.validaSchemaLote(xmlLote, nfce, result);
+
+      result = await this.transmitirXml(xmlLote, nfce);
+    } catch (ex: any) {
+      result.success = false;
+      result.error = ex;
+    }
+
+    return result;
+  }
+
+  /**
    * Metodo para realizar o processamento de documento(s) do tipo 55 ou 65
    * @param documento Array de documentos modelo 55 ou 1 documento modelo 65
-   * @param assincrono Boolean para definir se a execução sera sincrona ou assincrona, por padrao === sincrona!
    */
-  public async executar(documento: NFeBase, assincrono: boolean = false) {
+  public async executar(documento: NFeBase) {
     let result = <RetornoProcessamentoNF>{
       success: false,
     };
@@ -92,30 +129,8 @@ export class EnviaProcessor {
         doc.nfe.infNFeSupl = appendQRCode.qrCode;
       }
 
-      let xmlLote = this.gerarXmlLote(xmlAssinado, assincrono);
-
-      if (this.schemaXsdLote === null) {
-        const pathXsd = path.join(__dirname, "..", "xsd/enviNFe_v4.00.xsd");
-        const nfeProcXsd = fs.readFileSync(pathXsd, "utf8");
-        process.chdir(path.dirname(pathXsd));
-        this.schemaXsdLote = libxmljs.parseXml(nfeProcXsd);
-      }
-
-      const xmlToValidate = libxmljs.parseXml(xmlLote);
-      const valid = xmlToValidate.validate(this.schemaXsdLote);
-      if (!valid) {
-        result.nfe = doc.nfe;
-        result.validacaoNF = <RetornoValidacao>{
-          xml_validado: xmlLote,
-          erros: xmlToValidate.validationErrors.map((e) => e.message),
-        };
-        throw new Error(
-          "Erro de validação do XML:\r\n" +
-            xmlToValidate.validationErrors
-              .map((e) => e.message.replace("Error: ", ""))
-              .join("\r\n")
-        );
-      }
+      let xmlLote = this.gerarXmlLote(xmlAssinado);
+      this.validaSchemaLote(xmlLote, doc.nfe, result);
 
       if (
         documento.docFiscal.modelo == "65" &&
@@ -153,7 +168,7 @@ export class EnviaProcessor {
         this.configuracoes.certificado
       );
 
-      let xmlLote = this.gerarXmlLote(xmlAssinado, false);
+      let xmlLote = this.gerarXmlLote(xmlAssinado);
 
       if (this.schemaXsdLote === null) {
         const pathXsd = path.join(__dirname, "..", "xsd/enviNFe_v4.00.xsd");
@@ -195,6 +210,60 @@ export class EnviaProcessor {
       ambiente,
       ServicosSefaz.autorizacao
     );
+  }
+
+  // V2 não precisa deserializar o xml, economiza 0.004s~0.012s \o/
+  // caso rodem bem em produção pode remover o metodo antigo
+  private appendQRCodeXML_V2(nfe: schema.TNFe, xmlAssinado: string) {
+    let qrCode = null;
+
+    const chave = nfe.infNFe.$.Id.replace("NFe", "");
+    const isOffline = nfe.infNFe.ide.tpEmis === "9";
+    const ambiente = nfe.infNFe.ide.tpAmb;
+
+    if (isOffline) {
+      let diaEmissao = nfe.infNFe.ide.dhEmi.substring(8, 10);
+      let digestValue =
+        nfe.signature.signedInfo.reference.digestValue.toString();
+
+      qrCode = this.gerarQRCodeNFCeOffline(
+        this.soapAutorizacao.urlQRCode,
+        chave,
+        "2",
+        ambiente,
+        diaEmissao,
+        nfe.infNFe.total.ICMSTot.vNF,
+        digestValue,
+        this.configuracoes.empresa.idCSC,
+        this.configuracoes.empresa.CSC
+      );
+    } else {
+      qrCode = this.gerarQRCodeNFCeOnline(
+        this.soapAutorizacao.urlQRCode,
+        chave,
+        "2",
+        ambiente,
+        this.configuracoes.empresa.idCSC,
+        this.configuracoes.empresa.CSC
+      );
+    }
+
+    let qrCodeObj = <schema.TNFeInfNFeSupl>{
+      qrCode: "<" + qrCode + ">",
+      urlChave: this.soapAutorizacao.urlChave,
+    };
+
+    let qrCodeXml = XmlHelper.serializeXml(qrCodeObj, "infNFeSupl")
+      .replace(">]]>", "]]>")
+      .replace("<![CDATA[<", "<![CDATA[");
+
+    return {
+      qrCode: qrCodeObj,
+      xml: xmlAssinado.replace(
+        "</infNFe><Signature",
+        "</infNFe>" + qrCodeXml + "<Signature"
+      ),
+    };
   }
 
   private appendQRCodeXML(documento: NFCeDocumento, xmlAssinado: string) {
@@ -249,6 +318,35 @@ export class EnviaProcessor {
         "</infNFe>" + qrCodeXml + "<Signature"
       ),
     };
+  }
+
+  private validaSchemaLote(
+    xmlLote: string,
+    nfe: schema.TNFe,
+    result: RetornoProcessamentoNF
+  ) {
+    if (this.schemaXsdLote === null) {
+      const pathXsd = path.join(__dirname, "..", "xsd/enviNFe_v4.00.xsd");
+      const nfeProcXsd = fs.readFileSync(pathXsd, "utf8");
+      process.chdir(path.dirname(pathXsd));
+      this.schemaXsdLote = libxmljs.parseXml(nfeProcXsd);
+    }
+
+    const xmlToValidate = libxmljs.parseXml(xmlLote);
+    const valid = xmlToValidate.validate(this.schemaXsdLote);
+    if (!valid) {
+      result.nfe = nfe;
+      result.validacaoNF = <RetornoValidacao>{
+        xml_validado: xmlLote,
+        erros: xmlToValidate.validationErrors.map((e) => e.message),
+      };
+      throw new Error(
+        "Erro de validação do XML:\r\n" +
+          xmlToValidate.validationErrors
+            .map((e) => e.message.replace("Error: ", ""))
+            .join("\r\n")
+      );
+    }
   }
 
   public async transmitirXml(xmlLote: string, nfeObj: Object) {
@@ -326,17 +424,13 @@ export class EnviaProcessor {
     );
   }
 
-  private gerarXmlLote(xml: string, isAsync: boolean) {
-    //TODO: ajustar para receber uma lista de xmls...
-
+  private gerarXmlLote(xml: string) {
     let loteId = Utils.randomInt(1, 999999999999999).toString();
 
     let enviNFe = <schema.TEnviNFe>{
       $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
       idLote: loteId,
-      indSinc: isAsync
-        ? schema.TEnviNFeIndSinc.Item0
-        : schema.TEnviNFeIndSinc.Item1,
+      indSinc: schema.TEnviNFeIndSinc.Sincrono,
       _: "[XMLS]",
     };
 

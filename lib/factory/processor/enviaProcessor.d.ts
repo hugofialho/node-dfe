@@ -8,18 +8,24 @@ export declare class EnviaProcessor {
     private schemaXsdLote;
     constructor(configuracoes: Configuracoes);
     /**
+     * Metodo para realizar o assinatura e transmissão do XML da NFCe (modelo 65)
+     * @param xml da NFCe
+     */
+    NFCeAssinaTransmite(xml: string): Promise<RetornoProcessamentoNF>;
+    /**
      * Metodo para realizar o processamento de documento(s) do tipo 55 ou 65
      * @param documento Array de documentos modelo 55 ou 1 documento modelo 65
-     * @param assincrono Boolean para definir se a execução sera sincrona ou assincrona, por padrao === sincrona!
      */
-    executar(documento: NFeBase, assincrono?: boolean): Promise<RetornoProcessamentoNF>;
+    executar(documento: NFeBase): Promise<RetornoProcessamentoNF>;
     /**
      * Metodo para gerar o XML do lote da NFe tipo 55
      * @param documento Array de documentos modelo 55
      */
     geraLoteXML(documento: NFeBase): Promise<RetornoProcessamentoNF>;
     private configuraUrlsSefaz;
+    private appendQRCodeXML_V2;
     private appendQRCodeXML;
+    private validaSchemaLote;
     transmitirXml(xmlLote: string, nfeObj: Object): Promise<RetornoProcessamentoNF>;
     private enviarNF;
     private gerarXmlLote;

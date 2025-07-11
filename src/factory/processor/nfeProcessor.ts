@@ -1,6 +1,5 @@
 import {
   RetornoProcessamentoNF,
-  RetornoProcessamento,
   NFCeDocumento,
   NFeDocumento,
   Configuracoes,
@@ -13,7 +12,6 @@ import { EnviaProcessor } from "./enviaProcessor";
 import { EventoProcessor } from "./eventoProcessor";
 import { InutilizaProcessor } from "./inutilizaProcessor";
 import { Inutilizar } from "../interface/inutilizacao";
-
 
 /**
  * Classe para processamento de NFe/NFCe
@@ -42,47 +40,25 @@ export class NFeProcessor {
   }
 
   public async executar(documento: NFeDocumento | NFCeDocumento) {
-    const { geral } = this.configuracoes;
-    let result = <RetornoProcessamentoNF>{};
     try {
-      result = <RetornoProcessamentoNF>(
-        await this.enviaProcessor.executar(documento)
-      );
-
-      let retEnviNFe = null;
-      let retConsReciNFe = null;
-
-      if (result.envioNF && result.envioNF.data) {
-        const data = Object(result.envioNF.data);
-        if (data.retEnviNFe && data.retEnviNFe.infRec && geral.modelo == "55") {
-          retEnviNFe = data.retEnviNFe;
-          const recibo = retEnviNFe.infRec.nRec;
-          result.consultaProc = <RetornoProcessamento>(
-            await this.retornoProcessor.executar(recibo)
-          );
-          retConsReciNFe = Object(result.consultaProc.data).retConsReciNFe;
-        }
-
-        if (
-          retEnviNFe &&
-          retConsReciNFe &&
-          retEnviNFe.cStat == "103" &&
-          retConsReciNFe.cStat == "104"
-        ) {
-          result.confirmada = true;
-          result.success = true;
-        }
-      } else if (result.retornoContingenciaOffline && result.success) {
-        return result;
-      } else if (!result.error) {
-        throw new Error("Erro ao realizar requisição. Campo envioNF vazio.");
-      }
+      return await this.enviaProcessor.executar(documento);
     } catch (ex: any) {
-      result.success = false;
-      result.error = ex;
+      return <RetornoProcessamentoNF>{
+        success: false,
+        error: ex,
+      };
     }
+  }
 
-    return result;
+  public async NFCeAssinaTransmite(xml: string) {
+    try {
+      return await this.enviaProcessor.NFCeAssinaTransmite(xml);
+    } catch (ex: any) {
+      return <RetornoProcessamentoNF>{
+        success: false,
+        error: ex,
+      };
+    }
   }
 
   public async inutilizarNumeracao(dados: Inutilizar) {

@@ -16,7 +16,8 @@ export declare class NFeProcessor {
      * @param documento Array de documentos modelo 55 ou 1 documento modelo 65
      */
     processarDocumento(documento: NFeDocumento | NFCeDocumento): Promise<RetornoProcessamentoNF>;
-    executar(documento: NFeDocumento | NFCeDocumento): Promise<RetornoProcessamentoNF>;
+    executar(documento: NFeDocumento | NFCeDocumento): Promise<any>;
+    NFCeAssinaTransmite(xml: string): Promise<any>;
     inutilizarNumeracao(dados: Inutilizar): Promise<any>;
     gerarEvento(evento: Evento): Promise<any>;
     processarXmlContingencia(xml: string): Promise<any>;

@@ -73,8 +73,8 @@ export interface TEnviNFe {
     _: string;
 }
 export declare enum TEnviNFeIndSinc {
-    Item0 = "0",
-    Item1 = "1"
+    Asincrono = "0",
+    Sincrono = "1"
 }
 export interface TNFe {
     $: {
@@ -2207,8 +2207,4 @@ export interface TRetEnviNFe {
     dhRecbtoField: string;
     itemField: object;
     versaoField: string;
-}
-export interface TRetEnviNFeInfRec {
-    nRecField: string;
-    tMedField: string;
 }

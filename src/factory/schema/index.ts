@@ -92,8 +92,8 @@ export interface TEnviNFe {
 
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
 export enum TEnviNFeIndSinc {
-  Item0 = "0",
-  Item1 = "1",
+  Asincrono = "0",
+  Sincrono = "1",
 }
 
 /*
@@ -2774,14 +2774,7 @@ export interface TRetEnviNFe {
   xMotivoField: string;
   cUFField: TCodUfIBGE;
   dhRecbtoField: string;
-  //infRec
   //protNFe
   itemField: object;
   versaoField: string;
-}
-
-//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
-export interface TRetEnviNFeInfRec {
-  nRecField: string;
-  tMedField: string;
 }

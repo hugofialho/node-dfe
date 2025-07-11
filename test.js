@@ -6,10 +6,10 @@ const path = require("path");
 const libxmljs = require("libxmljs");
 
 let cert = {
-  // pfx: fs.readFileSync("certificado/certificado.pfx"),
-  // pem: fs.readFileSync("certificado/cert.pem", "utf8"),
-  // key: fs.readFileSync("certificado/key.pem", "utf8"),
-  // password: fs.readFileSync("certificado/senha", "utf8"),
+  pfx: fs.readFileSync("certificado/certificado.pfx"),
+  pem: fs.readFileSync("certificado/CERTIFICATE.txt", "utf8"),
+  key: fs.readFileSync("certificado/KEY.txt", "utf8"),
+  password: fs.readFileSync("certificado/senha.txt", "utf8"),
 };
 
 let empresa = {
@@ -237,7 +237,7 @@ const configuracoes = {
   certificado: cert,
   geral: {
     ambiente: "2",
-    modelo: "55",
+    modelo: "65",
     versao: "4.00",
   },
 };
@@ -289,10 +289,12 @@ async function testeConsultaStatusServico(empresa, ambiente, modelo) {
 }
 
 function testeDesereliaze() {
-  let xml = `<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><nfeResultMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeStatusServico4"><retConsStatServ versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe"><tpAmb>2</tpAmb><verAplic>RSnfce201805211008</verAplic><cStat>107</cStat><xMotivo>Servico em Operacao</xMotivo><cUF>43</cUF><dhRecbto>2019-03-21T22:37:44-03:00</dhRecbto><tMed>1</tMed></retConsStatServ></nfeResultMsg></soap:Body></soap:Envelope>
-    <consStatServ versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe"><tpAmb>2</tpAmb><cUF>43</cUF><xServ>STATUS</xServ></consStatServ>`;
+  const nfceXml = fs.readFileSync(__dirname + "/mock/procNFe2.xml", "utf8");
 
-  let obj = XmlHelper.XmlHelper.deserializeXml(xml);
+  const ini = new Date();
+  let obj = XmlHelper.XmlHelper.deserializeXml(nfceXml);
+  const fin = new Date();
+  console.log(`Time: ${(fin.getTime() - ini.getTime()) / 1000}s`);
   console.log(require("util").inspect(obj, false, null));
 }
 
@@ -348,6 +350,14 @@ async function testeCCe() {
   fs.writeFileSync(__dirname + "/mock/cce.html", html);
 }
 
+async function testeNFCeAssinaTransmite() {
+  const nfceProcessor = new lib.NFeProcessor(configuracoes);
+
+  const nfceXml = fs.readFileSync(__dirname + "/mock/nfce.xml", "utf8");
+  const result = await nfceProcessor.NFCeAssinaTransmite(nfceXml);
+  console.log(result);
+}
+
 // testeCCe();
 
 // testeDANFESemValidade();
@@ -381,7 +391,8 @@ async function testeValidate() {
 
 // testeAssinaturaXML();
 //testeConsultaStatusServico(empresa, "2", "65");
-//testeDesereliaze();
-testeEmissaoNFCe();
+// testeEmissaoNFCe();
 //testeQRcodeNFCe();
 //testHashRespTec();
+// testeDesereliaze();
+testeNFCeAssinaTransmite();

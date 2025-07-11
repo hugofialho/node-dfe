@@ -14,7 +14,7 @@ export abstract class XmlHelper {
         return builder.buildObject(obj);
     }
 
-    public static deserializeXml(xml: string, options?: xml2js.OptionsV2) {
+    public static deserializeXml(xml: string, options?: xml2js.OptionsV2) : any {
         let resultObj;
         
         if (!options) {
