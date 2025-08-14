@@ -350,6 +350,14 @@ async function testeCCe() {
   fs.writeFileSync(__dirname + "/mock/cce.html", html);
 }
 
+async function testeNFCeTransmite() {
+  const nfceProcessor = new lib.NFeProcessor(configuracoes);
+
+  const nfceXml = fs.readFileSync(__dirname + "/mock/loteNFCe.xml", "utf8");
+  const result = await nfceProcessor.NFCeTransmite(nfceXml);
+  console.log(result);
+}
+
 async function testeNFCeAssinaTransmite() {
   const nfceProcessor = new lib.NFeProcessor(configuracoes);
 
@@ -395,4 +403,5 @@ async function testeValidate() {
 //testeQRcodeNFCe();
 //testHashRespTec();
 // testeDesereliaze();
-testeNFCeAssinaTransmite();
+//testeNFCeAssinaTransmite();
+testeNFCeTransmite();

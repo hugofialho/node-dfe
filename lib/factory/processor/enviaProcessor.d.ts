@@ -8,6 +8,11 @@ export declare class EnviaProcessor {
     private schemaXsdLote;
     constructor(configuracoes: Configuracoes);
     /**
+     * Metodo para transmissão do XML da NFCe (modelo 65)
+     * @param xml da NFCe
+     */
+    NFCeTransmite(xmlLote: string): Promise<RetornoProcessamentoNF>;
+    /**
      * Metodo para realizar o assinatura e transmissão do XML da NFCe (modelo 65)
      * @param xml da NFCe
      */

@@ -17,6 +17,7 @@ export declare class NFeProcessor {
      */
     processarDocumento(documento: NFeDocumento | NFCeDocumento): Promise<RetornoProcessamentoNF>;
     executar(documento: NFeDocumento | NFCeDocumento): Promise<any>;
+    NFCeTransmite(xmlLote: string): Promise<any>;
     NFCeAssinaTransmite(xml: string): Promise<any>;
     inutilizarNumeracao(dados: Inutilizar): Promise<any>;
     gerarEvento(evento: Evento): Promise<any>;

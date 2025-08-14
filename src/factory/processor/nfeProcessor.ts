@@ -50,6 +50,17 @@ export class NFeProcessor {
     }
   }
 
+  public async NFCeTransmite(xmlLote: string) {
+    try {
+      return await this.enviaProcessor.NFCeTransmite(xmlLote);
+    } catch (ex: any) {
+      return <RetornoProcessamentoNF>{
+        success: false,
+        error: ex,
+      };
+    }
+  }
+
   public async NFCeAssinaTransmite(xml: string) {
     try {
       return await this.enviaProcessor.NFCeAssinaTransmite(xml);

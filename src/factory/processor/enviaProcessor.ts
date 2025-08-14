@@ -65,6 +65,32 @@ export class EnviaProcessor {
   }
 
   /**
+   * Metodo para transmissão do XML da NFCe (modelo 65)
+   * @param xml da NFCe
+   */
+  public async NFCeTransmite(xmlLote: string) {
+    let result = <RetornoProcessamentoNF>{
+      success: false,
+    };
+
+    try {
+      this.configuraUrlsSefaz();
+      
+      let xmlObj = XmlHelper.deserializeXml(xmlLote, {
+        explicitArray: false,
+      });
+      let nfce = xmlObj.enviNFe.NFe as schema.TNFe;
+
+      result = await this.transmitirXml(xmlLote, nfce);
+    } catch (ex: any) {
+      result.success = false;
+      result.error = ex;
+    }
+
+    return result;
+  }
+
+  /**
    * Metodo para realizar o assinatura e transmissão do XML da NFCe (modelo 65)
    * @param xml da NFCe
    */
@@ -356,60 +382,19 @@ export class EnviaProcessor {
     };
 
     try {
-      let retEnviNFe = null;
-
-      if (!nfeObj) {
-        let xmlObj = XmlHelper.deserializeXml(xmlLote, {
-          explicitArray: false,
-        });
-        result.nfe = Object(xmlObj).enviNFe.NFe;
-      }
-
-      this.configuraUrlsSefaz();
-
       let retornoEnvio = await this.enviarNF(xmlLote);
-
-      // try {
-      //   log(
-      //     jsonOneLevel({
-      //       success: !!retornoEnvio ? retornoEnvio.success : false,
-      //       retornoEnvio: !!retornoEnvio,
-      //       data: !retornoEnvio ? false : !!retornoEnvio.data,
-      //     }),
-      //     "retornoEnvio.exists"
-      //   );
-
-      //   log(jsonOneLevel(retornoEnvio), "retornoEnvio.full");
-      // } catch (e: any) {
-      //   log(`ja deu erro pra logar.......${e.toString()}`, "retornoEnvio");
-      // }
+      result.envioNF = retornoEnvio;
 
       if (retornoEnvio && retornoEnvio.data) {
-        const data = Object(retornoEnvio.data);
-        if (data.retEnviNFe) {
-          retEnviNFe = data.retEnviNFe;
-        }
-      } else {
-        throw new Error("Erro ao realizar requisição");
+        result.success = true; //nao esta confirmada, mas houve sucesso nessa requisicao de envio da nota
+      } else if (retornoEnvio.error) {
+        result.error = retornoEnvio.error;
       }
-
-      // console.log(retEnviNFe && retEnviNFe.cStat == '104' && retEnviNFe.protNFe.infProt.cStat == '100');
-      // console.log(retEnviNFe && retEnviNFe.cStat == '103');
-      // 100 Autorizado o uso da NF-e
-      // 101 Cancelamento de NF-e homologado
-      // 102 Inutilização de número homologado
-      // 103 Lote recebido com sucesso
-      // 104 Lote processado
-      // 105 Lote em processamento
-      // 106 Lote não localizado
-      // 107 Serviço em Operação
-
-      result.envioNF = retornoEnvio;
     } catch (ex: any) {
       result.success = false;
       result.error = ex;
     }
-    result.success = true; //nao esta confirmada, mas houve sucesso nessa requisicao de envio da nota
+
     return result;
   }
 
