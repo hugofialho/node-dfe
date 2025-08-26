@@ -63,6 +63,7 @@ export declare class EnviaProcessor {
     private getTotal;
     private getTransp;
     private getTransportadora;
+    private getVeiculo;
     private getVolumes;
     private getCobr;
     private getDetalheCobranca;

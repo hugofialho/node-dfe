@@ -38,6 +38,7 @@ import {
   Volume,
   Intermediador,
   RetornoValidacao,
+  Veiculo
 } from "../interface/nfe";
 
 import { WebServiceHelper } from "../webservices/webserviceHelper";
@@ -1697,6 +1698,7 @@ export class EnviaProcessor {
     return <schema.TNFeInfNFeTransp>{
       modFrete: transp.modalidateFrete,
       transporta: this.getTransportadora(transp.transportadora),
+      veicTransp: this.getVeiculo(transp.veiculo),
       vol: this.getVolumes(transp.volumes),
     };
   }
@@ -1714,6 +1716,16 @@ export class EnviaProcessor {
       xEnder: transportadora.enderecoCompleto,
       xMun: transportadora.municipio,
       UF: transportadora.uf,
+    };
+  }
+
+  private getVeiculo(veiculo: Veiculo) {
+    if (!veiculo || !veiculo.placa) return null;
+
+    return <schema.TVeiculo>{
+      placa: veiculo.placa,
+      UF: veiculo.uf,
+      RNTC: veiculo.registro
     };
   }
 

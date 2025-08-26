@@ -309,6 +309,7 @@ export interface RetTrib {
 export interface Transporte {
     modalidateFrete: string;
     transportadora: Transportadora;
+    veiculo: Veiculo;
     volumes: Volume[];
 }
 export interface Transportadora {
@@ -326,6 +327,11 @@ export interface Volume {
     numeracao: string;
     pesoLiquido: string;
     pesoBruto: string;
+}
+export interface Veiculo {
+    placa: string;
+    uf: string;
+    registro: string;
 }
 export interface Cobranca {
     fatura: Fatura;

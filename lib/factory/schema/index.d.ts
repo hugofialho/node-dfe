@@ -1678,6 +1678,7 @@ export interface TNFeInfNFeTransp {
     modFrete: TNFeInfNFeTranspModFrete;
     transporta: TNFeInfNFeTranspTransporta;
     retTransp: TNFeInfNFeTranspRetTransp;
+    veicTransp: TVeiculo;
     items: object[];
     itemsElementName: ItemsChoiceType5[];
     vol: TNFeInfNFeTranspVol[];
@@ -1713,8 +1714,8 @@ export interface TNFeInfNFeTranspRetTransp {
 }
 export interface TVeiculo {
     placa: string;
-    uf: TUf;
-    rNTC: string;
+    UF: TUf;
+    RNTC: string;
 }
 export declare enum ItemsChoiceType5 {
     balsa = 0,

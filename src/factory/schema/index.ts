@@ -2114,7 +2114,7 @@ export interface TNFeInfNFeTransp {
   //balsa
   //reboque
   //vagao
-  //veicTransp
+  veicTransp: TVeiculo;
   items: object[];
   itemsElementName: ItemsChoiceType5[];
   vol: TNFeInfNFeTranspVol[];
@@ -2160,8 +2160,8 @@ export interface TNFeInfNFeTranspRetTransp {
 //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.portalfiscal.inf.br/nfe")]
 export interface TVeiculo {
   placa: string;
-  uf: TUf;
-  rNTC: string;
+  UF: TUf;
+  RNTC: string;
 }
 
 //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.portalfiscal.inf.br/nfe", IncludeInSchema=false)]

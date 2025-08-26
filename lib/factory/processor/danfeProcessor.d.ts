@@ -68,6 +68,11 @@ export declare class DanfeProcessor {
             uf: import("../schema").TUf;
             ie: string;
         } | null;
+        veiculo: {
+            placa: string;
+            UF: import("../schema").TUf;
+            RNTC: string;
+        } | null;
         volume: {
             quantidade: string;
             especie: string;
@@ -139,6 +144,11 @@ export declare class DanfeProcessor {
         municipio: string;
         uf: import("../schema").TUf;
         ie: string;
+    } | null;
+    getVeiculo(nfeProc: TNfeProc): {
+        placa: string;
+        UF: import("../schema").TUf;
+        RNTC: string;
     } | null;
     getVolume(nfeProc: TNfeProc): {
         quantidade: string;

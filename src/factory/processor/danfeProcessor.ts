@@ -68,6 +68,7 @@ export class DanfeProcessor {
       total_ipi: formataMoeda(ICMSTot.vIPI, 2),
       total_nota: formataMoeda(ICMSTot.vNF, 2),
       transportador: this.getTransportador(nfeProc),
+      veiculo: this.getVeiculo(nfeProc),
       volume: this.getVolume(nfeProc),
 
       informacoes_fisco: infAdic.infAdFisco,
@@ -134,6 +135,17 @@ export class DanfeProcessor {
           uf: transporta.UF,
           ie: transporta.IE,
         }
+      : null;
+  }
+
+  getVeiculo(nfeProc: TNfeProc) {
+    const veicTransp = nfeProc.NFe.infNFe.transp.veicTransp;
+    return veicTransp
+      ? {
+        placa: veicTransp.placa,
+        UF: veicTransp.UF,
+        RNTC: veicTransp.RNTC,
+      }
       : null;
   }
 

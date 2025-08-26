@@ -106,16 +106,21 @@ let transp = {
   //   municipio: "CIDADE DE DEUS",
   //   uf: "SP",
   // },
-  // volumes: [
-  //   {
-  //     quantidade: "1",
-  //     especie: "TESTE",
-  //     marca: "TESTE",
-  //     numeracao: "TESTE",
-  //     pesoLiquido: "1.000",
-  //     pesoBruto: "1.000",
-  //   },
-  // ],
+  veiculo: {
+    placa: 'ABC9999',
+    uf: 'SP',
+    registro: '1234567890'
+  },
+  volumes: [
+    {
+      quantidade: "1",
+      especie: "TESTE",
+      marca: "TESTE",
+      numeracao: "TESTE",
+      pesoLiquido: "1.000",
+      pesoBruto: "1.000",
+    },
+  ],
 };
 
 let intermediador = {
@@ -252,6 +257,8 @@ async function testeEmissaoNFCe() {
 
   // result = require("util").inspect(result, false, null);
   console.log("Resultado Emissão NFC-e: \n\n" + result.error.stack);
+
+  fs.writeFileSync(__dirname + "/mock/nfce-teste.xml", result.envioNF.xml_enviado);
 }
 
 function testeAssinaturaXML() {
@@ -403,5 +410,7 @@ async function testeValidate() {
 //testeQRcodeNFCe();
 //testHashRespTec();
 // testeDesereliaze();
-//testeNFCeAssinaTransmite();
-testeNFCeTransmite();
+// testeNFCeAssinaTransmite();
+// testeNFCeTransmite();
+
+testeEmissaoNFCe();
