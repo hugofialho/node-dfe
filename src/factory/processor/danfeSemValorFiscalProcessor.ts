@@ -80,6 +80,7 @@ export class DanfeSemValorFiscalProcessor {
       total_ipi: formataMoeda(ICMSTot.vIPI, 2),
       total_nota: formataMoeda(ICMSTot.vNF, 2),
       transportador: this.getTransportador(nfe),
+      veiculo: this.getVeiculo(nfe),
       volume: this.getVolume(nfe),
 
       informacoes_fisco: infAdic.infAdFisco,
@@ -148,20 +149,30 @@ export class DanfeSemValorFiscalProcessor {
         }
       : null;
   }
+  
+  getVeiculo(nfe: TNFe) {
+    const veicTransp = nfe.infNFe.transp.veicTransp;
+    return veicTransp
+      ? {
+        placa: veicTransp.placa,
+        UF: veicTransp.UF,
+        RNTC: veicTransp.RNTC,
+      }
+      : null;
+  }
 
   getVolume(nfe: TNFe) {
     const vol = nfe.infNFe.transp.vol;
-    const vol0 = vol && vol.length > 0 ? vol[0] : null;
-    return vol0
-      ? {
-          quantidade: vol0.qVol,
-          especie: vol0.esp,
-          marca: vol0.marca,
-          numeracao: vol0.nVol,
-          pesoBruto: vol0.pesoB,
-          pesoLiquido: vol0.pesoL,
-        }
-      : null;
+    if (!vol || vol.length === 0) return null;
+    const vol0 = vol instanceof Array ? vol[0] : vol;
+    return {
+      quantidade: vol0.qVol,
+      especie: vol0.esp,
+      marca: vol0.marca,
+      numeracao: vol0.nVol,
+      pesoBruto: vol0.pesoB,
+      pesoLiquido: vol0.pesoL,
+    };
   }
 
   getItens(nfe: TNFe) {

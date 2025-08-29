@@ -151,17 +151,16 @@ export class DanfeProcessor {
 
   getVolume(nfeProc: TNfeProc) {
     const vol = nfeProc.NFe.infNFe.transp.vol;
-    const vol0 = vol && vol.length > 0 ? vol[0] : null;
-    return vol0
-      ? {
-          quantidade: vol0.qVol,
-          especie: vol0.esp,
-          marca: vol0.marca,
-          numeracao: vol0.nVol,
-          pesoBruto: vol0.pesoB,
-          pesoLiquido: vol0.pesoL,
-        }
-      : null;
+    if (!vol || vol.length === 0) return null;
+    const vol0 = vol instanceof Array ? vol[0] : vol;
+    return {
+      quantidade: vol0.qVol,
+      especie: vol0.esp,
+      marca: vol0.marca,
+      numeracao: vol0.nVol,
+      pesoBruto: vol0.pesoB,
+      pesoLiquido: vol0.pesoL,
+    }
   }
 
   getItens(nfeProc: TNfeProc) {

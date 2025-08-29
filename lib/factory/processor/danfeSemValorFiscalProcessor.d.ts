@@ -72,6 +72,11 @@ export declare class DanfeSemValorFiscalProcessor {
             uf: import("../schema").TUf;
             ie: string;
         } | null;
+        veiculo: {
+            placa: string;
+            UF: import("../schema").TUf;
+            RNTC: string;
+        } | null;
         volume: {
             quantidade: string;
             especie: string;
@@ -143,6 +148,11 @@ export declare class DanfeSemValorFiscalProcessor {
         municipio: string;
         uf: import("../schema").TUf;
         ie: string;
+    } | null;
+    getVeiculo(nfe: TNFe): {
+        placa: string;
+        UF: import("../schema").TUf;
+        RNTC: string;
     } | null;
     getVolume(nfe: TNFe): {
         quantidade: string;

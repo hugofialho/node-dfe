@@ -413,4 +413,6 @@ async function testeValidate() {
 // testeNFCeAssinaTransmite();
 // testeNFCeTransmite();
 
-testeEmissaoNFCe();
+//testeEmissaoNFCe();
+
+testeDANFESemValidade();
