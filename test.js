@@ -107,9 +107,9 @@ let transp = {
   //   uf: "SP",
   // },
   veiculo: {
-    placa: 'ABC9999',
-    uf: 'SP',
-    registro: '1234567890'
+    placa: "ABC9999",
+    uf: "SP",
+    registro: "1234567890",
   },
   volumes: [
     {
@@ -258,7 +258,10 @@ async function testeEmissaoNFCe() {
   // result = require("util").inspect(result, false, null);
   console.log("Resultado Emissão NFC-e: \n\n" + result.error.stack);
 
-  fs.writeFileSync(__dirname + "/mock/nfce-teste.xml", result.envioNF.xml_enviado);
+  fs.writeFileSync(
+    __dirname + "/mock/nfce-teste.xml",
+    result.envioNF.xml_enviado
+  );
 }
 
 function testeAssinaturaXML() {
@@ -329,6 +332,10 @@ async function testeDANFE() {
   const xml2 = fs.readFileSync(__dirname + "/mock/procNFe2.xml", "utf8");
   const html2 = await danfeProcessor.xmlStringToHtml(xml2, null, true);
   fs.writeFileSync(__dirname + "/mock/danfe2.html", html2);
+
+  const xml3 = fs.readFileSync(__dirname + "/mock/procNFe3.xml", "utf8");
+  const html3 = await danfeProcessor.xmlStringToHtml(xml3, null, true);
+  fs.writeFileSync(__dirname + "/mock/danfe3.html", html3);
 }
 
 async function testeDANFESemValidade() {
@@ -415,4 +422,5 @@ async function testeValidate() {
 
 //testeEmissaoNFCe();
 
-testeDANFESemValidade();
+//testeDANFESemValidade();
+testeDANFE();
