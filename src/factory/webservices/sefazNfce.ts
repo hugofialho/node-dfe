@@ -128,7 +128,7 @@ export abstract class SefazNFCe {
         case "PB":
           return {
             urlChave: "www.receita.pb.gov.br/nfce/consulta",
-            urlQRCode: "http://www.receita.pb.gov.br/nfce",
+            urlQRCode: "http://www.sefaz.pb.gov.br/nfce",
           };
         case "PE":
           return {
