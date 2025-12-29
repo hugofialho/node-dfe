@@ -148,7 +148,8 @@ for (let i = 1; i <= 1; i++) {
         },
       },
     },
-    // vItem: "0.00",
+    infoAdicional: "teste",
+    vItem: "0.00",
     numeroItem: i,
   });
 }
@@ -228,7 +229,7 @@ let nfce = {
   docFiscal: documento,
   destinatario: dest,
   produtos: produtos,
-  total: { icmsTot, IBSCBSTot },
+  total: { icmsTot, IBSCBSTot, vNFTot: valorTotalProdutos.toFixed(2) },
   transporte: {
     modalidateFrete: "3",
   },

@@ -297,6 +297,7 @@ export interface Total {
   issqnTot: IssqnTot;
   retTrib: RetTrib;
   IBSCBSTot: TIBSCBSTot;
+  vNFTot: string;
 }
 
 export interface IcmsTot {

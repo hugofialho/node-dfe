@@ -442,8 +442,8 @@ export interface TNFeInfNFeDet {
     prod: TNFeInfNFeDetProd;
     imposto: TNFeInfNFeDetImposto;
     impostoDevol: any;
-    vItem: string;
     infAdProd: string;
+    vItem: string;
 }
 export interface TNFeInfNFeDetProd {
     cProd: string;
@@ -1619,6 +1619,7 @@ export interface TNFeInfNFeTotal {
     ISSQNtot: TNFeInfNFeTotalISSQNtot;
     retTrib: TNFeInfNFeTotalRetTrib;
     IBSCBSTot: TIBSCBSTot;
+    vNFTot: string;
 }
 export interface TNFeInfNFeTotalICMSTot {
     vBC: string;

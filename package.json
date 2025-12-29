@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "copy-files": "cp -r -f ./src/factory/templates ./src/factory/xsd ./lib/factory/",
-    "test": "npm run build && node test.js",
+    "test": "npm run build && node testRTC.js",
     "build": "tsc && npm run copy-files",
     "cxsd": "cxsd",
     "dev": "ts-node-dev --respawn ./src/index.ts"

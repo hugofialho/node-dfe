@@ -551,8 +551,8 @@ export interface TNFeInfNFeDet {
   prod: TNFeInfNFeDetProd;
   imposto: TNFeInfNFeDetImposto;
   impostoDevol: any; //TNFeInfNFeDetImpostoDevol;
-  vItem: string;
   infAdProd: string;
+  vItem: string;
 }
 
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
@@ -2043,6 +2043,7 @@ export interface TNFeInfNFeTotal {
   ISSQNtot: TNFeInfNFeTotalISSQNtot;
   retTrib: TNFeInfNFeTotalRetTrib;
   IBSCBSTot: TIBSCBSTot;
+  vNFTot: string;
 }
 
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]

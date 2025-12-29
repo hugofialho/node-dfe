@@ -770,7 +770,6 @@ export class EnviaProcessor {
           modelo,
           produtos[i].prod.CFOP
         ),
-        vItem: produtos[i].vItem,
         infAdProd: produtos[i].infoAdicional,
         impostoDevol:
           produtos[i].prod.percentualDevolucao &&
@@ -780,6 +779,7 @@ export class EnviaProcessor {
                 vIPIDevol: produtos[i].prod.valorIPIDevolucao,
               })
             : undefined,
+        vItem: produtos[i].vItem,
       });
     }
 
@@ -1673,6 +1673,7 @@ export class EnviaProcessor {
     return <schema.TNFeInfNFeTotal>{
       ICMSTot: total.icmsTot,
       IBSCBSTot: total.IBSCBSTot,
+      vNFTot: total.vNFTot,
     };
   }
 
