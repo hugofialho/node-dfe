@@ -442,6 +442,7 @@ export interface TNFeInfNFeDet {
     prod: TNFeInfNFeDetProd;
     imposto: TNFeInfNFeDetImposto;
     impostoDevol: any;
+    vItem: string;
     infAdProd: string;
 }
 export interface TNFeInfNFeDetProd {
@@ -659,6 +660,7 @@ export interface TNFeInfNFeDetImposto {
     IPI: any;
     ISSQN: any;
     ICMSUFDest: any;
+    IBSCBS: any;
 }
 export interface TNFeInfNFeDetImpostoICMS {
     item: object;
@@ -1616,6 +1618,7 @@ export interface TNFeInfNFeTotal {
     ICMSTot: TNFeInfNFeTotalICMSTot;
     ISSQNtot: TNFeInfNFeTotalISSQNtot;
     retTrib: TNFeInfNFeTotalRetTrib;
+    IBSCBSTot: TIBSCBSTot;
 }
 export interface TNFeInfNFeTotalICMSTot {
     vBC: string;
@@ -2208,4 +2211,66 @@ export interface TRetEnviNFe {
     dhRecbtoField: string;
     itemField: object;
     versaoField: string;
+}
+export interface TIBSCBS {
+    CST: string;
+    cClassTrib: string;
+    gIBSCBS: TGIBSCBS;
+}
+export interface TGIBSCBS {
+    vBC: string;
+    gIBSUF: TGIBSUF;
+    gIBSMun: TGIBSMun;
+    vIBS: string;
+    gCBS: TGCBS;
+}
+export interface TGIBSUF {
+    pIBSUF: string;
+    vIBSUF: string;
+}
+export interface TGIBSMun {
+    pIBSMun: string;
+    vIBSMun: string;
+}
+export interface TGCBS {
+    pCBS: string;
+    vCBS: string;
+}
+export interface TIBSCBSTot {
+    vBCIBSCBS: string;
+    gIBS: TGIBS;
+    gCBS: TGCBS;
+    gMono: TGMono;
+}
+export interface TGIBS {
+    gIBSUF: TGIBSUF;
+    gIBSMun: TGIBSMun;
+    vIBS: string;
+    vCredPres: string;
+    vCredPresCondSus: string;
+}
+export interface TGIBSUF {
+    vDif: string;
+    vDevTrib: string;
+    vIBSUF: string;
+}
+export interface TGIBSMun {
+    vDif: string;
+    vDevTrib: string;
+    vIBSMun: string;
+}
+export interface TGCBS {
+    vDif: string;
+    vDevTrib: string;
+    vCBS: string;
+    vCredPres: string;
+    vCredPresCondSus: string;
+}
+export interface TGMono {
+    vIBSMono: string;
+    vCBSMono: string;
+    vIBSMonoReten: string;
+    vCBSMonoReten: string;
+    vIBSMonoRet: string;
+    vCBSMonoRet: string;
 }

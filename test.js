@@ -413,14 +413,13 @@ async function testeValidate() {
 
 // testeAssinaturaXML();
 //testeConsultaStatusServico(empresa, "2", "65");
-// testeEmissaoNFCe();
 //testeQRcodeNFCe();
 //testHashRespTec();
 // testeDesereliaze();
 // testeNFCeAssinaTransmite();
 // testeNFCeTransmite();
 
-//testeEmissaoNFCe();
+testeEmissaoNFCe();
 
 //testeDANFESemValidade();
-testeDANFE();
+//testeDANFE();

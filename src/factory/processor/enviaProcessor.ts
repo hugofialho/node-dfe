@@ -38,7 +38,7 @@ import {
   Volume,
   Intermediador,
   RetornoValidacao,
-  Veiculo
+  Veiculo,
 } from "../interface/nfe";
 
 import { WebServiceHelper } from "../webservices/webserviceHelper";
@@ -76,7 +76,7 @@ export class EnviaProcessor {
 
     try {
       this.configuraUrlsSefaz();
-      
+
       let xmlObj = XmlHelper.deserializeXml(xmlLote, {
         explicitArray: false,
       });
@@ -770,6 +770,7 @@ export class EnviaProcessor {
           modelo,
           produtos[i].prod.CFOP
         ),
+        vItem: produtos[i].vItem,
         infAdProd: produtos[i].infoAdicional,
         impostoDevol:
           produtos[i].prod.percentualDevolucao &&
@@ -850,6 +851,7 @@ export class EnviaProcessor {
         ? [this.getIcmsUfDest(imposto.icmsUfDest)]
         : [],
       ISSQN: "",
+      IBSCBS: imposto.IBSCBS ? [imposto.IBSCBS] : [],
     };
 
     return detImposto;
@@ -1284,27 +1286,6 @@ export class EnviaProcessor {
     return result;
   }
 
-  private getImpostoISSQN() {
-    return <schema.TNFeInfNFeDetImpostoISSQN>{
-      vBC: "",
-      vAliq: "",
-      vISSQN: "",
-      cMunFG: "",
-      cListServ: schema.TCListServ.Item0101,
-      vDeducao: "",
-      vOutro: "",
-      vDescIncond: "",
-      vDescCond: "",
-      vISSRet: "",
-      indISS: schema.TNFeInfNFeDetImpostoISSQNIndISS.Item1,
-      cServico: "",
-      cMun: "",
-      cPais: "",
-      nProcesso: "",
-      indIncentivo: schema.TNFeInfNFeDetImpostoISSQNIndIncentivo.Item1,
-    };
-  }
-
   private getImpostoIPI(ipi: Ipi, modelo: string) {
     let result;
     if (modelo != "55" || !ipi) return; //não deve gerar grupo IPI para NFCe
@@ -1691,6 +1672,7 @@ export class EnviaProcessor {
   private getTotal(total: Total) {
     return <schema.TNFeInfNFeTotal>{
       ICMSTot: total.icmsTot,
+      IBSCBSTot: total.IBSCBSTot,
     };
   }
 
@@ -1725,7 +1707,7 @@ export class EnviaProcessor {
     return <schema.TVeiculo>{
       placa: veiculo.placa,
       UF: veiculo.uf,
-      RNTC: veiculo.registro
+      RNTC: veiculo.registro,
     };
   }
 

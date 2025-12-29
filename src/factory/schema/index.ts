@@ -551,6 +551,7 @@ export interface TNFeInfNFeDet {
   prod: TNFeInfNFeDetProd;
   imposto: TNFeInfNFeDetImposto;
   impostoDevol: any; //TNFeInfNFeDetImpostoDevol;
+  vItem: string;
   infAdProd: string;
 }
 
@@ -826,6 +827,8 @@ export interface TNFeInfNFeDetImposto {
 
   //items: object[]; //ICMS, II,IPI, ISSQN
   ICMSUFDest: any;
+
+  IBSCBS: any;
 }
 
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
@@ -2039,6 +2042,7 @@ export interface TNFeInfNFeTotal {
   ICMSTot: TNFeInfNFeTotalICMSTot;
   ISSQNtot: TNFeInfNFeTotalISSQNtot;
   retTrib: TNFeInfNFeTotalRetTrib;
+  IBSCBSTot: TIBSCBSTot;
 }
 
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
@@ -2777,4 +2781,77 @@ export interface TRetEnviNFe {
   //protNFe
   itemField: object;
   versaoField: string;
+}
+
+export interface TIBSCBS {
+  CST: string;
+  cClassTrib: string;
+  gIBSCBS: TGIBSCBS;
+}
+
+export interface TGIBSCBS {
+  vBC: string;
+  gIBSUF: TGIBSUF;
+  gIBSMun: TGIBSMun;
+  vIBS: string;
+  gCBS: TGCBS;
+}
+
+export interface TGIBSUF {
+  pIBSUF: string;
+  vIBSUF: string;
+}
+
+export interface TGIBSMun {
+  pIBSMun: string;
+  vIBSMun: string;
+}
+
+export interface TGCBS {
+  pCBS: string;
+  vCBS: string;
+}
+
+export interface TIBSCBSTot {
+  vBCIBSCBS: string;
+  gIBS: TGIBS;
+  gCBS: TGCBS;
+  gMono: TGMono;
+}
+
+export interface TGIBS {
+  gIBSUF: TGIBSUF;
+  gIBSMun: TGIBSMun;
+  vIBS: string;
+  vCredPres: string;
+  vCredPresCondSus: string;
+}
+
+export interface TGIBSUF {
+  vDif: string;
+  vDevTrib: string;
+  vIBSUF: string;
+}
+
+export interface TGIBSMun {
+  vDif: string;
+  vDevTrib: string;
+  vIBSMun: string;
+}
+
+export interface TGCBS {
+  vDif: string;
+  vDevTrib: string;
+  vCBS: string;
+  vCredPres: string;
+  vCredPresCondSus: string;
+}
+
+export interface TGMono {
+  vIBSMono: string;
+  vCBSMono: string;
+  vIBSMonoReten: string;
+  vCBSMonoReten: string;
+  vIBSMonoRet: string;
+  vCBSMonoRet: string;
 }

@@ -1,3 +1,4 @@
+import { TIBSCBS, TIBSCBSTot } from "../../schema";
 import { WebProxy } from "../../webservices/webserviceHelper";
 export declare enum ServicosSefaz {
     autorizacao = "autorizacao",
@@ -85,6 +86,7 @@ export interface Intermediador {
 export interface Produto {
     prod: DetalhesProduto;
     imposto: Imposto;
+    vItem: string;
     infoAdicional: string;
     numeroItem: string;
 }
@@ -131,6 +133,7 @@ export interface Imposto {
     pisst: PisST;
     cofinsst: CofinsST;
     icmsUfDest: IcmsUfDest;
+    IBSCBS: TIBSCBS;
 }
 export interface Icms {
     orig: string;
@@ -257,6 +260,7 @@ export interface Total {
     icmsTot: IcmsTot;
     issqnTot: IssqnTot;
     retTrib: RetTrib;
+    IBSCBSTot: TIBSCBSTot;
 }
 export interface IcmsTot {
     vBC: string;

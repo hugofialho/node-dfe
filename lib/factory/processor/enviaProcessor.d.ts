@@ -51,7 +51,6 @@ export declare class EnviaProcessor {
     private getDetProd;
     private getDetImposto;
     private getImpostoIcms;
-    private getImpostoISSQN;
     private getImpostoIPI;
     private getImpostoII;
     private getImpostoPIS;
