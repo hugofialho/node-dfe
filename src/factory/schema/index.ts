@@ -858,19 +858,12 @@ export interface TNFeInfNFeDetImpostoICMS {
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
 export interface TNFeInfNFeDetImpostoICMSICMS00 {
   orig: Torig;
-
   CST: TNFeInfNFeDetImpostoICMSICMS00CST;
-
   modBC: TNFeInfNFeDetImpostoICMSICMS00ModBC;
-
   vBC: string;
-
   pICMS: string;
-
   vICMS: string;
-
   pFCP: string;
-
   vFCP: string;
 }
 
@@ -1286,29 +1279,17 @@ export enum TNFeInfNFeDetImpostoICMSICMSSN102CSOSN {
 //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.portalfiscal.inf.br/nfe")]
 export interface TNFeInfNFeDetImpostoICMSICMSSN201 {
   orig: Torig;
-
   CSOSN: TNFeInfNFeDetImpostoICMSICMSSN201CSOSN;
-
   modBCST: TNFeInfNFeDetImpostoICMSICMSSN201ModBCST;
-
   pMVAST: string;
-
   pRedBCST: string;
-
   vBCST: string;
-
   pICMSST: string;
-
   vICMSST: string;
-
   vBCFCPST: string;
-
   pFCPST: string;
-
   vFCPST: string;
-
   pCredSN: string;
-
   vCredICMSSN: string;
 }
 
@@ -2798,18 +2779,41 @@ export interface TGIBSCBS {
   gCBS: TGCBS;
 }
 
+export interface TGDif {
+  pDif: string;
+  vDif: string;
+}
+
+export interface TGDevTrib {
+  vDevTrib: string;
+}
+
+export interface TGRed {
+  pRedAliq: string;
+  pAliqEfet: string;
+}
+
 export interface TGIBSUF {
   pIBSUF: string;
+  gDif: TGDif;
+  gDevTrib: TGDevTrib;
+  gRed: TGRed;
   vIBSUF: string;
 }
 
 export interface TGIBSMun {
   pIBSMun: string;
+  gDif: TGDif;
+  gDevTrib: TGDevTrib;
+  gRed: TGRed;
   vIBSMun: string;
 }
 
 export interface TGCBS {
   pCBS: string;
+  gDif: TGDif;
+  gDevTrib: TGDevTrib;
+  gRed: TGRed;
   vCBS: string;
 }
 

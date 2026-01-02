@@ -2225,16 +2225,36 @@ export interface TGIBSCBS {
     vIBS: string;
     gCBS: TGCBS;
 }
+export interface TGDif {
+    pDif: string;
+    vDif: string;
+}
+export interface TGDevTrib {
+    vDevTrib: string;
+}
+export interface TGRed {
+    pRedAliq: string;
+    pAliqEfet: string;
+}
 export interface TGIBSUF {
     pIBSUF: string;
+    gDif: TGDif;
+    gDevTrib: TGDevTrib;
+    gRed: TGRed;
     vIBSUF: string;
 }
 export interface TGIBSMun {
     pIBSMun: string;
+    gDif: TGDif;
+    gDevTrib: TGDevTrib;
+    gRed: TGRed;
     vIBSMun: string;
 }
 export interface TGCBS {
     pCBS: string;
+    gDif: TGDif;
+    gDevTrib: TGDevTrib;
+    gRed: TGRed;
     vCBS: string;
 }
 export interface TIBSCBSTot {

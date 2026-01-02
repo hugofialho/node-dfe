@@ -134,15 +134,48 @@ for (let i = 1; i <= 1; i++) {
           vBC: "0.00",
           gIBSUF: {
             pIBSUF: "0.00",
+            gDif: {
+              pDif: "0.00",
+              vDif: "0.00",
+            },
+            gDevTrib: {
+              vDevTrib: "0.00",
+            },
+            gRed: {
+              pRedAliq: "0.00",
+              pAliqEfet: "0.00",
+            },
             vIBSUF: "0.00",
           },
           gIBSMun: {
             pIBSMun: "0.00",
+            gDif: {
+              pDif: "0.00",
+              vDif: "0.00",
+            },
+            gDevTrib: {
+              vDevTrib: "0.00",
+            },
+            gRed: {
+              pRedAliq: "0.00",
+              pAliqEfet: "0.00",
+            },
             vIBSMun: "0.00",
           },
           vIBS: "0.00",
           gCBS: {
             pCBS: "0.00",
+            gDif: {
+              pDif: "0.00",
+              vDif: "0.00",
+            },
+            gDevTrib: {
+              vDevTrib: "0.00",
+            },
+            gRed: {
+              pRedAliq: "0.00",
+              pAliqEfet: "0.00",
+            },
             vCBS: "0.00",
           },
         },

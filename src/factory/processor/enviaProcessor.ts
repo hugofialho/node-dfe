@@ -858,121 +858,46 @@ export class EnviaProcessor {
   }
 
   private getImpostoIcms(icms: Icms) {
-    let result;
-    if (icms.CST && icms.CST !== "") {
-      switch (icms.CST) {
-        case "00":
-          result = {
-            ICMS00: <schema.TNFeInfNFeDetImpostoICMSICMS00>{
+    return icms.CSOSN
+      ? this.getImpostoIcmsSimplesNacional(icms)
+      : this.getImpostoIcmsNormal(icms);
+  }
+
+  private getImpostoIcmsNormal(icms: Icms) {
+    switch (icms.CST) {
+      case "00":
+        return {
+          ICMS00: <schema.TNFeInfNFeDetImpostoICMSICMS00>{
+            orig: icms.orig,
+            CST: icms.CST,
+            modBC: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS00ModBC,
+              icms.modBC
+            ),
+            vBC: icms.vBC,
+            pICMS: icms.pICMS,
+            vICMS: icms.vICMS,
+            pFCP: icms.pFCP,
+            vFCP: icms.vFCP,
+          },
+        };
+      case "10":
+        // partilha icms
+        if (icms.UFST && icms.UFST !== "" && icms.pBCOp && icms.pBCOp !== "") {
+          return {
+            ICMS10: <schema.TNFeInfNFeDetImpostoICMSICMSPart>{
               orig: icms.orig,
               CST: icms.CST,
               modBC: Utils.getEnumByValue(
-                schema.TNFeInfNFeDetImpostoICMSICMS00ModBC,
+                schema.TNFeInfNFeDetImpostoICMSICMSPartModBC,
                 icms.modBC
               ),
               vBC: icms.vBC,
-              pICMS: icms.pICMS,
-              vICMS: icms.vICMS,
-              pFCP: icms.pFCP,
-              vFCP: icms.vFCP,
-            },
-          };
-          break;
-        case "10":
-          // partilha icms
-          if (
-            icms.UFST &&
-            icms.UFST !== "" &&
-            icms.pBCOp &&
-            icms.pBCOp !== ""
-          ) {
-            result = {
-              ICMS10: <schema.TNFeInfNFeDetImpostoICMSICMSPart>{
-                orig: icms.orig,
-                CST: icms.CST,
-                modBC: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMSPartModBC,
-                  icms.modBC
-                ),
-                vBC: icms.vBC,
-                pRedBC: icms.pRedBC,
-                pICMS: icms.pICMS,
-                vICMS: icms.vICMS,
-                modBCST: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMSPartModBCST,
-                  icms.modBCST
-                ),
-                pMVAST: icms.pMVAST,
-                pRedBCST: icms.pRedBCST,
-                vBCST: icms.vBCST,
-                pICMSST: icms.pICMSST,
-                vICMSST: icms.vICMSST,
-                pBCOp: icms.pBCOp,
-                UFST: Utils.getEnumByValue(schema.TUf, icms.UFST),
-              },
-            };
-          } else {
-            result = {
-              ICMS10: <schema.TNFeInfNFeDetImpostoICMSICMS10>{
-                orig: icms.orig,
-                CST: icms.CST,
-                modBC: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMS10ModBC,
-                  icms.modBC
-                ),
-                pICMS: icms.pICMS,
-                vBC: icms.vBC,
-                vICMS: icms.vICMS,
-                pFCP: icms.pFCP,
-                vFCP: icms.vFCP,
-                modBCST: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMS10ModBCST,
-                  icms.modBCST
-                ),
-                pFCPST: icms.pFCPST,
-                pICMSST: icms.pICMSST,
-                pMVAST: icms.pMVAST,
-                pRedBCST: icms.pRedBCST,
-                vBCFCP: icms.vBCFCP,
-                vBCFCPST: icms.vBCFCPST,
-                vBCST: icms.vBCST,
-                vFCPST: icms.vFCPST,
-                vICMSST: icms.vICMSST,
-              },
-            };
-          }
-          break;
-        case "20":
-          result = {
-            ICMS20: <schema.TNFeInfNFeDetImpostoICMSICMS20>{
-              orig: icms.orig,
-              CST: icms.CST,
-              modBC: Utils.getEnumByValue(
-                schema.TNFeInfNFeDetImpostoICMSICMS20ModBC,
-                icms.modBC
-              ),
               pRedBC: icms.pRedBC,
-              vBC: icms.vBC,
               pICMS: icms.pICMS,
               vICMS: icms.vICMS,
-              vBCFCP: icms.vBCFCP,
-              pFCP: icms.pFCP,
-              vFCP: icms.vFCP,
-              vICMSDeson: icms.vICMSDeson,
-              motDesICMS: Utils.getEnumByValue(
-                schema.TNFeInfNFeDetImpostoICMSICMS20MotDesICMS,
-                icms.motDesICMS
-              ),
-            },
-          };
-          break;
-        case "30":
-          result = {
-            ICMS30: <schema.TNFeInfNFeDetImpostoICMSICMS30>{
-              orig: icms.orig,
-              CST: icms.CST,
               modBCST: Utils.getEnumByValue(
-                schema.TNFeInfNFeDetImpostoICMSICMS30ModBCST,
+                schema.TNFeInfNFeDetImpostoICMSICMSPartModBCST,
                 icms.modBCST
               ),
               pMVAST: icms.pMVAST,
@@ -980,99 +905,114 @@ export class EnviaProcessor {
               vBCST: icms.vBCST,
               pICMSST: icms.pICMSST,
               vICMSST: icms.vICMSST,
-              motDesICMS: Utils.getEnumByValue(
-                schema.TNFeInfNFeDetImpostoICMSICMS30MotDesICMS,
-                icms.motDesICMS
-              ),
-              vICMSDeson: icms.vICMSDeson,
-              vBCFCPST: icms.vBCFCPST,
-              pFCPST: icms.pFCPST,
-              vFCPST: icms.vFCPST,
+              pBCOp: icms.pBCOp,
+              UFST: Utils.getEnumByValue(schema.TUf, icms.UFST),
             },
           };
-          break;
-        case "40":
-        case "50":
-          result = {
-            ICMS40: <schema.TNFeInfNFeDetImpostoICMSICMS40>{
-              orig: icms.orig,
-              CST: icms.CST,
-              motDesICMS: Utils.getEnumByValue(
-                schema.TNFeInfNFeDetImpostoICMSICMS40MotDesICMS,
-                icms.motDesICMS
-              ),
-              vICMSDeson: icms.vICMSDeson,
-            },
-          };
-          break;
-        case "41":
-          if (icms.vBCSTRet && icms.vBCSTRet !== "") {
-            result = {
-              ICMS41: <schema.TNFeInfNFeDetImpostoICMSICMSST>{
-                orig: icms.orig,
-                CST: icms.CST,
-                vBCSTRet: icms.vBCSTRet,
-                vICMSSTRet: icms.vICMSSTRet,
-                vBCSTDest: icms.vBCSTDest,
-                vICMSSTDest: icms.vICMSSTDest,
-                //pFCPSTRet: '',
-                //pST: '',
-                //vBCFCPSTRet: '',
-                //vFCPSTRet: '',
-                pRedBCEfet: icms.pRedBCEfet,
-                vBCEfet: icms.vBCEfet,
-                pICMSEfet: icms.pICMSEfet,
-                vICMSEfet: icms.vICMSEfet,
-                //vICMSSubstituto: '',
-              },
-            };
-          } else {
-            result = {
-              ICMS40: <schema.TNFeInfNFeDetImpostoICMSICMS40>{
-                orig: icms.orig,
-                CST: icms.CST,
-                motDesICMS: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMS40MotDesICMS,
-                  icms.motDesICMS
-                ),
-                vICMSDeson: icms.vICMSDeson,
-              },
-            };
-          }
-          break;
-        case "51":
-          result = {
-            ICMS51: <schema.TNFeInfNFeDetImpostoICMSICMS51>{
-              orig: icms.orig,
-              CST: icms.CST,
-              modBC: Utils.getEnumByValue(
-                schema.TNFeInfNFeDetImpostoICMSICMS51ModBC,
-                icms.modBC
-              ),
-              vBC: icms.vBC,
-              pRedBC: icms.pRedBC,
-              pICMS: icms.pICMS,
-              vICMS: icms.vICMS,
-              pDif: icms.pDif,
-              vICMSDif: icms.vICMSDif,
-              vICMSOp: icms.vICMSOp,
-              vBCFCP: icms.vBCFCP,
-              pFCP: icms.pFCP,
-              vFCP: icms.vFCP,
-            },
-          };
-          break;
-        case "60":
-          result = {
-            ICMS60: <schema.TNFeInfNFeDetImpostoICMSICMS60>{
+        }
+
+        return {
+          ICMS10: <schema.TNFeInfNFeDetImpostoICMSICMS10>{
+            orig: icms.orig,
+            CST: icms.CST,
+            modBC: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS10ModBC,
+              icms.modBC
+            ),
+            vBC: icms.vBC,
+            pICMS: icms.pICMS,
+            vICMS: icms.vICMS,
+            vBCFCP: icms.vBCFCP,
+            pFCP: icms.pFCP,
+            vFCP: icms.vFCP,
+            modBCST: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS10ModBCST,
+              icms.modBCST
+            ),
+            pMVAST: icms.pMVAST,
+            pRedBCST: icms.pRedBCST,
+            vBCST: icms.vBCST,
+            pICMSST: icms.pICMSST,
+            vICMSST: icms.vICMSST,
+            vBCFCPST: icms.vBCFCPST,
+            pFCPST: icms.pFCPST,
+            vFCPST: icms.vFCPST,
+          },
+        };
+      case "20":
+        return {
+          ICMS20: <schema.TNFeInfNFeDetImpostoICMSICMS20>{
+            orig: icms.orig,
+            CST: icms.CST,
+            modBC: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS20ModBC,
+              icms.modBC
+            ),
+            pRedBC: icms.pRedBC,
+            vBC: icms.vBC,
+            pICMS: icms.pICMS,
+            vICMS: icms.vICMS,
+            vBCFCP: icms.vBCFCP,
+            pFCP: icms.pFCP,
+            vFCP: icms.vFCP,
+            vICMSDeson: icms.vICMSDeson,
+            motDesICMS: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS20MotDesICMS,
+              icms.motDesICMS
+            ),
+          },
+        };
+      case "30":
+        return {
+          ICMS30: <schema.TNFeInfNFeDetImpostoICMSICMS30>{
+            orig: icms.orig,
+            CST: icms.CST,
+            modBCST: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS30ModBCST,
+              icms.modBCST
+            ),
+            pMVAST: icms.pMVAST,
+            pRedBCST: icms.pRedBCST,
+            vBCST: icms.vBCST,
+            pICMSST: icms.pICMSST,
+            vICMSST: icms.vICMSST,
+            vBCFCPST: icms.vBCFCPST,
+            pFCPST: icms.pFCPST,
+            vFCPST: icms.vFCPST,
+            vICMSDeson: icms.vICMSDeson,
+            motDesICMS: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS30MotDesICMS,
+              icms.motDesICMS
+            ),
+          },
+        };
+      case "40":
+      case "50":
+        return {
+          ICMS40: <schema.TNFeInfNFeDetImpostoICMSICMS40>{
+            orig: icms.orig,
+            CST: icms.CST,
+            vICMSDeson: icms.vICMSDeson,
+            motDesICMS: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS40MotDesICMS,
+              icms.motDesICMS
+            ),
+          },
+        };
+      case "41":
+        if (icms.vBCSTRet && icms.vBCSTRet !== "") {
+          return {
+            ICMS41: <schema.TNFeInfNFeDetImpostoICMSICMSST>{
               orig: icms.orig,
               CST: icms.CST,
               vBCSTRet: icms.vBCSTRet,
               vICMSSTRet: icms.vICMSSTRet,
-              pST: icms.pST,
-              vBCFCPSTRet: icms.vBCFCPSTRet,
-              pFCPSTRet: icms.pFCPSTRet,
-              vFCPSTRet: icms.vFCPSTRet,
+              vBCSTDest: icms.vBCSTDest,
+              vICMSSTDest: icms.vICMSSTDest,
+              //pFCPSTRet: '',
+              //pST: '',
+              //vBCFCPSTRet: '',
+              //vFCPSTRet: '',
               pRedBCEfet: icms.pRedBCEfet,
               vBCEfet: icms.vBCEfet,
               pICMSEfet: icms.pICMSEfet,
@@ -1080,210 +1020,247 @@ export class EnviaProcessor {
               //vICMSSubstituto: '',
             },
           };
-          break;
-        case "70":
-          result = {
-            ICMS70: <schema.TNFeInfNFeDetImpostoICMSICMS70>{
+        }
+
+        return {
+          ICMS40: <schema.TNFeInfNFeDetImpostoICMSICMS40>{
+            orig: icms.orig,
+            CST: icms.CST,
+            vICMSDeson: icms.vICMSDeson,
+            motDesICMS: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS40MotDesICMS,
+              icms.motDesICMS
+            ),
+          },
+        };
+      case "51":
+        return {
+          ICMS51: <schema.TNFeInfNFeDetImpostoICMSICMS51>{
+            orig: icms.orig,
+            CST: icms.CST,
+            modBC: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS51ModBC,
+              icms.modBC
+            ),
+            pRedBC: icms.pRedBC,
+            vBC: icms.vBC,
+            pICMS: icms.pICMS,
+            vICMSOp: icms.vICMSOp,
+            pDif: icms.pDif,
+            vICMSDif: icms.vICMSDif,
+            vICMS: icms.vICMS,
+            vBCFCP: icms.vBCFCP,
+            pFCP: icms.pFCP,
+            vFCP: icms.vFCP,
+          },
+        };
+      case "60":
+        return {
+          ICMS60: <schema.TNFeInfNFeDetImpostoICMSICMS60>{
+            orig: icms.orig,
+            CST: icms.CST,
+            vBCSTRet: icms.vBCSTRet,
+            pST: icms.pST,
+            vICMSSTRet: icms.vICMSSTRet,
+            vBCFCPSTRet: icms.vBCFCPSTRet,
+            pFCPSTRet: icms.pFCPSTRet,
+            vFCPSTRet: icms.vFCPSTRet,
+            pRedBCEfet: icms.pRedBCEfet,
+            vBCEfet: icms.vBCEfet,
+            pICMSEfet: icms.pICMSEfet,
+            vICMSEfet: icms.vICMSEfet,
+          },
+        };
+      case "70":
+        return {
+          ICMS70: <schema.TNFeInfNFeDetImpostoICMSICMS70>{
+            orig: icms.orig,
+            CST: icms.CST,
+            modBC: icms.modBC,
+            pRedBC: icms.pRedBC,
+            vBC: icms.vBC,
+            pICMS: icms.pICMS,
+            vICMS: icms.vICMS,
+            vBCFCP: icms.vBCFCP,
+            pFCP: icms.pFCP,
+            vFCP: icms.vFCP,
+            modBCST: icms.modBCST,
+            pMVAST: icms.pMVAST,
+            pRedBCST: icms.pRedBCST,
+            vBCST: icms.vBCST,
+            pICMSST: icms.pICMSST,
+            vICMSST: icms.vICMSST,
+            vBCFCPST: icms.vBCFCPST,
+            pFCPST: icms.pFCPST,
+            vFCPST: icms.vFCPST,
+            vICMSDeson: icms.vICMSDeson,
+            motDesICMS: icms.motDesICMS,
+          },
+        };
+      case "90":
+        // partilha icms
+        if (icms.UFST && icms.UFST !== "" && icms.pBCOp && icms.pBCOp !== "") {
+          return {
+            ICMS90: <schema.TNFeInfNFeDetImpostoICMSICMSPart>{
               orig: icms.orig,
               CST: icms.CST,
-              modBC: icms.modBC,
+              modBC: Utils.getEnumByValue(
+                schema.TNFeInfNFeDetImpostoICMSICMSPartModBC,
+                icms.modBC
+              ),
               vBC: icms.vBC,
               pRedBC: icms.pRedBC,
               pICMS: icms.pICMS,
               vICMS: icms.vICMS,
-              modBCST: icms.modBCST,
+              modBCST: Utils.getEnumByValue(
+                schema.TNFeInfNFeDetImpostoICMSICMSPartModBCST,
+                icms.modBCST
+              ),
               pMVAST: icms.pMVAST,
               pRedBCST: icms.pRedBCST,
               vBCST: icms.vBCST,
               pICMSST: icms.pICMSST,
               vICMSST: icms.vICMSST,
-              motDesICMS: icms.motDesICMS,
-              vICMSDeson: icms.vICMSDeson,
-              vBCFCP: icms.vBCFCP,
-              pFCP: icms.pFCP,
-              vFCP: icms.vFCP,
-              vBCFCPST: icms.vBCFCPST,
-              pFCPST: icms.pFCPST,
-              vFCPST: icms.vFCPST,
+              pBCOp: icms.pBCOp,
+              UFST: Utils.getEnumByValue(schema.TUf, icms.UFST),
             },
           };
-          break;
-        case "90":
-          // partilha icms
-          if (
-            icms.UFST &&
-            icms.UFST !== "" &&
-            icms.pBCOp &&
-            icms.pBCOp !== ""
-          ) {
-            result = {
-              ICMS90: <schema.TNFeInfNFeDetImpostoICMSICMSPart>{
-                orig: icms.orig,
-                CST: icms.CST,
-                modBC: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMSPartModBC,
-                  icms.modBC
-                ),
-                vBC: icms.vBC,
-                pRedBC: icms.pRedBC,
-                pICMS: icms.pICMS,
-                vICMS: icms.vICMS,
-                modBCST: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMSPartModBCST,
-                  icms.modBCST
-                ),
-                pMVAST: icms.pMVAST,
-                pRedBCST: icms.pRedBCST,
-                vBCST: icms.vBCST,
-                pICMSST: icms.pICMSST,
-                vICMSST: icms.vICMSST,
-                pBCOp: icms.pBCOp,
-                UFST: Utils.getEnumByValue(schema.TUf, icms.UFST),
-              },
-            };
-          } else {
-            result = {
-              ICMS90: <schema.TNFeInfNFeDetImpostoICMSICMS90>{
-                orig: icms.orig,
-                CST: icms.CST,
-                modBC: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMS90ModBC,
-                  icms.modBC
-                ),
-                vBC: icms.vBC,
-                pRedBC: icms.pRedBC,
-                pICMS: icms.pICMS,
-                vICMS: icms.vICMS,
-                modBCST: icms.modBCST,
-                pMVAST: icms.pMVAST,
-                pRedBCST: icms.pRedBCST,
-                vBCST: icms.vBCST,
-                pICMSST: icms.pICMSST,
-                vICMSST: icms.vICMSST,
-                motDesICMS: Utils.getEnumByValue(
-                  schema.TNFeInfNFeDetImpostoICMSICMS90MotDesICMS,
-                  icms.motDesICMS
-                ),
-                vICMSDeson: icms.vICMSDeson,
-                vBCFCP: icms.vBCFCP,
-                pFCP: icms.pFCP,
-                vFCP: icms.vFCP,
-                vBCFCPST: icms.vBCFCPST,
-                vFCPST: icms.vFCPST,
-              },
-            };
-          }
-          break;
-        default:
-          //throw exception?
-          break;
-      }
-    } else {
-      // Simples Nacional
-      switch (icms.CSOSN) {
-        case "101":
-          result = {
-            ICMSSN101: <schema.TNFeInfNFeDetImpostoICMSICMSSN101>{
-              orig: icms.orig,
-              CSOSN: icms.CSOSN,
-              pCredSN: icms.pCredSN,
-              vCredICMSSN: icms.vCredICMSSN,
-            },
-          };
-          break;
-        case "102":
-        case "103":
-        case "300":
-        case "400":
-          result = {
-            ICMSSN102: <schema.TNFeInfNFeDetImpostoICMSICMSSN102>{
-              orig: icms.orig,
-              CSOSN: icms.CSOSN,
-            },
-          };
-          break;
-        case "201":
-          result = {
-            ICMSSN201: <schema.TNFeInfNFeDetImpostoICMSICMSSN201>{
-              orig: icms.orig,
-              CSOSN: icms.CSOSN,
-              modBCST: icms.modBCST,
-              pMVAST: icms.pMVAST,
-              pRedBCST: icms.pRedBCST,
-              vBCST: icms.vBCST,
-              pICMSST: icms.pICMSST,
-              vICMSST: icms.vICMSST,
-              pCredSN: icms.pCredSN,
-              vCredICMSSN: icms.vCredICMSSN,
-              vBCFCPST: icms.vBCFCPST,
-              pFCPST: icms.pFCPST,
-              vFCPST: icms.vFCPST,
-            },
-          };
-          break;
-        case "202":
-        case "203":
-          result = {
-            ICMSSN202: <schema.TNFeInfNFeDetImpostoICMSICMSSN202>{
-              orig: icms.orig,
-              CSOSN: icms.CSOSN,
-              modBCST: icms.modBCST,
-              pMVAST: icms.pMVAST,
-              pRedBCST: icms.pRedBCST,
-              vBCST: icms.vBCST,
-              pICMSST: icms.pICMSST,
-              vICMSST: icms.vICMSST,
-              vBCFCPST: icms.vBCFCPST,
-              pFCPST: icms.pFCPST,
-              vFCPST: icms.vFCPST,
-            },
-          };
-          break;
-        case "500":
-          result = {
-            ICMSSN500: <schema.TNFeInfNFeDetImpostoICMSICMSSN500>{
-              orig: icms.orig,
-              CSOSN: icms.CSOSN,
-              vBCSTRet: icms.vBCSTRet,
-              vICMSSTRet: icms.vICMSSTRet,
-              vBCFCPSTRet: icms.vBCFCPSTRet,
-              pFCPSTRet: icms.pFCPSTRet,
-              vFCPSTRet: icms.vFCPSTRet,
-              pRedBCEfet: icms.pRedBCEfet,
-              vBCEfet: icms.vBCEfet,
-              pICMSEfet: icms.pICMSEfet,
-              vICMSEfet: icms.vICMSEfet,
-            },
-          };
-          break;
-        case "900":
-          result = {
-            ICMSSN900: <schema.TNFeInfNFeDetImpostoICMSICMSSN900>{
-              orig: icms.orig,
-              CSOSN: icms.CSOSN,
-              modBC: icms.modBC,
-              vBC: icms.vBC,
-              pRedBC: icms.pRedBC,
-              pICMS: icms.pICMS,
-              vICMS: icms.vICMS,
-              modBCST: icms.modBCST,
-              pMVAST: icms.pMVAST,
-              pRedBCST: icms.pRedBCST,
-              vBCST: icms.vBCST,
-              pICMSST: icms.pICMSST,
-              vICMSST: icms.vICMSST,
-              pCredSN: icms.pCredSN,
-              vCredICMSSN: icms.vCredICMSSN,
-              vBCFCPST: icms.vBCFCPST,
-              pFCPST: icms.pFCPST,
-              vFCPST: icms.vFCPST,
-            },
-          };
-          break;
-      }
-    }
+        }
 
-    return result;
+        return {
+          ICMS90: <schema.TNFeInfNFeDetImpostoICMSICMS90>{
+            orig: icms.orig,
+            CST: icms.CST,
+            modBC: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS90ModBC,
+              icms.modBC
+            ),
+            vBC: icms.vBC,
+            pRedBC: icms.pRedBC,
+            pICMS: icms.pICMS,
+            vICMS: icms.vICMS,
+            vBCFCP: icms.vBCFCP,
+            pFCP: icms.pFCP,
+            vFCP: icms.vFCP,
+
+            modBCST: icms.modBCST,
+            pMVAST: icms.pMVAST,
+            pRedBCST: icms.pRedBCST,
+            vBCST: icms.vBCST,
+            pICMSST: icms.pICMSST,
+            vICMSST: icms.vICMSST,
+
+            vBCFCPST: icms.vBCFCPST,
+            pFCPST: icms.pFCPST,
+            vFCPST: icms.vFCPST,
+
+            vICMSDeson: icms.vICMSDeson,
+            motDesICMS: Utils.getEnumByValue(
+              schema.TNFeInfNFeDetImpostoICMSICMS90MotDesICMS,
+              icms.motDesICMS
+            ),
+          },
+        };
+    }
+  }
+
+  private getImpostoIcmsSimplesNacional(icms: Icms) {
+    switch (icms.CSOSN) {
+      case "101":
+        return {
+          ICMSSN101: <schema.TNFeInfNFeDetImpostoICMSICMSSN101>{
+            orig: icms.orig,
+            CSOSN: icms.CSOSN,
+            pCredSN: icms.pCredSN,
+            vCredICMSSN: icms.vCredICMSSN,
+          },
+        };
+      case "102":
+      case "103":
+      case "300":
+      case "400":
+        return {
+          ICMSSN102: <schema.TNFeInfNFeDetImpostoICMSICMSSN102>{
+            orig: icms.orig,
+            CSOSN: icms.CSOSN,
+          },
+        };
+      case "201":
+        return {
+          ICMSSN201: <schema.TNFeInfNFeDetImpostoICMSICMSSN201>{
+            orig: icms.orig,
+            CSOSN: icms.CSOSN,
+            modBCST: icms.modBCST,
+            pMVAST: icms.pMVAST,
+            pRedBCST: icms.pRedBCST,
+            vBCST: icms.vBCST,
+            pICMSST: icms.pICMSST,
+            vICMSST: icms.vICMSST,
+            vBCFCPST: icms.vBCFCPST,
+            pFCPST: icms.pFCPST,
+            vFCPST: icms.vFCPST,
+            pCredSN: icms.pCredSN,
+            vCredICMSSN: icms.vCredICMSSN,
+          },
+        };
+      case "202":
+      case "203":
+        return {
+          ICMSSN202: <schema.TNFeInfNFeDetImpostoICMSICMSSN202>{
+            orig: icms.orig,
+            CSOSN: icms.CSOSN,
+            modBCST: icms.modBCST,
+            pMVAST: icms.pMVAST,
+            pRedBCST: icms.pRedBCST,
+            vBCST: icms.vBCST,
+            pICMSST: icms.pICMSST,
+            vICMSST: icms.vICMSST,
+            vBCFCPST: icms.vBCFCPST,
+            pFCPST: icms.pFCPST,
+            vFCPST: icms.vFCPST,
+          },
+        };
+      case "500":
+        return {
+          ICMSSN500: <schema.TNFeInfNFeDetImpostoICMSICMSSN500>{
+            orig: icms.orig,
+            CSOSN: icms.CSOSN,
+            vBCSTRet: icms.vBCSTRet,
+            pST: icms.pST,
+            vICMSSTRet: icms.vICMSSTRet,
+            vBCFCPSTRet: icms.vBCFCPSTRet,
+            pFCPSTRet: icms.pFCPSTRet,
+            vFCPSTRet: icms.vFCPSTRet,
+            pRedBCEfet: icms.pRedBCEfet,
+            vBCEfet: icms.vBCEfet,
+            pICMSEfet: icms.pICMSEfet,
+            vICMSEfet: icms.vICMSEfet,
+          },
+        };
+      case "900":
+        return {
+          ICMSSN900: <schema.TNFeInfNFeDetImpostoICMSICMSSN900>{
+            orig: icms.orig,
+            CSOSN: icms.CSOSN,
+            modBC: icms.modBC,
+            vBC: icms.vBC,
+            pRedBC: icms.pRedBC,
+            pICMS: icms.pICMS,
+            vICMS: icms.vICMS,
+            modBCST: icms.modBCST,
+            pMVAST: icms.pMVAST,
+            pRedBCST: icms.pRedBCST,
+            vBCST: icms.vBCST,
+            pICMSST: icms.pICMSST,
+            vICMSST: icms.vICMSST,
+            vBCFCPST: icms.vBCFCPST,
+            pFCPST: icms.pFCPST,
+            vFCPST: icms.vFCPST,
+            pCredSN: icms.pCredSN,
+            vCredICMSSN: icms.vCredICMSSN,
+          },
+        };
+    }
   }
 
   private getImpostoIPI(ipi: Ipi, modelo: string) {
