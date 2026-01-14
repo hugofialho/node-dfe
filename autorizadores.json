@@ -4,19 +4,19 @@
     "servicos": {
       "autorizacao": {
         "url_producao": "https://nfce.sefaz.am.gov.br/nfce-services/services/NfeAutorizacao4",
-        "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeAutorizacao4.asmx?wsdl"
+        "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeAutorizacao4.asmx"
       },
       "retAutorizacao": {
         "url_producao": "https://nfce.sefaz.am.gov.br/nfce-services/services/NfeRetAutorizacao4",
-        "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetAutorizacao4.asmx?wsdl"
+        "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetAutorizacao4.asmx"
       },
       "consultarStatusServico": {
         "url_producao": "https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico4",
-        "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico4.asmx?wsdl"
+        "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico4.asmx"
       },
       "inutilizacao": {
-        "url_producao": "https://nfce.sefaz.am.gov.br/nfce-services/services/NFeInutilizacao4",
-        "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NFeInutilizacao4.asmx?wsdl"
+        "url_producao": "https://nfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao4",
+        "url_homologacao": "https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao4.asmx"
       },
       "recepcaoEvento": {
         "url_producao": "https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento4",
@@ -28,16 +28,16 @@
     "nome": "Goiás",
     "servicos": {
       "autorizacao": {
-        "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeAutorizacao4?wsdl",
-        "url_homologacao": "https://homolog.sefaz.go.gov.br/nfe/services/NFeAutorizacao4?wsdl"
+        "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeAutorizacao4",
+        "url_homologacao": "https://homolog.sefaz.go.gov.br/nfe/services/NFeAutorizacao4"
       },
       "retAutorizacao": {
-        "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeRetAutorizacao4?wsdl",
-        "url_homologacao": "https://homolog.sefaz.go.gov.br/nfe/services/NFeRetAutorizacao4?wsdl"
+        "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeRetAutorizacao4",
+        "url_homologacao": "https://homolog.sefaz.go.gov.br/nfe/services/NFeRetAutorizacao4"
       },
       "consultarStatusServico": {
-        "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeStatusServico4?wsdl",
-        "url_homologacao": "https://homolog.sefaz.go.gov.br/nfe/services/NFeStatusServico4?wsdl"
+        "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeStatusServico4",
+        "url_homologacao": "https://homolog.sefaz.go.gov.br/nfe/services/NFeStatusServico4"
       },
       "inutilizacao": {
         "url_producao": "https://nfe.sefaz.go.gov.br/nfe/services/NFeInutilizacao4",
@@ -154,15 +154,15 @@
     "servicos": {
       "autorizacao": {
         "url_producao": "https://nfce.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx",
-        "url_homologacao": "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx?wsdl"
+        "url_homologacao": "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx"
       },
       "retAutorizacao": {
         "url_producao": "https://nfce.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx",
-        "url_homologacao": "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx?wsdl"
+        "url_homologacao": "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx"
       },
       "consultarStatusServico": {
         "url_producao": "https://nfce.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx",
-        "url_homologacao": "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx?wsdl"
+        "url_homologacao": "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx"
       },
       "inutilizacao": {
         "url_producao": "https://nfe.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx",
