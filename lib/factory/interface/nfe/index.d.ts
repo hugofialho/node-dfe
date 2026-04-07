@@ -150,6 +150,7 @@ export interface Icms {
     pICMSST: string;
     vICMSST: string;
     vBCSTRet: string;
+    vICMSSubstituto: string;
     vICMSSTRet: string;
     vBCSTDest: string;
     vICMSSTDest: string;
