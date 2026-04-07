@@ -106,7 +106,7 @@ export class EnviaProcessor {
       let xmlAssinado = Signature.signXmlX509(
         xml,
         "infNFe",
-        this.configuracoes.certificado
+        this.configuracoes.certificado,
       );
 
       let nfceObj = XmlHelper.deserializeXml(xml, {
@@ -144,13 +144,13 @@ export class EnviaProcessor {
       let xmlAssinado = Signature.signXmlX509(
         doc.xml,
         "infNFe",
-        this.configuracoes.certificado
+        this.configuracoes.certificado,
       );
 
       if (documento.docFiscal.modelo == "65") {
         let appendQRCode = this.appendQRCodeXML(
           documento as NFCeDocumento,
-          xmlAssinado
+          xmlAssinado,
         );
         xmlAssinado = appendQRCode.xml;
         doc.nfe.infNFeSupl = appendQRCode.qrCode;
@@ -192,7 +192,7 @@ export class EnviaProcessor {
       let xmlAssinado = Signature.signXmlX509(
         doc.xml,
         "infNFe",
-        this.configuracoes.certificado
+        this.configuracoes.certificado,
       );
 
       let xmlLote = this.gerarXmlLote(xmlAssinado);
@@ -211,7 +211,7 @@ export class EnviaProcessor {
           "Erro de validação do XML:\r\n" +
             xmlToValidate.validationErrors
               .map((e) => e.message.replace("Error: ", ""))
-              .join("\r\n")
+              .join("\r\n"),
         );
       }
 
@@ -235,7 +235,7 @@ export class EnviaProcessor {
     this.soapAutorizacao = Sefaz.getSoapInfo(
       empresa.endereco.uf,
       ambiente,
-      ServicosSefaz.autorizacao
+      ServicosSefaz.autorizacao,
     );
   }
 
@@ -262,7 +262,7 @@ export class EnviaProcessor {
         nfe.infNFe.total.ICMSTot.vNF,
         digestValue,
         this.configuracoes.empresa.idCSC,
-        this.configuracoes.empresa.CSC
+        this.configuracoes.empresa.CSC,
       );
     } else {
       qrCode = this.gerarQRCodeNFCeOnline(
@@ -271,7 +271,7 @@ export class EnviaProcessor {
         "2",
         ambiente,
         this.configuracoes.empresa.idCSC,
-        this.configuracoes.empresa.CSC
+        this.configuracoes.empresa.CSC,
       );
     }
 
@@ -288,7 +288,7 @@ export class EnviaProcessor {
       qrCode: qrCodeObj,
       xml: xmlAssinado.replace(
         "</infNFe><Signature",
-        "</infNFe>" + qrCodeXml + "<Signature"
+        "</infNFe>" + qrCodeXml + "<Signature",
       ),
     };
   }
@@ -316,7 +316,7 @@ export class EnviaProcessor {
         valorTotal,
         digestValue,
         this.configuracoes.empresa.idCSC,
-        this.configuracoes.empresa.CSC
+        this.configuracoes.empresa.CSC,
       );
     } else {
       qrCode = this.gerarQRCodeNFCeOnline(
@@ -325,7 +325,7 @@ export class EnviaProcessor {
         "2",
         documento.docFiscal.ambiente,
         this.configuracoes.empresa.idCSC,
-        this.configuracoes.empresa.CSC
+        this.configuracoes.empresa.CSC,
       );
     }
 
@@ -342,7 +342,7 @@ export class EnviaProcessor {
       qrCode: qrCodeObj,
       xml: xmlAssinado.replace(
         "</infNFe><Signature",
-        "</infNFe>" + qrCodeXml + "<Signature"
+        "</infNFe>" + qrCodeXml + "<Signature",
       ),
     };
   }
@@ -350,7 +350,7 @@ export class EnviaProcessor {
   private validaSchemaLote(
     xmlLote: string,
     nfe: schema.TNFe,
-    result: RetornoProcessamentoNF
+    result: RetornoProcessamentoNF,
   ) {
     if (this.schemaXsdLote === null) {
       const pathXsd = path.join(__dirname, "..", "xsd/enviNFe_v4.00.xsd");
@@ -371,7 +371,7 @@ export class EnviaProcessor {
         "Erro de validação do XML:\r\n" +
           xmlToValidate.validationErrors
             .map((e) => e.message.replace("Error: ", ""))
-            .join("\r\n")
+            .join("\r\n"),
       );
     }
   }
@@ -406,7 +406,7 @@ export class EnviaProcessor {
       xml,
       certificado,
       this.soapAutorizacao,
-      webProxy
+      webProxy,
     );
   }
 
@@ -433,7 +433,7 @@ export class EnviaProcessor {
 
     let dadosChave = this.gerarChaveNF(
       this.configuracoes.empresa,
-      documento.docFiscal
+      documento.docFiscal,
     );
     let NFe = <schema.TNFe>{
       $: {
@@ -511,7 +511,7 @@ export class EnviaProcessor {
     versaoQRCode: string,
     ambiente: string,
     idCSC: string,
-    CSC: string
+    CSC: string,
   ) {
     let s = "|";
     let concat = [chave, versaoQRCode, ambiente, Number(idCSC)].join(s);
@@ -529,7 +529,7 @@ export class EnviaProcessor {
     valorTotal: string,
     digestValue: string,
     idCSC: string,
-    CSC: string
+    CSC: string,
   ) {
     let s = "|";
     let hexDigestValue = Buffer.from(digestValue).toString("hex");
@@ -557,7 +557,7 @@ export class EnviaProcessor {
     //nfe.avulsa = ;
     nfe.dest = this.getDest(
       documento.destinatario,
-      documento.docFiscal.ambiente
+      documento.docFiscal.ambiente,
     );
     //nfe.retirada = ;
     //nfe.entrega = ;
@@ -565,7 +565,7 @@ export class EnviaProcessor {
     nfe.det = this.getDet(
       documento.produtos,
       documento.docFiscal.ambiente,
-      documento.docFiscal.modelo
+      documento.docFiscal.modelo,
     );
     nfe.total = this.getTotal(documento.total);
     nfe.transp = this.getTransp(documento.transporte);
@@ -580,7 +580,7 @@ export class EnviaProcessor {
     if (this.configuracoes.responsavelTecnico)
       nfe.infRespTec = this.getResponsavelTecnico(
         this.configuracoes.responsavelTecnico,
-        dadosChave.chave
+        dadosChave.chave,
       );
 
     return nfe;
@@ -597,13 +597,13 @@ export class EnviaProcessor {
     if (documento.destinatario)
       nfce.dest = this.getDest(
         documento.destinatario,
-        documento.docFiscal.ambiente
+        documento.docFiscal.ambiente,
       );
 
     nfce.det = this.getDet(
       documento.produtos,
       documento.docFiscal.ambiente,
-      documento.docFiscal.modelo
+      documento.docFiscal.modelo,
     );
     nfce.total = this.getTotal(documento.total);
     nfce.transp = this.getTransp(documento.transporte);
@@ -613,7 +613,7 @@ export class EnviaProcessor {
     if (this.configuracoes.responsavelTecnico)
       nfce.infRespTec = this.getResponsavelTecnico(
         this.configuracoes.responsavelTecnico,
-        dadosChave.chave
+        dadosChave.chave,
       );
 
     return nfce;
@@ -631,31 +631,31 @@ export class EnviaProcessor {
       dhSaiEnt: documento.dhSaiEnt,
       tpNF: Utils.getEnumByValue(
         schema.TNFeInfNFeIdeTpNF,
-        documento.tipoDocumentoFiscal
+        documento.tipoDocumentoFiscal,
       ),
       idDest: Utils.getEnumByValue(
         schema.TNFeInfNFeIdeIdDest,
-        documento.identificadorDestinoOperacao
+        documento.identificadorDestinoOperacao,
       ),
       cMunFG: documento.codIbgeFatoGerador,
       tpImp: Utils.getEnumByValue(
         schema.TNFeInfNFeIdeTpImp,
-        documento.tipoImpressao
+        documento.tipoImpressao,
       ),
       tpEmis: Utils.getEnumByValue(
         schema.TNFeInfNFeIdeTpEmis,
-        documento.tipoEmissao
+        documento.tipoEmissao,
       ),
       cDV: dadosChave.dv,
       tpAmb: Utils.getEnumByValue(schema.TAmb, documento.ambiente),
       finNFe: Utils.getEnumByValue(schema.TFinNFe, documento.finalidadeEmissao),
       indFinal: Utils.getEnumByValue(
         schema.TNFeInfNFeIdeIndFinal,
-        documento.indConsumidorFinal
+        documento.indConsumidorFinal,
       ),
       indPres: Utils.getEnumByValue(
         schema.TNFeInfNFeIdeIndPres,
-        documento.indPresenca
+        documento.indPresenca,
       ),
       procEmi: Utils.getEnumByValue(schema.TProcEmi, documento.processoEmissao),
       verProc: documento.versaoAplicativoEmissao,
@@ -667,7 +667,7 @@ export class EnviaProcessor {
     if (documento.indIntermed) {
       ide.indIntermed = Utils.getEnumByValue(
         schema.TNFeInfNFeIdeIndIntermed,
-        documento.indIntermed
+        documento.indIntermed,
       ); // NT 2020.006
     }
 
@@ -680,7 +680,7 @@ export class EnviaProcessor {
           (ref) =>
             <schema.TNFeInfNFeIdeNFref>{
               refNFe: ref.refNFe,
-            }
+            },
         )
       : null;
   }
@@ -748,7 +748,7 @@ export class EnviaProcessor {
 
     dest.indIEDest = Utils.getEnumByValue(
       schema.TNFeInfNFeDestIndIEDest,
-      destinatario.indicadorIEDestinario
+      destinatario.indicadorIEDestinario,
     );
     dest.IE = destinatario.inscricaoEstadual;
     dest.ISUF = destinatario.inscricaoSuframa;
@@ -768,7 +768,7 @@ export class EnviaProcessor {
         imposto: this.getDetImposto(
           produtos[i].imposto,
           modelo,
-          produtos[i].prod.CFOP
+          produtos[i].prod.CFOP,
         ),
         infAdProd: produtos[i].infoAdicional,
         impostoDevol:
@@ -789,7 +789,7 @@ export class EnviaProcessor {
   private getDetProd(
     produto: DetalhesProduto,
     ambiente: string,
-    isPrimeiroProduto: boolean
+    isPrimeiroProduto: boolean,
   ) {
     return <schema.TNFeInfNFeDetProd>{
       cProd: produto.codigo,
@@ -872,7 +872,7 @@ export class EnviaProcessor {
             CST: icms.CST,
             modBC: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS00ModBC,
-              icms.modBC
+              icms.modBC,
             ),
             vBC: icms.vBC,
             pICMS: icms.pICMS,
@@ -890,7 +890,7 @@ export class EnviaProcessor {
               CST: icms.CST,
               modBC: Utils.getEnumByValue(
                 schema.TNFeInfNFeDetImpostoICMSICMSPartModBC,
-                icms.modBC
+                icms.modBC,
               ),
               vBC: icms.vBC,
               pRedBC: icms.pRedBC,
@@ -898,7 +898,7 @@ export class EnviaProcessor {
               vICMS: icms.vICMS,
               modBCST: Utils.getEnumByValue(
                 schema.TNFeInfNFeDetImpostoICMSICMSPartModBCST,
-                icms.modBCST
+                icms.modBCST,
               ),
               pMVAST: icms.pMVAST,
               pRedBCST: icms.pRedBCST,
@@ -917,7 +917,7 @@ export class EnviaProcessor {
             CST: icms.CST,
             modBC: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS10ModBC,
-              icms.modBC
+              icms.modBC,
             ),
             vBC: icms.vBC,
             pICMS: icms.pICMS,
@@ -927,7 +927,7 @@ export class EnviaProcessor {
             vFCP: icms.vFCP,
             modBCST: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS10ModBCST,
-              icms.modBCST
+              icms.modBCST,
             ),
             pMVAST: icms.pMVAST,
             pRedBCST: icms.pRedBCST,
@@ -946,7 +946,7 @@ export class EnviaProcessor {
             CST: icms.CST,
             modBC: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS20ModBC,
-              icms.modBC
+              icms.modBC,
             ),
             pRedBC: icms.pRedBC,
             vBC: icms.vBC,
@@ -958,7 +958,7 @@ export class EnviaProcessor {
             vICMSDeson: icms.vICMSDeson,
             motDesICMS: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS20MotDesICMS,
-              icms.motDesICMS
+              icms.motDesICMS,
             ),
           },
         };
@@ -969,7 +969,7 @@ export class EnviaProcessor {
             CST: icms.CST,
             modBCST: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS30ModBCST,
-              icms.modBCST
+              icms.modBCST,
             ),
             pMVAST: icms.pMVAST,
             pRedBCST: icms.pRedBCST,
@@ -982,7 +982,7 @@ export class EnviaProcessor {
             vICMSDeson: icms.vICMSDeson,
             motDesICMS: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS30MotDesICMS,
-              icms.motDesICMS
+              icms.motDesICMS,
             ),
           },
         };
@@ -995,7 +995,7 @@ export class EnviaProcessor {
             vICMSDeson: icms.vICMSDeson,
             motDesICMS: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS40MotDesICMS,
-              icms.motDesICMS
+              icms.motDesICMS,
             ),
           },
         };
@@ -1029,7 +1029,7 @@ export class EnviaProcessor {
             vICMSDeson: icms.vICMSDeson,
             motDesICMS: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS40MotDesICMS,
-              icms.motDesICMS
+              icms.motDesICMS,
             ),
           },
         };
@@ -1040,7 +1040,7 @@ export class EnviaProcessor {
             CST: icms.CST,
             modBC: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS51ModBC,
-              icms.modBC
+              icms.modBC,
             ),
             pRedBC: icms.pRedBC,
             vBC: icms.vBC,
@@ -1061,6 +1061,7 @@ export class EnviaProcessor {
             CST: icms.CST,
             vBCSTRet: icms.vBCSTRet,
             pST: icms.pST,
+            vICMSSubstituto: icms.vICMSSubstituto,
             vICMSSTRet: icms.vICMSSTRet,
             vBCFCPSTRet: icms.vBCFCPSTRet,
             pFCPSTRet: icms.pFCPSTRet,
@@ -1106,7 +1107,7 @@ export class EnviaProcessor {
               CST: icms.CST,
               modBC: Utils.getEnumByValue(
                 schema.TNFeInfNFeDetImpostoICMSICMSPartModBC,
-                icms.modBC
+                icms.modBC,
               ),
               vBC: icms.vBC,
               pRedBC: icms.pRedBC,
@@ -1114,7 +1115,7 @@ export class EnviaProcessor {
               vICMS: icms.vICMS,
               modBCST: Utils.getEnumByValue(
                 schema.TNFeInfNFeDetImpostoICMSICMSPartModBCST,
-                icms.modBCST
+                icms.modBCST,
               ),
               pMVAST: icms.pMVAST,
               pRedBCST: icms.pRedBCST,
@@ -1133,7 +1134,7 @@ export class EnviaProcessor {
             CST: icms.CST,
             modBC: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS90ModBC,
-              icms.modBC
+              icms.modBC,
             ),
             vBC: icms.vBC,
             pRedBC: icms.pRedBC,
@@ -1157,7 +1158,7 @@ export class EnviaProcessor {
             vICMSDeson: icms.vICMSDeson,
             motDesICMS: Utils.getEnumByValue(
               schema.TNFeInfNFeDetImpostoICMSICMS90MotDesICMS,
-              icms.motDesICMS
+              icms.motDesICMS,
             ),
           },
         };
@@ -1227,6 +1228,7 @@ export class EnviaProcessor {
             CSOSN: icms.CSOSN,
             vBCSTRet: icms.vBCSTRet,
             pST: icms.pST,
+            vICMSSubstituto: icms.vICMSSubstituto,
             vICMSSTRet: icms.vICMSSTRet,
             vBCFCPSTRet: icms.vBCFCPSTRet,
             pFCPSTRet: icms.pFCPSTRet,
@@ -1700,7 +1702,7 @@ export class EnviaProcessor {
               nVol: volume.numeracao,
               pesoL: volume.pesoLiquido,
               pesoB: volume.pesoBruto,
-            }
+            },
         )
       : null;
   }
@@ -1759,11 +1761,11 @@ export class EnviaProcessor {
 
       detPag.indPag = Utils.getEnumByValue(
         schema.TNFeInfNFePagDetPagIndPag,
-        pag.indicadorFormaPagamento
+        pag.indicadorFormaPagamento,
       );
       detPag.tPag = Utils.getEnumByValue(
         schema.TNFeInfNFePagDetPagTPag,
-        pag.formaPagamento
+        pag.formaPagamento,
       );
       detPag.vPag = pag.valor;
 
@@ -1784,12 +1786,12 @@ export class EnviaProcessor {
     return <schema.TNFeInfNFePagDetPagCard>{
       tpIntegra: Utils.getEnumByValue(
         schema.TNFeInfNFePagDetPagCardTpIntegra,
-        dadosCartao.tipoIntegracao
+        dadosCartao.tipoIntegracao,
       ),
       CNPJ: dadosCartao.cnpj,
       tBand: Utils.getEnumByValue(
         schema.TNFeInfNFePagDetPagCardTBand,
-        dadosCartao.bandeira
+        dadosCartao.bandeira,
       ),
       cAut: dadosCartao.codAutorizacao,
     };
